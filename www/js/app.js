@@ -49,6 +49,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
+
+    .state('app.explore', {
+      url: '/explore',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/explore.html',
+          controller: 'ExploreCtrl'
+        }
+      }
+    })
+
     .state('app.playlists', {
       url: '/playlists',
       views: {
@@ -58,7 +69,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
