@@ -1,0 +1,27 @@
+<ion-view view-title="Settings">
+  <ion-content>
+	<ion-list>
+	
+	<ion-list-header>
+		Location Settings
+	</ion-list-header>
+	<ion-checkbox [(ngModel)]="uselocation"> Use Location</ion-checkbox>
+	
+	<ion-list-header>
+		Notifications
+	</ion-list-header>
+	<ion-checkbox [(ngModel)]="posts"> Posts</ion-checkbox>
+	
+	<ion-list-header>
+		Map History
+	</ion-list-header>
+	<ion-item>
+	<button secondary full>
+		Clear History
+	</button>
+	</ion-item>
+	
+	</ion-list>
+	
+  </ion-content>
+</ion-view>
