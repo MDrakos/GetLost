@@ -1,4 +1,4 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers')
 
   .controller('ExploreCtrl', function ($scope) {
     $scope.maps = [
@@ -12,8 +12,4 @@ angular.module('starter.controllers', [])
 
   .controller('MapCtrl', function ($scope) {
     //Create Map...
-    var map = new L.Map('cartodb-map', {
-        center: [0,0],
-        zoom: 2
-      })
   });
