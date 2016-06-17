@@ -53,4 +53,33 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+})
+
+.controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
+  $scope.photos = [
+    { icon: 'img/trail1.jpg', id: 1 },
+    { icon: 'img/trail2.jpg', id: 2 },
+    { icon: 'img/trail3.jpg', id: 3 },
+    { icon: 'img/trail4.jpg', id: 4 },
+    { icon: 'img/trail5.jpg', id: 5 },
+    { icon: 'img/trail6.jpg', id: 6 },
+    { icon: 'img/trail7.jpg', id: 7 },
+    { icon: 'img/trail8.jpg', id: 8 }
+  ];
+  $scope.startApp = function() {
+    $state.go('app');
+  };
+  $scope.next = function() {
+    $ionicSlideBoxDelegate.next();
+  };
+  $scope.previous = function() {
+    $ionicSlideBoxDelegate.previous();
+  };
+  $scope.slideChanged = function(index) {
+    $scope.slideIndex = index;
+  };
+})
+
+
+
+;
