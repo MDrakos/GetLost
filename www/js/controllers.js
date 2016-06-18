@@ -53,4 +53,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('SettingsCtrl', function($scope, $stateParams){
+	//Functions for settings menu
 });
