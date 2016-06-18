@@ -63,6 +63,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         templateUrl: 'templates/playlists.html',
         controller: 'PlaylistsCtrl'
       }
+    })
+	.state('app.settings', {
+      url: '/settings',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/settings.html',
+          controller: 'SettingsCtrl'
+        }
+      }
+    })
     }
   })
 
@@ -74,11 +84,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
-  })
-
-
+  });
   
-    ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });

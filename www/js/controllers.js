@@ -55,6 +55,10 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 
+.controller('SettingsCtrl', function($scope, $stateParams){
+	//Functions for settings menu
+});
+
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
   $scope.photos = [
     { icon: 'img/trail1.jpg', id: 1 },
@@ -78,8 +82,5 @@ angular.module('starter.controllers', [])
   $scope.slideChanged = function(index) {
     $scope.slideIndex = index;
   };
-})
+});
 
-
-
-;
