@@ -1,23 +1,35 @@
-<ion-view view-title="Settings">
+<ion-view >
   <ion-content>
+	<div style = 
+		"background-color: #90C3D4; 
+		display: flex;
+		align-items: center;
+		justify-content: center;		
+		height: 100px;" >
+		<h2 style = "color: #FFFFFF;">Settings</h2>
+	</div>
+  
 	<ion-list>
 	
-	<ion-list-header>
+	<ion-list-header style = "font-size: 120%">
 		Location Settings
 	</ion-list-header>
-	<ion-checkbox [(ngModel)]="uselocation"> Use Location</ion-checkbox>
+	<ion-checkbox ng-model="settings.allowlocation"> 
+		Use Location
+	</ion-checkbox>
+	<br>
 	
-	<ion-list-header>
+	<ion-list-header style = "font-size: 120%">
 		Notifications
 	</ion-list-header>
-	<ion-checkbox [(ngModel)]="posts"> Posts</ion-checkbox>
+	<ion-checkbox ng-model = "settings.notifications.news" > 
+		News
+	</ion-checkbox>
+	<br>
 	
-	<ion-list-header>
-		Map History
-	</ion-list-header>
-	<ion-item>
-	<button secondary full>
-		Clear History
+	<ion-item href="#history">
+	<button class = "button secondary full">
+		History
 	</button>
 	</ion-item>
 	
