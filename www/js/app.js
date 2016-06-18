@@ -63,7 +63,6 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         templateUrl: 'templates/playlists.html',
         controller: 'PlaylistsCtrl'
       }
-<<<<<<< HEAD
     })
 	.state('app.settings', {
       url: '/settings',
@@ -74,11 +73,9 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-=======
     }
   })
 
->>>>>>> origin/development
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
@@ -87,11 +84,8 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
-  })
-
-
+  });
   
-    ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });
