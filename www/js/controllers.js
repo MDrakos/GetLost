@@ -57,7 +57,7 @@ angular.module('starter.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
-});
+})
 
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
   $scope.photos = [
@@ -82,5 +82,5 @@ angular.module('starter.controllers', [])
   $scope.slideChanged = function(index) {
     $scope.slideIndex = index;
   };
-});
+})
 
