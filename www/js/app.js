@@ -25,11 +25,18 @@ angular.module('starter', ['ionic', 'starter.controllers'])
   .config(function ($stateProvider, $urlRouterProvider) {
     $stateProvider
 
+
       .state('app', {
         url: '/app',
         abstract: true,
         templateUrl: 'templates/menu.html',
         controller: 'AppCtrl'
+      })
+
+      .state('start', {
+        url: '/start',
+        templateUrl: 'templates/start.html',
+        controller: 'StartCtrl'
       })
 
       .state('app.search', {
@@ -56,6 +63,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           'menuContent': {
             templateUrl: 'templates/explore.html',
             controller: 'ExploreCtrl'
+          }
+        }
+      })
+
+      .state('app.settings', {
+        url: '/settings',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/settings.html',
+            controller: 'SettingsCtrl'
           }
         }
       })
@@ -88,6 +105,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           }
         }
       });
+
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/playlists');
+    $urlRouterProvider.otherwise('/start');
   });
