@@ -86,7 +86,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
-  });
+  })
 
   .state('app.favourites', {
     url: '/favourites',
