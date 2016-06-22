@@ -76,7 +76,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
-
+		
+	.state('app.history',{
+		url: '/history',
+		views: {
+			'menuContent': {
+				templateUrl: 'templates/history.html',
+				controller: 'HistoryCtrl'
+			}
+		}
+	})
 
   .state('app.single', {
     url: '/playlists/:playlistId',

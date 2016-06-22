@@ -1,3 +1,58 @@
+//INITIALIZE GLOBAL PREFERENCES ----------------------------------------
+const Global = {
+	
+	Favorites: [],
+	
+	AppPrefs: {
+		uselocation: true,
+		notifications: {news: true},
+		history: ["location 1", "location 2"]
+	},
+	
+	Serialize: function(){
+		//Serialize Global to string
+		var serialize = {};
+		for(var field in this){
+			if(typeof this[field] === "function"){
+				continue;
+			}
+			
+			serialize[field] = this[field];
+		}
+		var str = JSON.stringify(serialize);
+		
+		//Write string to file
+		 $cordovaFile.writeFile(cordova.file.dataDirectory,"userprefs.pref", str, true).then(function(result) {
+					// Success! 
+					console.log("Saved file.");
+			}, function(err) {
+					// An error occured. Show a message to the user
+					console.log("Cannot write file.");
+			});
+	},
+	
+	Deserialize: function(){
+		var me = this;
+		//Read in file
+		$cordovaFile.readAsText(cordova.file.dataDirectory, "userprefs.pref")
+      .then(function (success) {
+        // success
+				var deserialize = JSON.parse();
+				
+				for(var field in deserialize){
+					me[field] = deserialize[field];
+				}
+				
+      }, function (error) {
+        // error
+				console.log("Cannot read file.");
+      });
+
+	}
+}
+
+//INITIALIZE ANGULAR MODULE --------------------------------------------
+
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -57,6 +112,13 @@ angular.module('starter.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
+	$scope.uselocation = Global.AppPrefs.uselocation;
+	$scope.notifications = Global.AppPrefs.notifications;
+})
+
+.controller('HistoryCtrl', function($scope, $stateParams){
+	//Functions for history
+	$scope.history = Global.AppPrefs.history;
 })
 
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {

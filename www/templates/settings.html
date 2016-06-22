@@ -9,12 +9,14 @@
 		<h2 style = "color: #FFFFFF;">Settings</h2>
 	</div>
   
+	<div style = "height: 50px"></div>
+	
 	<ion-list>
 	
 	<ion-list-header style = "font-size: 120%">
 		Location Settings
 	</ion-list-header>
-	<ion-checkbox ng-model="settings.allowlocation"> 
+	<ion-checkbox ng-model="uselocation"> 
 		Use Location
 	</ion-checkbox>
 	<br>
@@ -22,13 +24,13 @@
 	<ion-list-header style = "font-size: 120%">
 		Notifications
 	</ion-list-header>
-	<ion-checkbox ng-model = "settings.notifications.news" > 
+	<ion-checkbox ng-model = "notifications.news" > 
 		News
 	</ion-checkbox>
 	<br>
 	
-	<ion-item href="#history">
-	<button class = "button secondary full">
+	<ion-item href="#/app/history">
+	<button class="button button-full button-secondary button-large">
 		History
 	</button>
 	</ion-item>
