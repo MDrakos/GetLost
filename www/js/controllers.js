@@ -75,4 +75,9 @@ angular.module('starter.controllers', [])
 
     .controller('FavouriteCtrl', function($scope, $stateParams) {
 
-    });
+    })
+
+
+
+
+;
