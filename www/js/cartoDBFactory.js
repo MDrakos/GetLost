@@ -1,6 +1,6 @@
-angular.module('starter.factories')
+angular.module('starter.factories', [])
 // Services for fetching data from CartoDB
-  .service('mapService', function () {
+  .service('MapService', function () {
     
     // Get the trail data from cartoDB
     this.getTrail = function(layerName, trailName) {
