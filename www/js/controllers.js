@@ -53,9 +53,9 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams, MapService) {
-  console.log($scope);
-  console.log($stateParams);
-  console.log(MapService.getTrail());
+  var layerName = 'otway_ski_trails';
+  MapService.getTrail(layerName, $stateParams.playlistId).done(function(data){console.log(data)});
+  MapService.listTrails(layerName).done(function(data){console.log(data)});
 })
 
 .controller('SettingsCtrl', function($scope, $stateParams){
