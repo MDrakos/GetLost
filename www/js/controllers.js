@@ -52,7 +52,10 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $stateParams, MapService) {
+  console.log($scope);
+  console.log($stateParams);
+  console.log(MapService.getTrail());
 })
 
 .controller('SettingsCtrl', function($scope, $stateParams){
