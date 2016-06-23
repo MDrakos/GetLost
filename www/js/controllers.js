@@ -9,7 +9,7 @@ const Global = {
 		history: ["location 1", "location 2"]
 	},
 	
-	Serialize: function(){
+	serialize: function(){
 		//Serialize Global to string
 		var serialize = {};
 		for(var field in this){
@@ -20,34 +20,26 @@ const Global = {
 			serialize[field] = this[field];
 		}
 		var str = JSON.stringify(serialize);
-		
-		//Write string to file
-		 $cordovaFile.writeFile(cordova.file.dataDirectory,"userprefs.pref", str, true).then(function(result) {
-					// Success! 
-					console.log("Saved file.");
-			}, function(err) {
-					// An error occured. Show a message to the user
-					console.log("Cannot write file.");
-			});
+
+		let storage = new Storage(SqlStorage, {
+			name: 'getlost',
+			existingDatabase: true
+		});
+		storage.set("global", str);
 	},
 	
-	Deserialize: function(){
-		var me = this;
-		//Read in file
-		$cordovaFile.readAsText(cordova.file.dataDirectory, "userprefs.pref")
-      .then(function (success) {
-        // success
-				var deserialize = JSON.parse();
+	deserialize: function(){
+		let storage = new Storage(SqlStorage, {
+			name: 'getlost',
+			existingDatabase: true
+		});
+		storage.get("global").then((global) => {
+			var deserialize = JSON.parse();
 				
-				for(var field in deserialize){
-					me[field] = deserialize[field];
-				}
-				
-      }, function (error) {
-        // error
-				console.log("Cannot read file.");
-      });
-
+			for(var field in deserialize){
+				me[field] = deserialize[field];
+			}
+		});
 	}
 }
 
@@ -112,8 +104,7 @@ angular.module('starter.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
-	$scope.uselocation = Global.AppPrefs.uselocation;
-	$scope.notifications = Global.AppPrefs.notifications;
+	$scope.prefs = Global.AppPrefs;
 })
 
 .controller('HistoryCtrl', function($scope, $stateParams){

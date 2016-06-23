@@ -16,17 +16,17 @@
 	<ion-list-header style = "font-size: 120%">
 		Location Settings
 	</ion-list-header>
-	<ion-checkbox ng-model="uselocation"> 
+	<ion-toggle ng-model="prefs.uselocation"> 
 		Use Location
-	</ion-checkbox>
+	</ion-toggle>
 	<br>
 	
 	<ion-list-header style = "font-size: 120%">
 		Notifications
 	</ion-list-header>
-	<ion-checkbox ng-model = "notifications.news" > 
+	<ion-toggle ng-model = "prefs.notifications.news" > 
 		News
-	</ion-checkbox>
+	</ion-toggle>
 	<br>
 	
 	<ion-item href="#/app/history">
