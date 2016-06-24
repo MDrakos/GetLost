@@ -53,4 +53,45 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
+})
+
+.controller('GalleryCtrl', function($scope, $ionicModal) {
+  $scope.gallery = [
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' }
+  ];
+
+  $scope.showImages = function(index) {
+    $scope.activeSlide = index;
+    $scope.showModal('templates/photo.html');
+  };
+
+  $scope.showModal = function(templateUrl) {
+    $ionicModal.fromTemplateUrl(templateUrl, {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    $scope.modal.remove()
+  };
 });
