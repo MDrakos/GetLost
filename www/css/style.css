@@ -19,3 +19,11 @@
   height:   100vh;
   width:    auto;
 }
+
+.card {
+  display: inline-block;
+  align-items: left;
+  justify-content: left;
+  width: 49.63%;
+  margin: 0;
+}

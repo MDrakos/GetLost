@@ -105,8 +105,10 @@ angular.module('starter.controllers', [])
 .controller('FavouriteCtrl', function($scope, $stateParams) {
 
 })
-
-
+  
+.controller('ExploreCtrl', function($scope, $stateParams) {
+  
+})
 
 
 ;
