@@ -105,8 +105,27 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
-  });
+  })
 
+  .state('app.favourites', {
+    url: '/favourites',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/favourites.html',
+        controller: 'FavouritesCtrl'
+      }
+    }
+  })
+
+    .state('app.favourite', {
+    url: '/favourites/:favouritesId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/favourite.html',
+        controller: 'FavouriteCtrl'
+      }
+    }
+  });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });
