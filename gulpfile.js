@@ -49,3 +49,12 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('index', function () {
+  var target = gulp.src('./www/index.html');
+  var sources = gulp.src(['./www/**/*.js'], {read: false});
+
+  return target.pipe(inject(sources))
+      .pipe(gulp.dest('./www'));
+});
+
