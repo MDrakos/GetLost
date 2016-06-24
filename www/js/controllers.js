@@ -9,32 +9,40 @@ const Global = {
 		history: ["location 1", "location 2"]
 	},
 	
+	saveTo: function(name, data){
+		let storage = new Storage(SqlStorage, {
+			name: 'getlost',
+			existingDatabase: true
+		});
+		storage.set(name, data);
+	},
+	
+	loadFrom: function(name){
+		let storage = new Storage(SqlStorage, {
+			name: 'getlost',
+			existingDatabase: true
+		});
+		return storage.get("global");
+	},
+	
 	serialize: function(){
 		//Serialize Global to string
 		var serialize = {};
 		for(var field in this){
-			if(typeof this[field] === "function"){
+			if(field.startsWith("[private]") || typeof this[field] === "function")
 				continue;
-			}
 			
 			serialize[field] = this[field];
 		}
 		var str = JSON.stringify(serialize);
 
-		let storage = new Storage(SqlStorage, {
-			name: 'getlost',
-			existingDatabase: true
-		});
-		storage.set("global", str);
+		this.saveTo("global", str);
 	},
 	
 	deserialize: function(){
-		let storage = new Storage(SqlStorage, {
-			name: 'getlost',
-			existingDatabase: true
-		});
-		storage.get("global").then((global) => {
-			var deserialize = JSON.parse();
+		var me = this;
+		this.loadFrom("global").then((global) => {
+			var deserialize = JSON.parse(global);
 				
 			for(var field in deserialize){
 				me[field] = deserialize[field];
