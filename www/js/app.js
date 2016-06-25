@@ -55,6 +55,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
   })
 
+      .state('app.explore', {
+        url: '/explore',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/explore.html',
+            controller: 'ExploreCtrl'
+          }
+        }
+      })
+
+      .state('app.map', {
+        url: '/explore/map/:mapId',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/map.html',
+            controller: 'MapCtrl'
+          }
+        }
+      })
 
   .state('app.playlists', {
     url: '/playlists',
@@ -87,7 +106,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
-
+	
 	.state('app.contact',{
 		url: '/contact',
 		views:{
@@ -96,8 +115,28 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 				controller: 'ContactCtrl'
 			}
 		}
-	});
-	
+	})
+
+  .state('app.favourites', {
+    url: '/favourites',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/favourites.html',
+        controller: 'FavouritesCtrl'
+      }
+    }
+  })
+
+    .state('app.favourite', {
+    url: '/favourites/:favouritesId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/favourite.html',
+        controller: 'FavouriteCtrl'
+      }
+    }
+  });
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });
