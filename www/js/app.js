@@ -67,7 +67,17 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
-  });
+  })
+
+    .state('app.nearestTrail', {
+      url: '/nearestTrail',
+      views: {
+        'menuContent': {
+          templateUrl: 'tempates/nearestTrail.html',
+          controller: ''
+        }
+      }
+    });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/playlists');
 });
