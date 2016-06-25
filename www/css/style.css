@@ -1,1 +1,21 @@
 /* Empty. Add your own CSS if you like */
+.start-button {
+  font-family:  Verdana, sans-serif;
+  top:          60%;
+  position:     absolute;
+  z-index:      100;
+}
+.mainbg {
+  background-color: #4d4d4d;
+}
+.imgStretch {
+  position:   relative;
+  border:     5px solid black;
+  z-index:    50;
+  height:     100%;
+  width:      100%;
+}
+.mainslide {
+  height:   100vh;
+  width:    auto;
+}

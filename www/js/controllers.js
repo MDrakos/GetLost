@@ -53,4 +53,60 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
-});
+})
+
+.controller('SettingsCtrl', function($scope, $stateParams){
+	//Functions for settings menu
+})
+
+.controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
+  $scope.photos = [
+    { icon: 'img/trail1.jpg', id: 1 },
+    { icon: 'img/trail2.jpg', id: 2 },
+    { icon: 'img/trail3.jpg', id: 3 },
+    { icon: 'img/trail4.jpg', id: 4 },
+    { icon: 'img/trail5.jpg', id: 5 },
+    { icon: 'img/trail6.jpg', id: 6 },
+    { icon: 'img/trail7.jpg', id: 7 },
+    { icon: 'img/trail8.jpg', id: 8 }
+  ];
+  $scope.startApp = function() {
+    $state.go('app');
+  };
+  $scope.next = function() {
+    $ionicSlideBoxDelegate.next();
+  };
+  $scope.previous = function() {
+    $ionicSlideBoxDelegate.previous();
+  };
+  $scope.slideChanged = function(index) {
+    $scope.slideIndex = index;
+  };
+})
+  
+.controller('FavouritesCtrl', function($scope)
+{
+  $scope.favourites = [
+    { name: 'Something Trail1', location: 'Something Park1', img: 'img/ionic.png', id: 1 },
+    { name: 'Something Trail2', location: 'Something Park2', img: 'img/ionic.png', id: 2 },
+    { name: 'Something Trail3', location: 'Something Park3', img: 'img/ionic.png', id: 3 },
+    { name: 'Something Trail4', location: 'Something Park4', img: 'img/ionic.png', id: 4 },
+    { name: 'Something Trail5', location: 'Something Park5', img: 'img/ionic.png', id: 5 },
+    { name: 'Something Trail6', location: 'Something Park6', img: 'img/ionic.png', id: 6 },
+    { name: 'Something Trail7', location: 'Something Park7', img: 'img/ionic.png', id: 7 },
+    { name: 'Something Trail8', location: 'Something Park8', img: 'img/ionic.png', id: 8 }
+  ];
+  $scope.selectFav = function(favourite)
+  {
+    $scope.selectedFav = favourite;
+  }
+})
+
+.controller('FavouriteCtrl', function($scope, $stateParams) {
+
+})
+
+
+
+
+;
