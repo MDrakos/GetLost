@@ -126,6 +126,18 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   });
+  })
+
+	.state('app.contact',{
+		url: '/contact',
+		views:{
+			'menuContent':{
+				templateUrl: 'templates/contactus.html',
+				controller: 'ContactCtrl'
+			}
+		}
+	});
+	
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });
