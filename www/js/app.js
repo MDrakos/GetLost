@@ -97,6 +97,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     })
 
 
+    })
+    .state('app.gallery', {
+      url: '/gallery',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/gallery.html',
+          controller: 'GalleryCtrl'
+        }
+      }
+    })
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {

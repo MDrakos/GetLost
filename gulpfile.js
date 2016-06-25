@@ -58,3 +58,12 @@ gulp.task('inject-css', function(){
 	//using gulp-inject, inject css into the index
 	return target.pipe(inject(sources)).pipe(gulp.dest('./www/'))
 })
+
+gulp.task('index', function () {
+  var target = gulp.src('./www/index.html');
+  var sources = gulp.src(['./www/**/*.js'], {read: false});
+
+  return target.pipe(inject(sources))
+      .pipe(gulp.dest('./www'));
+});
+
