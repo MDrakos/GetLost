@@ -55,6 +55,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
   })
 
+      .state('app.explore', {
+        url: '/explore',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/explore.html',
+            controller: 'ExploreCtrl'
+          }
+        }
+      })
+
+      .state('app.map', {
+        url: '/explore/map/:mapId',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/map.html',
+            controller: 'MapCtrl'
+          }
+        }
+      })
 
   .state('app.playlists', {
     url: '/playlists',
