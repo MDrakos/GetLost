@@ -1,4 +1,4 @@
-<ion-view >
+<ion-view view-title=''>
   <ion-content>
 	<div style = 
 		"background-color: #FF9D00; 
@@ -23,12 +23,10 @@
 		
 			<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: top">
 				<div ng-repeat= "phone in phones" style = "padding-bottom: 20px">
-					<a href = "tel: {{phone.number}}">
+					<ion-item class="button-clear" href="tel:{{phone.number}}">
 						<h3>Call: {{phone.number}}</h3>
-					</a>
-					<p>
-						{{phone.purpose}}
-					</p>
+						<p>{{phone.purpose}}</p>
+					</ion-item>					
 				</div>
 			</div>
 		</ion-item>
@@ -40,12 +38,10 @@
 			</ion-icon>
 			<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: top">
 				<div ng-repeat= "email in emails" style = "padding-bottom: 20px">
-					<a href = "mailto: {{email.address}}">
+					<ion-item class="button-clear" href="mailto:{{email.address}}">
 						<h3>Email: {{email.address}}</h3>
-					</a>
-					<p>
-						{{email.purpose}}
-					</p>
+						<p>{{email.purpose}}</p>
+					</ion-item>
 				</div>
 			</div>
 		</ion-item>
