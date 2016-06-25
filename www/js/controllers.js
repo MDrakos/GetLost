@@ -14,6 +14,9 @@ const Global = {
 	Private:{},
 	
 	saveTo: function(name, data){
+		if(!SqlStorage)
+			return;
+		
 		let storage = new Storage(SqlStorage, {
 			name: 'getlost',
 			existingDatabase: true
@@ -22,6 +25,9 @@ const Global = {
 	},
 	
 	loadFrom: function(name){
+		if(!SqlStorage)
+			return null;
+		
 		let storage = new Storage(SqlStorage, {
 			name: 'getlost',
 			existingDatabase: true
@@ -40,6 +46,8 @@ const Global = {
 		}
 		var str = JSON.stringify(serialize);
 
+		console.log(serialize);
+		
 		this.saveTo("global", str);
 	},
 	
@@ -117,6 +125,9 @@ angular.module('starter.controllers', [])
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
 	$scope.prefs = Global.AppPrefs;
+	$scope.serialize = function(){
+		Global.serialize();
+	}
 })
 
 .controller('HistoryCtrl', function($scope, $stateParams){
