@@ -25,9 +25,14 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
+      .state('start', {
+          url: '/start',
+          templateUrl: 'templates/start.html',
+          controller: 'StartCtrl'
+      })
+
     .state('app', {
     url: '/app',
-    abstract: true,
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
   })
@@ -48,16 +53,48 @@ angular.module('starter', ['ionic', 'starter.controllers'])
           templateUrl: 'templates/browse.html'
         }
       }
-    })
-    .state('app.playlists', {
-      url: '/playlists',
+  })
+
+      .state('app.explore', {
+        url: '/explore',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/explore.html',
+            controller: 'ExploreCtrl'
+          }
+        }
+      })
+
+      .state('app.map', {
+        url: '/explore/map/:mapId',
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/map.html',
+            controller: 'MapCtrl'
+          }
+        }
+      })
+
+  .state('app.playlists', {
+    url: '/playlists',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/playlists.html',
+        controller: 'PlaylistsCtrl'
+      }
+    }
+  })
+
+	.state('app.settings', {
+      url: '/settings',
       views: {
         'menuContent': {
-          templateUrl: 'templates/playlists.html',
-          controller: 'PlaylistsCtrl'
+          templateUrl: 'templates/settings.html',
+          controller: 'SettingsCtrl'
         }
       }
     })
+
     .state('app.gallery', {
       url: '/gallery',
       views: {
@@ -67,6 +104,7 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         }
       }
     })
+
   .state('app.single', {
     url: '/playlists/:playlistId',
     views: {
@@ -75,7 +113,38 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'PlaylistCtrl'
       }
     }
+  })
+	
+	.state('app.contact',{
+		url: '/contact',
+		views:{
+			'menuContent':{
+				templateUrl: 'templates/contactus.html',
+				controller: 'ContactCtrl'
+			}
+		}
+	})
+
+  .state('app.favourites', {
+    url: '/favourites',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/favourites.html',
+        controller: 'FavouritesCtrl'
+      }
+    }
+  })
+
+    .state('app.favourite', {
+    url: '/favourites/:favouritesId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/favourite.html',
+        controller: 'FavouriteCtrl'
+      }
+    }
   });
+
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/playlists');
+  $urlRouterProvider.otherwise('/start');
 });
