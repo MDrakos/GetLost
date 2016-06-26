@@ -6,12 +6,41 @@ const Global = {
 	],
 	
 	AppPrefs: {
-		uselocation: true,
-		notifications: {news: true},
+		uselocation: false,
+		notifications: [
+			{title: 'News', value: true},
+			{title: 'Weather Updates', value: false}
+		],
 		history: ["location 1", "location 2"]
 	},
 	
 	Private:{},
+	
+	//https://gist.github.com/brunoksato/5e7f9b2916289d1649a4
+	getLocation: function($cordovaGeolocation){
+		if(!Global.AppPrefs.uselocation)
+			return {error: "location services not enabled."};
+		var loc = $cordovaGeolocation.getCurrentPosition({timeout: 1000, enableHighAccuracy: false});
+		var res = {};
+		loc.then(
+			function(position){
+				var lat = position.coords.latitude;
+				var lon = position.coords.longitude;
+				res.lat = lat; res.lon = lon;
+			},
+			function(err){
+				res.error = err;
+			});
+		return res;
+	},
+	
+	getGpsEnabled: function(){
+		var res = false;
+		window.plugins.locationAndSettings.isGpsEnabled(function(result){
+			res = result;
+		}, function(err){res = false;});
+		return res;
+	},
 	
 	saveTo: function(name, data){
 		if(!SqlStorage)
@@ -125,9 +154,16 @@ angular.module('starter.controllers', [])
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
 	$scope.prefs = Global.AppPrefs;
+	//$cordovaGeolocation
+	$scope.enableloc = function(){
+		//var configloc = window.plugins.locationAndSettings;
+		//configloc.switchToLocationSettings();
+		//new value
+		console.log($scope.prefs.uselocation);
+	};
 	$scope.serialize = function(){
 		Global.serialize();
-	}
+	};
 })
 
 .controller('HistoryCtrl', function($scope, $stateParams){
