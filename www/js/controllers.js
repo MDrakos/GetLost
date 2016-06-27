@@ -1,97 +1,3 @@
-//INITIALIZE GLOBAL PREFERENCES ----------------------------------------
-const Global = {
-	
-	Favorites: [
-		{ name: 'Something Trail1', location: 'Something Park1', img: 'img/ionic.png', id: 1 }
-	],
-	
-	AppPrefs: {
-		uselocation: false,
-		notifications: [
-			{title: 'News', value: true},
-			{title: 'Weather Updates', value: false}
-		],
-		history: ["location 1", "location 2"]
-	},
-	
-	Private:{},
-	
-	//https://gist.github.com/brunoksato/5e7f9b2916289d1649a4
-	getLocation: function($cordovaGeolocation){
-		if(!Global.AppPrefs.uselocation)
-			return {error: "location services not enabled."};
-		var loc = $cordovaGeolocation.getCurrentPosition({timeout: 1000, enableHighAccuracy: false});
-		var res = {};
-		loc.then(
-			function(position){
-				var lat = position.coords.latitude;
-				var lon = position.coords.longitude;
-				res.lat = lat; res.lon = lon;
-			},
-			function(err){
-				res.error = err;
-			});
-		return res;
-	},
-	
-	getGpsEnabled: function(){
-		var res = false;
-		window.plugins.locationAndSettings.isGpsEnabled(function(result){
-			res = result;
-		}, function(err){res = false;});
-		return res;
-	},
-	
-	saveTo: function(name, data){
-		if(!SqlStorage)
-			return;
-		
-		let storage = new Storage(SqlStorage, {
-			name: 'getlost',
-			existingDatabase: true
-		});
-		storage.set(name, data);
-	},
-	
-	loadFrom: function(name){
-		if(!SqlStorage)
-			return null;
-		
-		let storage = new Storage(SqlStorage, {
-			name: 'getlost',
-			existingDatabase: true
-		});
-		return storage.get("global");
-	},
-	
-	serialize: function(){
-		//Serialize Global to string
-		var serialize = {};
-		for(var field in this){
-			if(field.startsWith("[private]") || field == "Private" || typeof this[field] === "function")
-				continue;
-			
-			serialize[field] = this[field];
-		}
-		var str = JSON.stringify(serialize);
-
-		console.log(serialize);
-		
-		this.saveTo("global", str);
-	},
-	
-	deserialize: function(){
-		var me = this;
-		this.loadFrom("global").then((global) => {
-			var deserialize = JSON.parse(global);
-				
-			for(var field in deserialize){
-				me[field] = deserialize[field];
-			}
-		});
-	}
-}
-
 //INITIALIZE ANGULAR MODULE --------------------------------------------
 
 angular.module('starter.controllers', [])
@@ -162,7 +68,9 @@ angular.module('starter.controllers', [])
 		console.log($scope.prefs.uselocation);
 	};
 	$scope.serialize = function(){
-		Global.serialize();
+		Global.serialize(function(output){
+			console.log(JSON.stringify(output));
+		});
 	};
 })
 
@@ -171,7 +79,7 @@ angular.module('starter.controllers', [])
 	$scope.history = Global.AppPrefs.history;
 })
 
-.controller('ContactCtrl', function($scope, $stateParams){
+.controller('ContactCtrl', function($scope, $stateParams, $window){
 	$scope.phones = [
 		{number: "+1-250-000-000", purpose: "company"},
 		{number: "+1-250-000-001", purpose: "private"}
@@ -179,6 +87,15 @@ angular.module('starter.controllers', [])
 	$scope.emails = [
 		{address: "something@something.ca", purpose: "company"}
 	];
+	
+	$scope.sendmail = function(address){
+		Global.sendMail({
+			to: address,
+			subject: "GetLost: feedback",
+			body: "---------------------<br>GetLost<br>version:0<br>",
+			isHtml: true
+		});
+	}
 })
 
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {

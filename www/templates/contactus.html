@@ -23,7 +23,7 @@
 		
 			<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: top">
 				<div ng-repeat= "phone in phones" style = "padding-bottom: 20px">
-					<ion-item class="item-borderless" href="tel:{{phone.number}}">
+					<ion-item class="item-borderless" ng-href="tel:{{phone.number}}">
 						<h3>Call: {{phone.number}}</h3>
 						<p>{{phone.purpose}}</p>
 					</ion-item>					
@@ -38,7 +38,7 @@
 			</ion-icon>
 			<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: top">
 				<div ng-repeat= "email in emails" style = "padding-bottom: 20px">
-					<ion-item class="item-borderless" href="mailto:{{email.address}}">
+					<ion-item class="item-borderless" href"mailto:{{email.address}}" ng-click="sendmail(email.address)">
 						<h3>Email: {{email.address}}</h3>
 						<p>{{email.purpose}}</p>
 					</ion-item>
