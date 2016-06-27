@@ -110,8 +110,11 @@ angular.module('starter.controllers', [])
   $scope.datas = geojsonService.getData();
 })
 
-.controller('ItemCtrl', ['$ionicFilterBar', function ItemCtrl($ionicFilterBar) {
-  var itemCtrl = this, items = [], filterBarInstance;
+  /* TODO change to filter by placeName */
+.controller('ExplorePageSearchItemCtrl', ['$ionicFilterBar', function ItemCtrl($ionicFilterBar) {
+  var itemCtrl = this;
+  var items = [];
+  var filterBarInstance;
   for(var i=1; i<=1000; i++) {
     var item = {
       description: 'desc' + i
