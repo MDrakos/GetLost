@@ -46,28 +46,36 @@ const Global = {
 		return res;
 	},
 	
-	saveTo: function(name, data, fn){
-		var db = window.sqlitePlugin.openDatabase({
-			name:'GetLost.db',
-			location: 2,
-			createFromLocation: 1
+	getDB: function(fn){
+		var db;
+		db = window.sqlitePlugin.openDatabase({
+			name: 'GetLost.db',
+			location: 2
+		}, function(){
+			db.executeSql("CREATE TABLE IF NOT EXISTS store (name text primary key, value text)", function(){
+				if(fn)
+					fn(db);
+			});
+		}, function(){
+			console.log("Could not create database.");
 		});
-		db.executeSql("CREATE TABLE IF NOT EXISTS store (name text primary key, value text)");
-		db.executeSql("INSERT INTO store (name,value) VALUES (?,?)", [name, JSON.stringify(data)], function(res){
-			if(fn)
-				fn(res);
+	},
+	
+	saveTo: function(name, data, fn){
+		Global.getDB(function(db){
+			db.executeSql("INSERT INTO store (name,value) VALUES (?,?)", [name, JSON.stringify(data)], function(res){
+				if(fn)
+					fn(res);
+			});
 		});
 	},
 	
 	loadFrom: function(name, fn){
-		var db = window.sqlitePlugin.openDatabase({
-			name:'GetLost.db',
-			location: 2,			
-			createFromLocation: 1
-		});
-		db.executeSql("SELECT value FROM store WHERE store.name = ?",[name], function(result){
-			if(fn)
-				fn(result);
+		Global.getDB(function(db){
+			db.executeSql("SELECT value FROM store WHERE store.name = ?",[name], function(result){
+				if(fn)
+					fn(result);
+			});
 		});
 	},
 	
