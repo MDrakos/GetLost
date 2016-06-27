@@ -1,20 +1,32 @@
 <ion-view view-title='Explore'>
   <ion-nav-buttons side="right">
-    <div ng-controller="ItemCtrl as itemCtrl">
+    <div ng-controller="ExplorePageSearchItemCtrl as itemCtrl">
       <button class="button button-icon ion-search" ng-click="itemCtrl.showFilterBar()">
       </button>
     </div>
   </ion-nav-buttons>
 
   <ion-content>
-    <div style="padding: 5px; border: solid black 2px">
+
+    <!-- Segment Buttons TODO-->
+    <div style="padding: 5px">
       <ti-segmented-control>
-        <ti-segmented-control-button class="button-positive" title="'Easy'"></ti-segmented-control-button>
-        <ti-segmented-control-button class="button-balanced" title="'Medium'"></ti-segmented-control-button>
-        <ti-segmented-control-button class="button-assertive" title="'Hard'"></ti-segmented-control-button>
+        <ti-segmented-control-button class="button-balanced" title="'Easy'"></ti-segmented-control-button>
+        <ti-segmented-control-button class="button-positive" title="'Medium'"></ti-segmented-control-button>
+        <ti-segmented-control-button class="button-dark" title="'Hard'"></ti-segmented-control-button>
         <ti-segmented-control-button class="button-royal" title="'All'" selected></ti-segmented-control-button>
       </ti-segmented-control>
     </div>
+
+    <ion-refresher>
+      <!--TODO
+      -->
+    </ion-refresher>
+    <ion-item ng-repeat="data in datas" href="#/app/explore/{{data.iterID}}">
+      <h2 style="font-size: 20px">
+        {{data.placeName}}, {{data.name}}, {{data.difficulty}}
+      </h2>
+    </ion-item>
 
   </ion-content>
 </ion-view>
