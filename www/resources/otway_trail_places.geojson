@@ -1,1 +1,203 @@
-{"type": "FeatureCollection", "features": [{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.879291,53.964594]},"properties":{"name":"Hagan's Hub\n","descriptio":"Junction","type":"st","cartodb_id":3,"created_at":"2015-06-01T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.872639,53.960479]},"properties":{"name":"The Doghouse","descriptio":"Junction","type":"st","cartodb_id":4,"created_at":"2015-06-01T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.869635,53.963963]},"properties":{"name":"The Gnome","descriptio":"Junction","type":"st","cartodb_id":5,"created_at":"2015-06-01T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.877016,53.964291]},"properties":{"name":"Four Corners","descriptio":"Junction","type":"st","cartodb_id":6,"created_at":"2015-06-01T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.886715,53.963787]},"properties":{"name":"Adam's Apple","descriptio":"Junction","type":"st","cartodb_id":7,"created_at":"2015-06-02T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.876887,53.970451]},"properties":{"name":"Piccadilly Circus","descriptio":"Junction","type":"all","cartodb_id":8,"created_at":"2015-06-02T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.876201,53.961855]},"properties":{"name":"The Office","descriptio":"Junction","type":"st","cartodb_id":9,"created_at":"2015-06-02T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.895899,53.959412]},"properties":{"name":"The Greenway","descriptio":"Trail Connection","type":"all","cartodb_id":10,"created_at":"2015-06-02T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.894912,53.967119]},"properties":{"name":"'55 Chevy","descriptio":"Junction","type":"st","cartodb_id":1,"created_at":"2015-06-01T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.8859,53.964847]},"properties":{"name":"Legs Junction","descriptio":"Junction","type":"st","cartodb_id":2,"created_at":"2015-06-01T00:00:00Z","updated_at":"2015-06-02T00:00:00Z"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.892042,53.966131]},"properties":{"name":"Old Biathlon Cabin","descriptio":"Junction","type":"all","cartodb_id":11,"created_at":"2015-06-02T00:00:00Z","updated_at":"2015-06-03T15:59:21Z"}}]}
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.879291,
+          53.964594
+        ]
+      },
+      "properties": {
+        "name": "Hagan's Hub\n",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 3,
+        "created_at": "2015-06-01T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.872639,
+          53.960479
+        ]
+      },
+      "properties": {
+        "name": "The Doghouse",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 4,
+        "created_at": "2015-06-01T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.869635,
+          53.963963
+        ]
+      },
+      "properties": {
+        "name": "The Gnome",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 5,
+        "created_at": "2015-06-01T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.877016,
+          53.964291
+        ]
+      },
+      "properties": {
+        "name": "Four Corners",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 6,
+        "created_at": "2015-06-01T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.886715,
+          53.963787
+        ]
+      },
+      "properties": {
+        "name": "Adam's Apple",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 7,
+        "created_at": "2015-06-02T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.876887,
+          53.970451
+        ]
+      },
+      "properties": {
+        "name": "Piccadilly Circus",
+        "descriptio": "Junction",
+        "type": "all",
+        "cartodb_id": 8,
+        "created_at": "2015-06-02T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.876201,
+          53.961855
+        ]
+      },
+      "properties": {
+        "name": "The Office",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 9,
+        "created_at": "2015-06-02T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.895899,
+          53.959412
+        ]
+      },
+      "properties": {
+        "name": "The Greenway",
+        "descriptio": "Trail Connection",
+        "type": "all",
+        "cartodb_id": 10,
+        "created_at": "2015-06-02T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.894912,
+          53.967119
+        ]
+      },
+      "properties": {
+        "name": "'55 Chevy",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 1,
+        "created_at": "2015-06-01T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8859,
+          53.964847
+        ]
+      },
+      "properties": {
+        "name": "Legs Junction",
+        "descriptio": "Junction",
+        "type": "st",
+        "cartodb_id": 2,
+        "created_at": "2015-06-01T00:00:00Z",
+        "updated_at": "2015-06-02T00:00:00Z"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.892042,
+          53.966131
+        ]
+      },
+      "properties": {
+        "name": "Old Biathlon Cabin",
+        "descriptio": "Junction",
+        "type": "all",
+        "cartodb_id": 11,
+        "created_at": "2015-06-02T00:00:00Z",
+        "updated_at": "2015-06-03T15:59:21Z"
+      }
+    }
+  ]
+}

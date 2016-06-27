@@ -1,1 +1,80 @@
-{"type": "FeatureCollection", "features": [{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.842855,53.968962]},"properties":{"cartodb_id":4,"descriptio":"parking","name":"Lower Parking"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.810669,53.984004]},"properties":{"cartodb_id":5,"descriptio":"parking","name":"Upper Parking"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.8441,53.971562]},"properties":{"cartodb_id":1,"descriptio":"destination","name":"Skills Park"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.852769,53.98519]},"properties":{"cartodb_id":3,"descriptio":"destination","name":"Dirt Jumps"}},{"type":"Feature","geometry":{"type":"Point","coordinates":[-122.839379,53.989152]},"properties":{"cartodb_id":2,"descriptio":"destination","name":"Papa Woods Bridge"}}]}
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.842855,
+          53.968962
+        ]
+      },
+      "properties": {
+        "cartodb_id": 4,
+        "descriptio": "parking",
+        "name": "Lower Parking"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.810669,
+          53.984004
+        ]
+      },
+      "properties": {
+        "cartodb_id": 5,
+        "descriptio": "parking",
+        "name": "Upper Parking"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.8441,
+          53.971562
+        ]
+      },
+      "properties": {
+        "cartodb_id": 1,
+        "descriptio": "destination",
+        "name": "Skills Park"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.852769,
+          53.98519
+        ]
+      },
+      "properties": {
+        "cartodb_id": 3,
+        "descriptio": "destination",
+        "name": "Dirt Jumps"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -122.839379,
+          53.989152
+        ]
+      },
+      "properties": {
+        "cartodb_id": 2,
+        "descriptio": "destination",
+        "name": "Papa Woods Bridge"
+      }
+    }
+  ]
+}
