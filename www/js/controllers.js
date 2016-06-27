@@ -107,8 +107,28 @@ angular.module('starter.controllers', [])
 })
   
 .controller('ExploreCtrl', function($scope, $stateParams) {
-  
+
 })
 
+.controller('ItemCtrl', ['$ionicFilterBar', function ItemCtrl($ionicFilterBar) {
+  var itemCtrl = this, items = [], filterBarInstance;
+  for(var i=1; i<=1000; i++) {
+    var item = {
+      description: 'desc' + i
+    };
+    items.push(item);
+  }
+  itemCtrl.items = items;
+  itemCtrl.showFilterBar = function() {
+    filterBarInstance = $ionicFilterBar.show({
+      items: itemCtrl.items,
+      update: function(filteredItems) {
+        itemCtrl.items = filteredItems;
+      },
+      filterProperties: 'desc'
+    });
+  };
+  return itemCtrl;
+}])
 
 ;
