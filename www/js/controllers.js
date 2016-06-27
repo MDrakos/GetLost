@@ -106,8 +106,8 @@ angular.module('starter.controllers', [])
 
 })
   
-.controller('ExploreCtrl', function($scope, $stateParams) {
-
+.controller('ExploreCtrl', function($scope, geojsonService) {
+  $scope.datas = geojsonService.getData();
 })
 
 .controller('ItemCtrl', ['$ionicFilterBar', function ItemCtrl($ionicFilterBar) {
