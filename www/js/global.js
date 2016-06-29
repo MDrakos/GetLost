@@ -38,23 +38,23 @@ const Global = {
 		return res;
 	},
 	
-	isGpsEnabled: function(){
-		var res = false;
-		window.plugins.locationAndSettings.isGpsEnabled(function(result){
-			res = result;
-		}, function(err){res = false;});
-		return res;
-	},
-	
 	saveTo: function(name, data, fn, err){
-		window.requestFileSystem(window.PERSISTANT,0, function(filesystem){
-			filesystem.root.getFile(name, {create: true, exclusive: false}, function(fileEntry){
+		window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(filesystem){
+			filesystem.getFile(name, {create: true, exclusive: false, replace: true}, function(fileEntry){
 				//Write file
 				fileEntry.createWriter(function (fileWriter){
+					fileWriter.onwriteend = function(){
+						if(fn){
+							fn();
+						}
+					};
+					
+					fileWriter.onerror = function(e){
+						if(err)
+							err();
+					};
+					
 					fileWriter.write(JSON.stringify(data));
-					if(fn){
-						fn();
-					}
 				});
 			}, function(){
 					//Error func
@@ -69,8 +69,8 @@ const Global = {
 	},
 	
 	loadFrom: function(name, fn, err){
-		window.requestFileSystem(window.PERSISTANT,0, function(filesystem){
-			filesystem.root.getFile(name, {create: true, exclusive: false}, function(fileEntry){
+		window.resolveLocalFileSystemURL(cordova.file.dataDirectory, function(filesystem){
+			filesystem.getFile(name, {create: false, exclusive: false}, function(fileEntry){
 				//Read file
 				fileEntry.file(function(file){
 					var reader = new FileReader();
@@ -103,19 +103,18 @@ const Global = {
 			
 			serialize[field] = this[field];
 		}
-		var str = JSON.stringify(serialize);
 		
-		this.saveTo("global", str, fn);
+		this.saveTo("global.dat", serialize, fn, function(){console.log("File could not be written to");});
 	},
 	
 	deserialize: function(){
 		var me = this;
-		this.loadFrom("global", function(global){
+		this.loadFrom("global.dat", function(global){
 			var deserialize = JSON.parse(global);
 				
 			for(var field in deserialize){
 				me[field] = deserialize[field];
 			}
-		});
+		}, function(){console.log("File could not be read from");});
 	}
 }

@@ -60,13 +60,6 @@ angular.module('starter.controllers', [])
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
 	$scope.prefs = Global.AppPrefs;
-	//$cordovaGeolocation
-	$scope.enableloc = function(){
-		//var configloc = window.plugins.locationAndSettings;
-		//configloc.switchToLocationSettings();
-		//new value
-		console.log($scope.prefs.uselocation);
-	};
 	
 	$scope.enablegps = function(){
 		cordova.dialogGPS();
@@ -74,7 +67,7 @@ angular.module('starter.controllers', [])
 	
 	$scope.serialize = function(){
 		Global.serialize(function(output){
-			console.log(JSON.stringify(output));
+			console.log("Serialization successful");
 		});
 	};
 })
