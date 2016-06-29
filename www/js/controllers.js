@@ -67,6 +67,11 @@ angular.module('starter.controllers', [])
 		//new value
 		console.log($scope.prefs.uselocation);
 	};
+	
+	$scope.enablegps = function(){
+		cordova.dialogGPS();
+	}
+	
 	$scope.serialize = function(){
 		Global.serialize(function(output){
 			console.log(JSON.stringify(output));

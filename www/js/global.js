@@ -46,36 +46,51 @@ const Global = {
 		return res;
 	},
 	
-	getDB: function(fn){
-		var db;
-		db = window.sqlitePlugin.openDatabase({
-			name: 'GetLost.db',
-			location: 2
-		}, function(){
-			db.executeSql("CREATE TABLE IF NOT EXISTS store (name text primary key, value text)", function(){
-				if(fn)
-					fn(db);
+	saveTo: function(name, data, fn, err){
+		window.requestFileSystem(window.PERSISTANT,0, function(filesystem){
+			filesystem.root.getFile(name, {create: true, exclusive: false}, function(fileEntry){
+				//Write file
+				fileEntry.createWriter(function (fileWriter){
+					fileWriter.write(JSON.stringify(data));
+					if(fn){
+						fn();
+					}
+				});
+			}, function(){
+					//Error func
+					if(err)
+						err();
 			});
 		}, function(){
-			console.log("Could not create database.");
+				//Error func
+				if(err)
+							err();
 		});
 	},
 	
-	saveTo: function(name, data, fn){
-		Global.getDB(function(db){
-			db.executeSql("INSERT INTO store (name,value) VALUES (?,?)", [name, JSON.stringify(data)], function(res){
-				if(fn)
-					fn(res);
+	loadFrom: function(name, fn, err){
+		window.requestFileSystem(window.PERSISTANT,0, function(filesystem){
+			filesystem.root.getFile(name, {create: true, exclusive: false}, function(fileEntry){
+				//Read file
+				fileEntry.file(function(file){
+					var reader = new FileReader();
+					reader.onloadend = function(){
+						if(fn){
+							fn(this.result);
+						}
+					}
+					
+					reader.readAsText(file);
+				});
+			}, function(){
+					//Error func
+					if(err)
+						err();
 			});
-		});
-	},
-	
-	loadFrom: function(name, fn){
-		Global.getDB(function(db){
-			db.executeSql("SELECT value FROM store WHERE store.name = ?",[name], function(result){
-				if(fn)
-					fn(result);
-			});
+		}, function(){
+				//Error func
+				if(err)
+							err();
 		});
 	},
 	
@@ -96,7 +111,6 @@ const Global = {
 	deserialize: function(){
 		var me = this;
 		this.loadFrom("global", function(global){
-			console.log(global);
 			var deserialize = JSON.parse(global);
 				
 			for(var field in deserialize){
