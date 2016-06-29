@@ -118,3 +118,15 @@ const Global = {
 		}, function(){console.log("File could not be read from");});
 	}
 }
+
+function onDeviceReady(){
+	console.log("Deserializing Global");
+	Global.deserialize();
+}
+function onAppClose(){
+	console.log("Serializing Global");
+	Global.serialize();
+}
+document.addEventListener("deviceready", onDeviceReady, false);
+document.addEventListener("unload",onAppClose, false);
+document.addEventListener("pause",onAppClose, false);

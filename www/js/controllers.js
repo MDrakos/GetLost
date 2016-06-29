@@ -66,6 +66,13 @@ angular.module('starter.controllers', [])
 	}
 	
 	$scope.serialize = function(){
+		/*
+		Global.saveTo("test.txt", "1 2 3", function(){
+			Global.loadFrom("test.txt", function(data){
+				console.log(data);
+			});
+		}, function(){console.log("err");})*/
+		
 		Global.serialize(function(output){
 			console.log("Serialization successful");
 		});
