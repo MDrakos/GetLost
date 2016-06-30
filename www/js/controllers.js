@@ -106,32 +106,35 @@ angular.module('starter.controllers', [])
 
 })
   
-.controller('ExploreCtrl', function($scope, geojsonService) {
-  $scope.datas = geojsonService.getData();
-})
+.controller('ExploreCtrl', function($scope, $ionicFilterBar, geojsonService) {
+  $scope.datas = geojsonService.getData(); //get geojson data
 
-  /* TODO change to filter by placeName */
-.controller('ExplorePageSearchItemCtrl', ['$ionicFilterBar', function ItemCtrl($ionicFilterBar) {
-  var itemCtrl = this;
-  var items = [];
-  var filterBarInstance;
-  for(var i=1; i<=1000; i++) {
-    var item = {
-      description: 'desc' + i
-    };
-    items.push(item);
-  }
-  itemCtrl.items = items;
-  itemCtrl.showFilterBar = function() {
+  //filter bar control
+  $scope.showFilterBar = function () {
     filterBarInstance = $ionicFilterBar.show({
-      items: itemCtrl.items,
-      update: function(filteredItems) {
-        itemCtrl.items = filteredItems;
+      items: $scope.datas,
+      update: function (filteredItems) {
+        $scope.datas = filteredItems;
       },
-      filterProperties: 'desc'
+      filterProperties: 'name'
     });
   };
-  return itemCtrl;
-}])
+
+  //segment bar control
+  $scope.buttonClicked = function (index) {
+    console.log(index);
+    var diff = 'green'
+    if (index === 0)   diff = 'green';
+    if (index === 1)   diff = 'blue';
+    if (index === 2)   diff = 'black';
+    if (index === 3)   diff = 'all';
+    $scope.datas = geojsonService.getData();
+    if (diff !== 'all') {
+      $scope.datas = $scope.datas.filter(function (data) {
+        return data.difficulty === diff;
+      })
+    }
+  };
+})
 
 ;
