@@ -1,6 +1,6 @@
 {
   "name": "angular-material",
-  "version": "1.1.0-rc.5",
+  "version": "1.0.9",
   "main": "index",
   "format": "cjs",
   "registry": "github",
@@ -43,33 +43,5 @@
   ],
   "bugs": {
     "url": "https://github.com/angular/material/issues"
-  },
-  "gitHead": "c288f5937cec8bcffe73fb02b7f0f00e215b05f8",
-  "description": "This repository is used only for Angular Material v1.x library deployments and localized installs using `npm` and `bower`. The actual component source-code for this library is in the [main Angular Material repository](https://github.com/angular/material).",
-  "_id": "angular-material@1.1.0-rc.5",
-  "scripts": {},
-  "_shasum": "699dbf4bca1cfee9bdb368f7c2b4e8880a2d7896",
-  "_from": "angular-material@latest",
-  "_npmVersion": "3.6.0",
-  "_nodeVersion": "5.6.0",
-  "_npmUser": {
-    "name": "angularcore",
-    "email": "angular-core+npm@google.com"
-  },
-  "dist": {
-    "shasum": "699dbf4bca1cfee9bdb368f7c2b4e8880a2d7896",
-    "tarball": "https://registry.npmjs.org/angular-material/-/angular-material-1.1.0-rc.5.tgz"
-  },
-  "maintainers": [
-    {
-      "name": "angularcore",
-      "email": "angular-core+npm@google.com"
-    }
-  ],
-  "_npmOperationalInternal": {
-    "host": "packages-16-east.internal.npmjs.com",
-    "tmp": "tmp/angular-material-1.1.0-rc.5.tgz_1464976924021_0.0057348147965967655"
-  },
-  "directories": {},
-  "_resolved": "https://registry.npmjs.org/angular-material/-/angular-material-1.1.0-rc.5.tgz"
+  }
 }
