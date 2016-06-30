@@ -1,7 +1,7 @@
 angular.module('starter.factories', [])
 
 // Services for fetching data from CartoDB
-  .service('MapService', function () {
+  .factory('MapService', function () {
 
     var sql = new cartodb.SQL({user: 'sparkgeo', format: 'geojson'});
 
