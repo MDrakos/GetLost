@@ -116,7 +116,25 @@ const Global = {
 				me[field] = deserialize[field];
 			}
 		}, function(){console.log("File could not be read from");});
+	},
+	
+	getVersion: function(){
+		return window.device.version;
+	},
+	
+	getOs: function(){
+		return window.device.platform;
+	},
+
+	getAppInfo: function(fn){
+		window.cordova.getAppVersion.getAppName(function(n){
+			window.cordova.getAppVersion.getVersionNumber(function(v){
+				if(fn)
+					fn(n+": "+v);
+			});
+		});
 	}
+	
 }
 
 function onDeviceReady(){

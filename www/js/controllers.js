@@ -86,19 +86,20 @@ angular.module('starter.controllers', [])
 
 .controller('ContactCtrl', function($scope, $stateParams, $window){
 	$scope.phones = [
-		{number: "+1-250-000-000", purpose: "company"},
-		{number: "+1-250-000-001", purpose: "private"}
+		{number: "+1-250-960-6490", purpose: "company"},
 	];
 	$scope.emails = [
-		{address: "something@something.ca", purpose: "company"}
+		{address: "compnetlab@unbc.ca", purpose: "company"}
 	];
 	
 	$scope.sendmail = function(address){
-		Global.sendMail({
-			to: address,
-			subject: "GetLost: feedback",
-			body: "---------------------<br>GetLost<br>version:0<br>",
-			isHtml: true
+		Global.getAppInfo(function(appid){
+			Global.sendMail({
+				to: address,
+				subject: "GetLost: feedback",
+				body: "<br>---------------------<br>"+appid+"<br>"+Global.getOs()+": "+Global.getVersion()+"<br>"+(new Date()).toDateString(),
+				isHtml: true
+			});
 		});
 	}
 })

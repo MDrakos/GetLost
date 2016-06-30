@@ -24,7 +24,12 @@
     "cordova-sqlite-storage",
     "cordova-plugin-geolocation",
     "cordova-plugin-email-composer",
-    "cordova-plugin-file"
+    "cordova-plugin-file",
+    {
+      "locator": "https://github.com/rodrigo-martinezd/cordova-dialog-gps.git",
+      "id": "cordova-dialog-gps"
+    },
+    "cordova-plugin-app-version"
   ],
   "cordovaPlatforms": []
 }
