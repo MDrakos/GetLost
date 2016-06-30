@@ -12,6 +12,8 @@ angular.module('starter.services', [])
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Otway');
+
+  /*
   request.open("GET", "../resources/otway_snowshoe_trails.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
@@ -36,6 +38,7 @@ angular.module('starter.services', [])
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Pidherny');
+  */
 
   this.getData = function() {
     var data = [];
@@ -56,8 +59,5 @@ angular.module('starter.services', [])
     return data;
   }
 })
-
-
-
 
 ;
