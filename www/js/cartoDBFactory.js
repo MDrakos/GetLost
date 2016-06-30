@@ -1,18 +1,20 @@
 angular.module('starter.factories', [])
 
+  .constant('LAYER_NAME', 'otway_ski_trails')
+
 // Services for fetching data from CartoDB
-  .factory('MapService', function () {
+  .factory('MapService', function (LAYER_NAME) {
 
     var sql = new cartodb.SQL({user: 'sparkgeo', format: 'geojson'});
 
     return {
       // Get the data for trail
-      getTrail: function (layerName, trailID) {
+      getTrail: function (trailID) {
 
         var sqlString = "SELECT * FROM {{layerName}} WHERE cartodb_id={{trailID}}";
 
         var args = {
-          layerName: layerName,
+          layerName: LAYER_NAME,
           trailID: trailID
         };
 
@@ -20,12 +22,12 @@ angular.module('starter.factories', [])
       },
 
       // Get a list of trails for a layer
-      listTrails: function (layerName) {
+      listTrails: function () {
 
         var sqlString = "SELECT * FROM {{layerName}}";
 
         var args = {
-          layerName: layerName
+          layerName: LAYER_NAME
         };
 
         return sql.execute(sqlString, args);
