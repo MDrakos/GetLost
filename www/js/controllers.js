@@ -104,6 +104,16 @@ angular.module('starter.controllers', [])
 	}
 })
 
+.controller('ContactCtrl', function($scope, $stateParams){
+	$scope.phones = [
+		{number: "+1-250-000-000", purpose: "company"},
+		{number: "+1-250-000-001", purpose: "private"}
+	];
+	$scope.emails = [
+		{address: "something@something.ca", purpose: "company"}
+	];
+})
+
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
   $scope.photos = [
     { icon: 'img/trail1.jpg', id: 1 },
