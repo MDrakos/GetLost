@@ -7,5 +7,6 @@ plugins/
 .bowerrc
 .editorconfig
 .idea/
-
+bower_components/
+www/lib/
 
