@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'jett.ionic.filter.bar',
-  'ti-segmented-control'])
+  'ti-segmented-control', 'ngMaterial'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
