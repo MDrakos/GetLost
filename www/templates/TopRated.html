@@ -1,0 +1,20 @@
+<ion-view view-title="TopRated">
+  <ion-content>
+    <ion-list>
+
+      <ion-item ng-repeat="TopRated in TopParks" ng-if=" $index <= prefs.TopRateNum.valueOf()">
+
+        <h1>{{TopRated.name}}</h1>
+        Rating: {{TopRated.rating}}<br>
+        <h2>Descprition:</h2>
+        {{TopRated.description}}<br>
+        <ul>
+          <!-- will show a small set of pictures for that trail. curently capped at a max of 10 images if there are more-->
+          <li class="small-image pull-left thumbnail" ng-repeat="image in TopRated.images" ng-if=" $index <= 10">
+            <img ng-src="{{image}}" hieght="{{100}}px" width="{{100}}px" style="float:left" />
+          </li>
+        </ul>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

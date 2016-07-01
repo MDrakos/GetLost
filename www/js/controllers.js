@@ -1,3 +1,63 @@
+//These will be later stored in seperate json files once being able to load and read from them is susccessful
+const Global = {
+
+  AppPrefs: {
+    TopRateNum: 4 //number of top rated trails to show on top rated page. (number plus 1!)
+  },
+
+  //the current dummy top rated list this will later have to be loaded from a content server
+  toplist: [{
+    id: 1,
+    name: 'park1',
+    description: "garbly 1",
+    rating: 1,
+    images: [
+      "img/trail1.jpg",
+      "img/trail2.jpg"
+    ]
+  }, {
+    id: 2,
+    name: 'park2',
+    description: "garbly 2",
+    rating: 2,
+    images: [
+      "img/trail2.jpg"
+    ]
+  }, {
+    id: 3,
+    name: 'park3',
+    description: "garbly 3",
+    rating: 3,
+    images: [
+      "img/trail3.jpg"
+    ]
+  }, {
+    id: 4,
+    name: 'park4',
+    description: "garbly 4",
+    rating: 4,
+    images: [
+      "img/trail4.jpg"
+    ]
+  }, {
+    id: 5,
+    name: 'park5',
+    description: "garbly 5",
+    rating: 5,
+    images: [
+      "img/trail5.jpg"
+    ]
+  }, {
+    id: 6,
+    name: 'park6',
+    description: "garbly 6",
+    rating: 6,
+    images: [
+      "img/trail6.jpg"
+    ]
+  }]
+};
+
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -93,7 +153,7 @@ angular.module('starter.controllers', [])
     $scope.slideIndex = index;
   };
 })
-  
+
 .controller('FavouritesCtrl', function($scope)
 {
   $scope.favourites = [
@@ -116,6 +176,11 @@ angular.module('starter.controllers', [])
 
 })
 
+  .controller('TopRatedCtrl', function ($scope) {
+      $scope.TopParks = Global.toplist;
+      $scope.prefs = Global.AppPrefs;
+    }
+  )
 
 
 
