@@ -8,33 +8,33 @@ angular.module('starter.services', [])
   //save the city names
   var placeNames = [];
 
-  request.open("GET", "../resources/otway_ski_trails.geojson", false);
+  request.open("GET", "resources/otway_ski_trails.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Otway');
 
   /*
-  request.open("GET", "../resources/otway_snowshoe_trails.geojson", false);
+  request.open("GET", "resources/otway_snowshoe_trails.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Otway');
-  request.open("GET", "../resources/otway_singletrack_04082016_2.geojson", false);
+  request.open("GET", "resources/otway_singletrack_04082016_2.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Otway');
-  request.open("GET", "../resources/otway_trail_places.geojson", false);
+  request.open("GET", "resources/otway_trail_places.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Otway');
-  request.open("GET", "../resources/pidherny_mtb_places.geojson", false);
+  request.open("GET", "resources/pidherny_mtb_places.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Pidherny');
-  request.open("GET", "../resources/pidherny_08042016.geojson", false);
+  request.open("GET", "resources/pidherny_08042016.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Pidherny');
-  request.open("GET", "../resources/pidherny_rec_bdy.geojson", false);
+  request.open("GET", "resources/pidherny_rec_bdy.geojson", false);
   request.send(null);
   jsonInfo.push(JSON.parse(request.responseText));
   placeNames.push('Pidherny');
