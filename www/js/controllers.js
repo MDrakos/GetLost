@@ -71,7 +71,7 @@ angular.module('starter.controllers', [])
     { icon: 'img/trail8.jpg', id: 8 }
   ];
   $scope.startApp = function() {
-    $state.go('app');
+    $state.go('app.explore');
   };
   $scope.next = function() {
     $ionicSlideBoxDelegate.next();
@@ -107,33 +107,49 @@ angular.module('starter.controllers', [])
 })
   
 .controller('ExploreCtrl', function($scope, $ionicFilterBar, geojsonService) {
-  $scope.datas = geojsonService.getData(); //get geojson data
+  $scope.dataset              = geojsonService.getData(); //get geojson data
+  $scope.datas                = $scope.dataset;           //duplicate set of data that is filtered by app
+  $scope.segmentSelectedIndex = 3;                        //stores current segment selection
 
   //filter bar control
   $scope.showFilterBar = function () {
     filterBarInstance = $ionicFilterBar.show({
+      //items to be filtered
       items: $scope.datas,
+      //update function
       update: function (filteredItems) {
         $scope.datas = filteredItems;
       },
-      filterProperties: 'name'
+      filterProperties: 'name'  //filter by name
     });
   };
 
   //segment bar control
   $scope.buttonClicked = function (index) {
-    console.log(index);
-    var diff = 'green'
-    if (index === 0)   diff = 'green';
-    if (index === 1)   diff = 'blue';
-    if (index === 2)   diff = 'black';
-    if (index === 3)   diff = 'all';
-    $scope.datas = geojsonService.getData();
+    $scope.segmentSelectedIndex = index; //store current index
+    //find the wanted difficulty based on index
+    var diff = 'all';
+    if (index === 0)   { diff = 'green';  }
+    if (index === 1)   { diff = 'blue';   }
+    if (index === 2)   { diff = 'black';  }
+    if (index === 3)   { diff = 'all';    }
+    $scope.datas = $scope.dataset; //reload full data
+    //if the 'all' is selected, do nothing. Else filter by difficulty
     if (diff !== 'all') {
-      $scope.datas = $scope.datas.filter(function (data) {
+      $scope.datas = $scope.datas.filter( function(data) {
         return data.difficulty === diff;
       })
     }
+  };
+  
+  //refresher function
+  $scope.repullData = function() {
+    //repull geojson data
+    $scope.dataset = geojsonService.getData();
+    //refilter data depending on what segment button is selected
+    $scope.buttonClicked($scope.segmentSelectedIndex);
+    //stop from refreshing
+    $scope.$broadcast('scroll.refreshComplete');
   };
 })
 
