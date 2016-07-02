@@ -9,10 +9,12 @@
     </author>
   <content src="index.html"/>
 
-  <!-- security related TODO Implement higher security (don't allow access to everything) -->
-  <access origin="*" />
-  <allow-navigation href="*" />
+  <!-- Allow access to online libraries -->
+  <allow-navigation href="https://ajax.googleapis.com/ajax/libs/*/" />
+  <allow-navigation href="https://cdn.rawgit.com/djett41/ionic-filter-bar/*/" />
+  <allow-navigation href="https://cdn.rawgit.com/tinga-dev/ti-ionic-segmented-control/*/" />
 
+  <access origin="*" />
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
