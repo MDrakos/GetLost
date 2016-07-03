@@ -26,13 +26,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-      .state('start', {
-          url: '/start',
-          templateUrl: 'templates/start.html',
-          controller: 'StartCtrl'
-      })
+  .state('start', {
+    url: '/start',
+    templateUrl: 'templates/start.html',
+    controller: 'StartCtrl'
+  })
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
@@ -56,6 +56,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
   })
 
+  .state('app.map', {
+    url: '/explore/map/:mapId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
 
   .state('app.playlists', {
     url: '/playlists',
@@ -88,6 +97,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+
+	.state('app.contact',{
+		url: '/contact',
+		views:{
+			'menuContent':{
+				templateUrl: 'templates/contactus.html',
+				controller: 'ContactCtrl'
+			}
+		}
+	})
 
   .state('app.favourites', {
     url: '/favourites',
