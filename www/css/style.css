@@ -1,32 +1,21 @@
-.image-list-thumb {
-  padding: 2px 2px 2px 2px;
-  height: 100px;
+/* Empty. Add your own CSS if you like */
+.start-button {
+  font-family:  Verdana, sans-serif;
+  top:          60%;
+  position:     absolute;
+  z-index:      100;
 }
-
-.image-modal {
-  width: 100% !important;
-  height: 100%;
-  top: 0 !important;
-  left: 0 !important;
+.mainbg {
+  background-color: #4d4d4d;
 }
-
-.transparent {
-  background: transparent !important;
+.imgStretch {
+  position:   relative;
+  border:     5px solid black;
+  z-index:    50;
+  height:     100%;
+  width:      100%;
 }
-
-.fullscreen-image {
-  max-width: 100%;
-  max-height: 100%;
-  bottom: 0;
-  left: 0;
-  margin: auto;
-  overflow: auto;
-  position: fixed;
-  right: 0;
-  top: 0;
-}
-
-.slider {
-  width: 100%;
-  height: 100%;
+.mainslide {
+  height:   100vh;
+  width:    auto;
 }

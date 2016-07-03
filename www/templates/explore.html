@@ -1,0 +1,10 @@
+<ion-view view-title="Explore">
+  <ion-content>
+    <h1>Prince George Maps</h1>
+    <ion-list>
+      <ion-item ng-repeat="map in maps" href="#/app/explore/map/{{map.id}}">
+        {{map.title}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

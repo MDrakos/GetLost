@@ -7,7 +7,6 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
 
-
 var paths = {
   sass: ['./scss/**/*.scss']
 };
@@ -50,6 +49,15 @@ gulp.task('git-check', function(done) {
   }
   done();
 });
+
+gulp.task('inject-css', function(){
+	//Get the current index
+	var target = gulp.src('./www/index.html');
+	//Get all css, it's not necessary to read the files
+	var css = gulp.src(['./www/css/*.css'],{read: false});
+	//using gulp-inject, inject css into the index
+	return target.pipe(inject(sources)).pipe(gulp.dest('./www/'))
+})
 
 gulp.task('index', function () {
   var target = gulp.src('./www/index.html');
