@@ -8,6 +8,10 @@ angular.module('starter.factories', [])
     var sql = new cartodb.SQL({user: 'sparkgeo', format: 'geojson'});
 
     return {
+      // PUT ALL FACTORY FUNCTION HERE
+      // Add functions as required for your controllers. Functions
+      //  should be abstract and generic, using parameters to filter output.
+
       // Get the data for trail
       getTrail: function (trailID) {
 
