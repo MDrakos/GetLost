@@ -1,0 +1,14 @@
+{
+  "toplist": {
+    "id": 1,
+    "name": "load 1",
+    "description": "file load 1",
+    "rating": 1,
+    "images": [
+      "img/trail1.jpg",
+      "img/trail2.jpg",
+      "img/trail3.jpg"
+    ]
+  }
+}
+//this is the top rated locally stored file, will allow for any file to be parsed
