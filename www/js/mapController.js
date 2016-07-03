@@ -49,8 +49,18 @@ angular.module('starter.controllers')
       if (mapReference.map !== null){
         // Remove the layer, add a new one
         console.log('Map Exists');
-        mapReference.map.removeLayer(mapReference.layer);
-        mapReference.map.addLayer(mapReference.layer);
+
+        // This is the way it should be done, but does not work...
+        // mapReference.map.removeLayer(mapReference.layer);
+        // mapReference.map.addLayer(mapReference.layer);
+
+        mapReference.map.remove();
+
+        mapReference.map = new L.Map('cartodbMap', {
+          dragging: true,
+          layers: [mapReference.layer, currentTileLayer]
+        });
+
       } else {
         // Create new map
         console.log('New Map');
