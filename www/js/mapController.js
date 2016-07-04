@@ -89,7 +89,7 @@ angular.module('starter.controllers')
       navigator.geolocation.getCurrentPosition(
         function (position) {
           console.log(position.coords);
-          var latLng = [position.coords.latitude, position.coords.longitude]
+          var latLng = [position.coords.latitude, position.coords.longitude];
           mapReference.map.setView(latLng, 15);
 
           if (mapReference.currentLocation === null) {
