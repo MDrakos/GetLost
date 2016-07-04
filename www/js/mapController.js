@@ -12,6 +12,9 @@ angular.module('starter.controllers')
       $scope.maps = data.features;
     });
   })
+      .error(function (errors) {
+        console.log("listTrails Errors:" + errors);
+      });
 
   .controller('MapCtrl', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
 
@@ -73,6 +76,9 @@ angular.module('starter.controllers')
       // Fit map to trail bounds
       mapReference.map.fitBounds(mapReference.layer.getBounds());
 
+    })
+    .error(function (errors) {
+      console.log("getTrail Errors:" + errors);
     });
 
     // Function for centering over the users current location
