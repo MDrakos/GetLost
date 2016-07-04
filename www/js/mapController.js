@@ -5,18 +5,20 @@ angular.module('starter.controllers')
   .service('mapReference', function () {
     this.map = null;
     this.layer = null;
+    this.currentLocation = null;
   })
 
-  .controller('ExploreCtrl', function ($scope, MapService) {
-    MapService.listTrails().done(function(data){
-      $scope.maps = data.features;
-    });
-  })
+  .controller('ExploreCtrl', ['$scope', 'MapService', function ($scope, MapService) {
+    MapService.listTrails()
+      .done(function(data){
+        $scope.maps = data.features;
+      })
       .error(function (errors) {
         console.log("listTrails Errors:" + errors);
       });
+  }])
 
-  .controller('MapCtrl', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
+  .controller('MapCtrl', ['$scope', '$cordovaGeolocation', 'mapReference', function ($scope, $stateParams, $cordovaGeolocation, MapService, SHORT_STYLE, mapReference) {
 
     var OpenTopoMap = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       maxZoom: 17,
@@ -107,4 +109,4 @@ angular.module('starter.controllers')
         });
     };
 
-  });
+  }]);
