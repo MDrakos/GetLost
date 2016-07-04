@@ -8,3 +8,6 @@ plugins/
 .bowerrc
 .editorconfig
 .idea/
+resources/
+www/lib/
+
