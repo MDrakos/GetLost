@@ -18,7 +18,7 @@ angular.module('starter.controllers')
       });
   }])
 
-  .controller('MapCtrl', ['$scope', '$cordovaGeolocation', 'mapReference', function ($scope, $stateParams, $cordovaGeolocation, MapService, SHORT_STYLE, mapReference) {
+  .controller('MapCtrl', ['$scope', '$stateParams', 'MapService', 'SHORT_STYLE', 'mapReference', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
 
     var OpenTopoMap = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       maxZoom: 17,
@@ -86,21 +86,20 @@ angular.module('starter.controllers')
     // Function for centering over the users current location
     $scope.locate = function(){
 
-      $cordovaGeolocation
-        .getCurrentPosition()
-        .then(function (position) {
-          mapReference.map.center.lat  = position.coords.latitude;
-          mapReference.map.center.lng = position.coords.longitude;
-          mapReference.map.center.zoom = 15;
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          console.log(position.coords);
+          var latLng = [position.coords.latitude, position.coords.longitude]
+          mapReference.map.setView(latLng, 15);
 
           if (mapReference.currentLocation === null) {
-            mapReference.currentLocation = L.marker(position.coords, {
+            mapReference.currentLocation = L.marker(latLng, {
               message: "You Are Here",
               focus: true,
               draggable: false
             }).addTo(mapReference.map);
           } else{
-            mapReference.currentLocation.setLatLng(position.coords);
+            mapReference.currentLocation.setLatLng(latLng);
           }
         }, function(err) {
           // error
