@@ -75,5 +75,30 @@ angular.module('starter.controllers')
 
     });
 
+    // Function for centering over the users current location
+    $scope.locate = function(){
+
+      $cordovaGeolocation
+        .getCurrentPosition()
+        .then(function (position) {
+          mapReference.map.center.lat  = position.coords.latitude;
+          mapReference.map.center.lng = position.coords.longitude;
+          mapReference.map.center.zoom = 15;
+
+          if (mapReference.currentLocation === null) {
+            mapReference.currentLocation = L.marker(position.coords, {
+              message: "You Are Here",
+              focus: true,
+              draggable: false
+            }).addTo(mapReference.map);
+          } else{
+            mapReference.currentLocation.setLatLng(position.coords);
+          }
+        }, function(err) {
+          // error
+          console.log("Location error!");
+          console.log(err);
+        });
+    };
 
   });
