@@ -2,6 +2,7 @@ angular.module('starter.controllers')
 
   .constant('SHORT_STYLE', {"color": "#FFE403", "weight": 5, "opacity": 0.65})
 
+  // Angular service to persist the map and layer between page loads.
   .service('mapReference', function () {
     this.map = null;
     this.layer = null;
