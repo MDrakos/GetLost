@@ -11,7 +11,7 @@
 
     <h1>Prince George Maps</h1>
     <ion-list>
-      <ion-item ng-repeat="map in maps" href="#/app/explore/map/{{map.id}}">
+      <ion-item ng-repeat="map in maps" href="#/app/explore/map/{{map.properties.cartodb_id}}">
         {{map.properties.name}}
       </ion-item>
     </ion-list>
