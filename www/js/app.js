@@ -135,7 +135,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'FavouriteCtrl'
       }
     }
-  });
+  })
+    .state('app.TopRated', {
+      url: '/TopRated',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/TopRated.html',
+          controller: 'TopRatedCtrl'
+        }
+      }
+    });
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
