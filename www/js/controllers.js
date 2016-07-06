@@ -52,7 +52,7 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $stateParams, MapService) {
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {
@@ -98,6 +98,16 @@ angular.module('starter.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
+})
+
+.controller('ContactCtrl', function($scope, $stateParams){
+	$scope.phones = [
+		{number: "+1-250-000-000", purpose: "company"},
+		{number: "+1-250-000-001", purpose: "private"}
+	];
+	$scope.emails = [
+		{address: "something@something.ca", purpose: "company"}
+	];
 })
 
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
