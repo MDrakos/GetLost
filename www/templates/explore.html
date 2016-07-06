@@ -3,7 +3,7 @@
     <h1>Prince George Maps</h1>
     <ion-list>
       <ion-item ng-repeat="map in maps" href="#/app/explore/map/{{map.id}}">
-        {{map.title}}
+        {{map.properties.name}}
       </ion-item>
     </ion-list>
   </ion-content>
