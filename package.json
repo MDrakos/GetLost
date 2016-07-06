@@ -31,5 +31,7 @@
     },
     "cordova-plugin-app-version"
   ],
-  "cordovaPlatforms": []
+  "cordovaPlatforms": [
+    "android"
+  ]
 }
