@@ -117,9 +117,9 @@ angular.module('starter.controllers', [])
 })
   
 .controller('ExploreCtrl', function($scope, $ionicFilterBar, geojsonService) {
-  $scope.dataset              = geojsonService.getData(); //get geojson data
-  $scope.datas                = $scope.dataset;           //duplicate set of data that is filtered by app
-  $scope.segmentSelectedIndex = 3;                        //stores current segment selection
+  $scope.dataset           = geojsonService.getData(); //get geojson data
+  $scope.datas             = $scope.dataset;           //duplicate set of data that is filtered by app
+  var segmentSelectedIndex = 3;                        //stores current segment selection
 
   //filter bar control
   $scope.showFilterBar = function () {
@@ -136,7 +136,7 @@ angular.module('starter.controllers', [])
 
   //segment bar control
   $scope.buttonClicked = function (index) {
-    $scope.segmentSelectedIndex = index; //store current index
+    segmentSelectedIndex = index; //store current index
     //find the wanted difficulty based on index
     var diff = 'all';
     if (index === 0)   { diff = 'green';  }
@@ -157,7 +157,7 @@ angular.module('starter.controllers', [])
     //repull geojson data
     $scope.dataset = geojsonService.getData();
     //refilter data depending on what segment button is selected
-    $scope.buttonClicked($scope.segmentSelectedIndex);
+    $scope.buttonClicked(segmentSelectedIndex);
     //stop from refreshing
     $scope.$broadcast('scroll.refreshComplete');
   };
