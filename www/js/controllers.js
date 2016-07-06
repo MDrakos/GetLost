@@ -94,7 +94,7 @@ angular.module('starter.controllers', [])
     $scope.modal.hide();
     $scope.modal.remove()
   };
-});
+})
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
