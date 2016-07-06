@@ -1,0 +1,14 @@
+<ion-view view-title="Get Lost">
+  <ion-content class="mainbg">
+    <div>
+      <button class="button button-full button-dark button-large start-button" ng-click="app/start/startApp()">
+        Get Started
+      </button>
+    </div>
+    <ion-slide-box does-continue="true" auto-play="true" slide-interval="5000">
+      <ion-slide ng-repeat="photo in photos" href="#/app/start/{{photo.id}}" class="mainslide">
+        <img src="{{photo.icon}}" class="imgStretch"/>
+      </ion-slide>
+    </ion-slide-box>
+  </ion-content>
+</ion-view>
