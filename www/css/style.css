@@ -16,8 +16,39 @@
   width:      100%;
 }
 .mainslide {
-  height:   100vh;
-  width:    auto;
+  height: 100vh;
+  width: auto;
+}
+
+.main-card {
+  padding: 2px;
+  text-align: center;
+  position: relative;
+}
+.main-card-title {
+  opacity: 0.77;
+  text-align: center;
+  border-top-left-radius: 5%;
+  border-top-right-radius: 5%;
+}
+.main-card-title-text {
+  font-family: Verdana, sans-serif;
+  text-align: center;
+  font-weight: 600;
+  color: whitesmoke;
+  opacity: 1;
+}
+.main-card-content-text {
+  font-family: Verdana, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  position: relative;
+}
+.main-card-footer {
+  opacity: 0.77;
+  text-align: center;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
 }
 .image-list-thumb {
   padding: 2px 2px 2px 2px;

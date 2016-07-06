@@ -4,7 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'jett.ionic.filter.bar',
+  'ti-segmented-control', 'ngMaterial'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -25,13 +26,13 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-      .state('start', {
-          url: '/start',
-          templateUrl: 'templates/start.html',
-          controller: 'StartCtrl'
-      })
+  .state('start', {
+    url: '/start',
+    templateUrl: 'templates/start.html',
+    controller: 'StartCtrl'
+  })
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
@@ -55,25 +56,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
   })
 
-      .state('app.explore', {
-        url: '/explore',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/explore.html',
-            controller: 'ExploreCtrl'
-          }
-        }
-      })
-
-      .state('app.map', {
-        url: '/explore/map/:mapId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/map.html',
-            controller: 'MapCtrl'
-          }
-        }
-      })
+  .state('app.map', {
+    url: '/explore/map/:mapId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
 
   .state('app.playlists', {
     url: '/playlists',
@@ -126,6 +117,16 @@ angular.module('starter', ['ionic', 'starter.controllers'])
     }
   })
 
+	.state('app.contact',{
+		url: '/contact',
+		views:{
+			'menuContent':{
+				templateUrl: 'templates/contactus.html',
+				controller: 'ContactCtrl'
+			}
+		}
+	})
+
   .state('app.favourites', {
     url: '/favourites',
     views: {
@@ -144,7 +145,19 @@ angular.module('starter', ['ionic', 'starter.controllers'])
         controller: 'FavouriteCtrl'
       }
     }
-  });
+  })
+
+    .state('app.explore', {
+      url: '/explore',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/explore.html',
+          controller: 'ExploreCtrl'
+        }
+      }
+    })
+
+  ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });

@@ -1,15 +1,15 @@
 angular.module('starter.controllers')
 
-  .controller('ExploreCtrl', function ($scope) {
-    $scope.maps = [
-      {title: 'Otway', id: 1},
-      {title: 'Pidherny', id: 2},
-      {title: 'UNBC', id: 3},
-      {title: 'Moores Meadow', id: 4},
-      {title: 'Cottonwood Park', id: 5}
-    ]
+  .controller('ExploreCtrl', function ($scope, MapService) {
+    MapService.listTrails().done(function(data){
+      var features = data.features;
+      $scope.maps = features;
+    });
   })
 
-  .controller('MapCtrl', function ($scope) {
-    //Create Map...
+  .controller('MapCtrl', function ($scope, MapService) {
+    MapService.getTrail($stateParams.playlistId).done(function(data){
+      console.log(data);
+      $scope.geojson = data;
+    });
   });
