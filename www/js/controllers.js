@@ -52,11 +52,21 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams) {
+.controller('PlaylistCtrl', function($scope, $stateParams, MapService) {
 })
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
+})
+
+.controller('ContactCtrl', function($scope, $stateParams){
+	$scope.phones = [
+		{number: "+1-250-000-000", purpose: "company"},
+		{number: "+1-250-000-001", purpose: "private"}
+	];
+	$scope.emails = [
+		{address: "something@something.ca", purpose: "company"}
+	];
 })
 
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
@@ -71,7 +81,7 @@ angular.module('starter.controllers', [])
     { icon: 'img/trail8.jpg', id: 8 }
   ];
   $scope.startApp = function() {
-    $state.go('app');
+    $state.go('app.explore');
   };
   $scope.next = function() {
     $ionicSlideBoxDelegate.next();
@@ -105,8 +115,52 @@ angular.module('starter.controllers', [])
 .controller('FavouriteCtrl', function($scope, $stateParams) {
 
 })
+  
+.controller('ExploreCtrl', function($scope, $ionicFilterBar, geojsonService) {
+  $scope.dataset           = geojsonService.getData(); //get geojson data
+  $scope.datas             = $scope.dataset;           //duplicate set of data that is filtered by app
+  var segmentSelectedIndex = 3;                        //stores current segment selection
 
+  //filter bar control
+  $scope.showFilterBar = function () {
+    filterBarInstance = $ionicFilterBar.show({
+      //items to be filtered
+      items: $scope.datas,
+      //update function
+      update: function (filteredItems) {
+        $scope.datas = filteredItems;
+      },
+      filterProperties: 'name'  //filter by name
+    });
+  };
 
-
+  //segment bar control
+  $scope.buttonClicked = function (index) {
+    segmentSelectedIndex = index; //store current index
+    //find the wanted difficulty based on index
+    var diff = 'all';
+    if (index === 0)   { diff = 'green';  }
+    if (index === 1)   { diff = 'blue';   }
+    if (index === 2)   { diff = 'black';  }
+    if (index === 3)   { diff = 'all';    }
+    $scope.datas = $scope.dataset; //reload full data
+    //if the 'all' is selected, do nothing. Else filter by difficulty
+    if (diff !== 'all') {
+      $scope.datas = $scope.datas.filter( function(data) {
+        return data.difficulty === diff;
+      })
+    }
+  };
+  
+  //refresher function
+  $scope.repullData = function() {
+    //repull geojson data
+    $scope.dataset = geojsonService.getData();
+    //refilter data depending on what segment button is selected
+    $scope.buttonClicked(segmentSelectedIndex);
+    //stop from refreshing
+    $scope.$broadcast('scroll.refreshComplete');
+  };
+})
 
 ;
