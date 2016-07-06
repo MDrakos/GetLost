@@ -20,7 +20,16 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-sqlite-storage",
+    "cordova-plugin-geolocation",
+    "cordova-plugin-email-composer",
+    "cordova-plugin-file",
+    {
+      "locator": "https://github.com/rodrigo-martinezd/cordova-dialog-gps.git",
+      "id": "cordova-dialog-gps"
+    },
+    "cordova-plugin-app-version"
   ],
   "cordovaPlatforms": []
 }

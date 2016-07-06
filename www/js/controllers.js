@@ -1,62 +1,4 @@
-//These will be later stored in seperate json files once being able to load and read from them is susccessful
-const Global = {
-
-  AppPrefs: {
-    TopRateNum: 4 //number of top rated trails to show on top rated page. (number plus 1!)
-  },
-
-  //the current dummy top rated list this will later have to be loaded from a content server
-  toplist: [{
-    id: 1,
-    name: 'park1',
-    description: "garbly 1",
-    rating: 1,
-    images: [
-      "img/trail1.jpg",
-      "img/trail2.jpg"
-    ]
-  }, {
-    id: 2,
-    name: 'park2',
-    description: "garbly 2",
-    rating: 2,
-    images: [
-      "img/trail2.jpg"
-    ]
-  }, {
-    id: 3,
-    name: 'park3',
-    description: "garbly 3",
-    rating: 3,
-    images: [
-      "img/trail3.jpg"
-    ]
-  }, {
-    id: 4,
-    name: 'park4',
-    description: "garbly 4",
-    rating: 4,
-    images: [
-      "img/trail4.jpg"
-    ]
-  }, {
-    id: 5,
-    name: 'park5',
-    description: "garbly 5",
-    rating: 5,
-    images: [
-      "img/trail5.jpg"
-    ]
-  }, {
-    id: 6,
-    name: 'park6',
-    description: "garbly 6",
-    rating: 6,
-    images: [
-      "img/trail6.jpg"
-    ]
-  }]
-};
+//INITIALIZE ANGULAR MODULE --------------------------------------------
 
 angular.module('starter.controllers', [])
 
@@ -117,6 +59,49 @@ angular.module('starter.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
+	$scope.prefs = Global.AppPrefs;
+	
+	$scope.enablegps = function(){
+		cordova.dialogGPS();
+	}
+	
+	$scope.serialize = function(){
+		/*
+		Global.saveTo("test.txt", "1 2 3", function(){
+			Global.loadFrom("test.txt", function(data){
+				console.log(data);
+			});
+		}, function(){console.log("err");})*/
+		
+		Global.serialize(function(output){
+			console.log("Serialization successful");
+		});
+	};
+})
+
+.controller('HistoryCtrl', function($scope, $stateParams){
+	//Functions for history
+	$scope.history = Global.AppPrefs.history;
+})
+
+.controller('ContactCtrl', function($scope, $stateParams, $window){
+	$scope.phones = [
+		{number: "+1-250-960-6490", purpose: "company"},
+	];
+	$scope.emails = [
+		{address: "compnetlab@unbc.ca", purpose: "company"}
+	];
+	
+	$scope.sendmail = function(address){
+		Global.getAppInfo(function(appid){
+			Global.sendMail({
+				to: address,
+				subject: "GetLost: feedback",
+				body: "<br>---------------------<br>"+appid+"<br>"+Global.getOs()+": "+Global.getVersion()+"<br>"+(new Date()).toDateString(),
+				isHtml: true
+			});
+		});
+	}
 })
 
 .controller('ContactCtrl', function($scope, $stateParams){
@@ -153,35 +138,11 @@ angular.module('starter.controllers', [])
     $scope.slideIndex = index;
   };
 })
-
-.controller('FavouritesCtrl', function($scope)
-{
-  $scope.favourites = [
-    { name: 'Something Trail1', location: 'Something Park1', img: 'img/ionic.png', id: 1 },
-    { name: 'Something Trail2', location: 'Something Park2', img: 'img/ionic.png', id: 2 },
-    { name: 'Something Trail3', location: 'Something Park3', img: 'img/ionic.png', id: 3 },
-    { name: 'Something Trail4', location: 'Something Park4', img: 'img/ionic.png', id: 4 },
-    { name: 'Something Trail5', location: 'Something Park5', img: 'img/ionic.png', id: 5 },
-    { name: 'Something Trail6', location: 'Something Park6', img: 'img/ionic.png', id: 6 },
-    { name: 'Something Trail7', location: 'Something Park7', img: 'img/ionic.png', id: 7 },
-    { name: 'Something Trail8', location: 'Something Park8', img: 'img/ionic.png', id: 8 }
-  ];
+  
+.controller('FavouritesCtrl', function($scope){
+	$scope.favourites = Global.Favorites;
   $scope.selectFav = function(favourite)
   {
     $scope.selectedFav = favourite;
   }
-})
-
-.controller('FavouriteCtrl', function($scope, $stateParams) {
-
-})
-
-  .controller('TopRatedCtrl', function ($scope) {
-      $scope.TopParks = Global.toplist;
-      $scope.prefs = Global.AppPrefs;
-    }
-  )
-
-
-
-;
+});
