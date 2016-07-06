@@ -9,3 +9,5 @@ plugins/
 .bowerrc
 .editorconfig
 .idea/
+www/lib/
+resources/

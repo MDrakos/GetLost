@@ -5,12 +5,15 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers'])
-
+//angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'jett.ionic.filter.bar',
+ // 'ti-segmented-control', 'ngMaterial'])
+  
+  
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+    if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
 
@@ -25,13 +28,13 @@ angular.module('starter', ['ionic', 'starter.controllers'])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
 
-      .state('start', {
-          url: '/start',
-          templateUrl: 'templates/start.html',
-          controller: 'StartCtrl'
-      })
+  .state('start', {
+    url: '/start',
+    templateUrl: 'templates/start.html',
+    controller: 'StartCtrl'
+  })
 
-    .state('app', {
+  .state('app', {
     url: '/app',
     templateUrl: 'templates/menu.html',
     controller: 'AppCtrl'
@@ -55,25 +58,15 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
   })
 
-      .state('app.explore', {
-        url: '/explore',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/explore.html',
-            controller: 'ExploreCtrl'
-          }
-        }
-      })
-
-      .state('app.map', {
-        url: '/explore/map/:mapId',
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/map.html',
-            controller: 'MapCtrl'
-          }
-        }
-      })
+  .state('app.map', {
+    url: '/explore/map/:mapId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
+      }
+    }
+  })
 
   .state('app.playlists', {
     url: '/playlists',
@@ -145,16 +138,18 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
-    .state('app.TopRated', {
-      url: '/TopRated',
+
+    .state('app.explore', {
+      url: '/explore',
       views: {
         'menuContent': {
-          templateUrl: 'templates/TopRated.html',
-          controller: 'TopRatedCtrl'
+          templateUrl: 'templates/explore.html',
+          controller: 'ExploreCtrl'
         }
       }
-    });
+    })
 
+  ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });
