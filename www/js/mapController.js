@@ -8,10 +8,55 @@ angular.module('starter.controllers')
     this.layer = null;
   })
 
-  .controller('ExploreCtrl', function ($scope, MapService) {
+  .controller('ExploreCtrl', function ($scope, $ionicFilterBar, MapService) {
     MapService.listTrails().done(function(data){
       $scope.maps = data.features;
+      $scope.mapProps = [];
+      for(var i=0; i<$scope.maps.length; i++) {
+        $scope.mapProps[i] = ($scope.maps[i]["properties"]);
+      }
+      $scope.filteredMapProps = $scope.mapProps;
     });
+
+    $scope.segmentSelectedIndex = 3; //stores current segment selection
+    //filter bar control
+    $scope.showFilterBar = function () {
+      console.log($scope.filteredMapProps);
+      filterBarInstance = $ionicFilterBar.show({
+        //items to be filtered
+        items: $scope.filteredMapProps,
+        //update function
+        update: function (filteredItems) {
+          $scope.filteredMapProps = filteredItems;
+        },
+        filterProperties: 'name'  //filter by name
+      });
+    };
+
+    //segment bar control
+    $scope.buttonClicked = function (index) {
+      $scope.segmentSelectedIndex = index; //store current index
+      //find the wanted difficulty based on index
+      var diff = 'all';
+      if (index === 0)   { diff = 'green';  }
+      if (index === 1)   { diff = 'blue';   }
+      if (index === 2)   { diff = 'black';  }
+      if (index === 3)   { diff = 'all';    }
+      $scope.filteredMapProps = $scope.mapProps; //reload full data
+      //if the 'all' is selected, do nothing. Else filter by difficulty
+      if (diff !== 'all') {
+        $scope.filteredMapProps = $scope.filteredMapProps.filter( function(data) {
+          return data.difficulty === diff;
+        })
+      }
+    };
+
+    //refresher function
+    $scope.repullData = function() {
+      //TODO repull map data
+      //refilter data depending on what segment button is selected
+      $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
+    };
   })
 
   .controller('MapCtrl', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
