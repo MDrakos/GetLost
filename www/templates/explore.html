@@ -9,16 +9,9 @@
 
   <ion-content>
 
-    <h1>Prince George Maps</h1>
-    <ion-list>
-      <ion-item ng-repeat="map in maps" href="#/app/explore/map/{{map.properties.cartodb_id}}">
-        {{map.properties.name}}
-      </ion-item>
-    </ion-list>
-<!--
     <ion-refresher on-refresh="repullData()"></ion-refresher>
 
-    &lt;!&ndash; Segment Buttons &ndash;&gt;
+    <!-- Segment Buttons -->
     <div style="padding: 5px">
       <ti-segmented-control on-select="buttonClicked($index)">
         <ti-segmented-control-button class="button-balanced" title="'Easy'">         Easy   </ti-segmented-control-button>
@@ -28,24 +21,11 @@
       </ti-segmented-control>
     </div>
 
-    <md-content layout-padding>
-      <md-grid-list md-cols="2" md-row-height="1:1" md-gutter="4px">
-        <md-grid-tile ng-repeat="map in maps" href="#/app/explore/map/{{map.id}}"
-                      style="border: 2px solid black; border: 2px solid {{map.properties.difficulty}}; border-radius: 5%;">
-
-          <img src="img/trail7.jpg" style="width:100%"/>
-
-          <md-grid-tile-header class="main-card-title" style="background-color: {{map.properties.difficulty}}">
-            <h3 class="main-card-title-text">{{map.properties.name}}+ {{map.id}}, {{map.properties.placeName}}</h3>
-          </md-grid-tile-header>
-
-          <md-grid-tile-footer class="main-card-footer" style="background-color: {{map.properties.difficulty}}">
-            <button class="button button-energized button-icon ion-star" ng-click=""></button>
-          </md-grid-tile-footer>
-
-        </md-grid-tile>
-      </md-grid-list>
-    </md-content>-->
+    <ion-list>
+      <ion-item ng-repeat="map in filteredMapProps" href="#/app/explore/map/{{map.cartodb_id}}">
+        {{map.name}}
+      </ion-item>
+    </ion-list>
 
   </ion-content>
 </ion-view>
