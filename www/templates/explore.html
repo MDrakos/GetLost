@@ -1,25 +1,29 @@
 <ion-view view-title='Explore'>
-  <ion-nav-buttons side="right">
-    <div>
-      <button class="button button-icon ion-search" ng-click="showFilterBar()">
-        Search
-      </button>
-    </div>
-  </ion-nav-buttons>
+  <ion-nav-bar>
+    <ion-nav-buttons side="right">
+      <div>
+        <button class="button button-icon ion-search" ng-click="showFilterBar()">
+          Search
+        </button>
+      </div>
+    </ion-nav-buttons>
+  </ion-nav-bar>
 
   <ion-content>
 
     <ion-refresher on-refresh="repullData()"></ion-refresher>
 
     <!-- Segment Buttons -->
-    <div style="padding: 5px">
-      <ti-segmented-control on-select="buttonClicked($index)">
-        <ti-segmented-control-button class="button-balanced" title="'Easy'">         Easy   </ti-segmented-control-button>
-        <ti-segmented-control-button class="button-positive" title="'Medium'">       Medium </ti-segmented-control-button>
-        <ti-segmented-control-button class="button-dark"     title="'Hard'">         Hard   </ti-segmented-control-button>
-        <ti-segmented-control-button class="button-royal"    title="'All'" selected> All    </ti-segmented-control-button>
-      </ti-segmented-control>
-    </div>
+    <ti-segmented-control on-select="buttonClicked($index)">
+      <ti-segmented-control-button class="button-balanced"  id="segmentButton"  title="'Easy'">
+        Easy   </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-positive"  id="segmentButton"  title="'Medium'">
+        Medium </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-dark"      id="segmentButton"  title="'Hard'">
+        Hard   </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-royal"     id="segmentButton"  title="'All'" selected>
+        All    </ti-segmented-control-button>
+    </ti-segmented-control>
 
     <md-content layout-padding>
       <md-grid-list md-cols="2" md-row-height="1:1" md-gutter="4px">
