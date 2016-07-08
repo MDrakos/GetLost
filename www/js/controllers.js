@@ -1,3 +1,5 @@
+//INITIALIZE ANGULAR MODULE --------------------------------------------
+
 angular.module('starter.controllers', [])
 
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
@@ -57,6 +59,49 @@ angular.module('starter.controllers', [])
 
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
+	$scope.prefs = Global.AppPrefs;
+	
+	$scope.enablegps = function(){
+		cordova.dialogGPS();
+	}
+	
+	$scope.serialize = function(){
+		/*
+		Global.saveTo("test.txt", "1 2 3", function(){
+			Global.loadFrom("test.txt", function(data){
+				console.log(data);
+			});
+		}, function(){console.log("err");})*/
+		
+		Global.serialize(function(output){
+			console.log("Serialization successful");
+		});
+	};
+})
+
+.controller('HistoryCtrl', function($scope, $stateParams){
+	//Functions for history
+	$scope.history = Global.AppPrefs.history;
+})
+
+.controller('ContactCtrl', function($scope, $stateParams, $window){
+	$scope.phones = [
+		{number: "+1-250-960-6490", purpose: "company"},
+	];
+	$scope.emails = [
+		{address: "compnetlab@unbc.ca", purpose: "company"}
+	];
+	
+	$scope.sendmail = function(address){
+		Global.getAppInfo(function(appid){
+			Global.sendMail({
+				to: address,
+				subject: "GetLost: feedback",
+				body: "<br>---------------------<br>"+appid+"<br>"+Global.getOs()+": "+Global.getVersion()+"<br>"+(new Date()).toDateString(),
+				isHtml: true
+			});
+		});
+	}
 })
 
 .controller('ContactCtrl', function($scope, $stateParams){
@@ -81,7 +126,7 @@ angular.module('starter.controllers', [])
     { icon: 'img/trail8.jpg', id: 8 }
   ];
   $scope.startApp = function() {
-    $state.go('app');
+    $state.go('app.explore');
   };
   $scope.next = function() {
     $ionicSlideBoxDelegate.next();
@@ -94,18 +139,8 @@ angular.module('starter.controllers', [])
   };
 })
   
-.controller('FavouritesCtrl', function($scope)
-{
-  $scope.favourites = [
-    { name: 'Something Trail1', location: 'Something Park1', img: 'img/ionic.png', id: 1 },
-    { name: 'Something Trail2', location: 'Something Park2', img: 'img/ionic.png', id: 2 },
-    { name: 'Something Trail3', location: 'Something Park3', img: 'img/ionic.png', id: 3 },
-    { name: 'Something Trail4', location: 'Something Park4', img: 'img/ionic.png', id: 4 },
-    { name: 'Something Trail5', location: 'Something Park5', img: 'img/ionic.png', id: 5 },
-    { name: 'Something Trail6', location: 'Something Park6', img: 'img/ionic.png', id: 6 },
-    { name: 'Something Trail7', location: 'Something Park7', img: 'img/ionic.png', id: 7 },
-    { name: 'Something Trail8', location: 'Something Park8', img: 'img/ionic.png', id: 8 }
-  ];
+.controller('FavouritesCtrl', function($scope){
+	$scope.favourites = Global.Favorites;
   $scope.selectFav = function(favourite)
   {
     $scope.selectedFav = favourite;
@@ -115,8 +150,50 @@ angular.module('starter.controllers', [])
 .controller('FavouriteCtrl', function($scope, $stateParams) {
 
 })
+  
+.controller('ExploreCtrl', function($scope, $ionicFilterBar, geojsonService) {
+  $scope.dataset           = geojsonService.getData(); //get geojson data
+  $scope.datas             = $scope.dataset;           //duplicate set of data that is filtered by app
+  var segmentSelectedIndex = 3;                        //stores current segment selection
 
+  //filter bar control
+  $scope.showFilterBar = function () {
+    filterBarInstance = $ionicFilterBar.show({
+      //items to be filtered
+      items: $scope.datas,
+      //update function
+      update: function (filteredItems) {
+        $scope.datas = filteredItems;
+      },
+      filterProperties: 'name'  //filter by name
+    });
+  };
 
-
-
-;
+  //segment bar control
+  $scope.buttonClicked = function (index) {
+    segmentSelectedIndex = index; //store current index
+    //find the wanted difficulty based on index
+    var diff = 'all';
+    if (index === 0)   { diff = 'green';  }
+    if (index === 1)   { diff = 'blue';   }
+    if (index === 2)   { diff = 'black';  }
+    if (index === 3)   { diff = 'all';    }
+    $scope.datas = $scope.dataset; //reload full data
+    //if the 'all' is selected, do nothing. Else filter by difficulty
+    if (diff !== 'all') {
+      $scope.datas = $scope.datas.filter( function(data) {
+        return data.difficulty === diff;
+      })
+    }
+  };
+  
+  //refresher function
+  $scope.repullData = function() {
+    //repull geojson data
+    $scope.dataset = geojsonService.getData();
+    //refilter data depending on what segment button is selected
+    $scope.buttonClicked(segmentSelectedIndex);
+    //stop from refreshing
+    $scope.$broadcast('scroll.refreshComplete');
+  };
+});
