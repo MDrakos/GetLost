@@ -1,6 +1,6 @@
 <ion-side-menus enable-menu-with-back-views="false">
   <ion-side-menu-content>
-    <ion-nav-bar class="bar-stable">
+    <ion-nav-bar class="bar-stable headerbackground">
       <ion-nav-back-button>
       </ion-nav-back-button>
 
@@ -18,29 +18,17 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ng-click="login()">
-          Login
-        </ion-item>
-        <ion-item menu-close href="#/app/search">
-          Search
-        </ion-item>
         <ion-item menu-close href="#/app/explore">
           Explore
-        </ion-item>
-        <ion-item menu-close href="#/app/browse">
-          Browse
-        </ion-item>
-        <ion-item menu-close href="#/app/playlists">
-          Playlists
-        </ion-item>
-		    <ion-item menu-close href="#/app/settings">
-          Settings
         </ion-item>
         <ion-item menu-close href="#/app/favourites">
           <i class="icon icon ion-star"></i> Favourites
         </ion-item>
         <ion-item menu-close href="#/app/gallery">
           Gallery
+        </ion-item>
+        <ion-item menu-close href="#/app/settings">
+          Settings
         </ion-item>
       </ion-list>
     </ion-content>
