@@ -1,4 +1,10 @@
-<ion-view >
+<ion-view view-title=''>
+	<ion-nav-buttons side="secondary">
+      <button class="button" ng-click="serialize()">
+        Save
+      </button>
+  </ion-nav-buttons>
+
   <ion-content>
 	<div style = 
 		"background-color: #90C3D4; 
@@ -9,28 +15,33 @@
 		<h2 style = "color: #FFFFFF;">Settings</h2>
 	</div>
   
+	<div style = "height: 50px"></div>
+	
 	<ion-list>
 	
 	<ion-list-header style = "font-size: 120%">
 		Location Settings
 	</ion-list-header>
-	<ion-checkbox ng-model="settings.allowlocation"> 
-		Use Location
-	</ion-checkbox>
+	<ion-item ng-model="prefs.uselocation" ng-click="enablegps()"> 
+		Location Settings
+	</ion-item>
 	<br>
 	
 	<ion-list-header style = "font-size: 120%">
 		Notifications
 	</ion-list-header>
-	<ion-checkbox ng-model = "settings.notifications.news" > 
-		News
-	</ion-checkbox>
+	<ion-item class="item-borderless" ng-repeat="notification in prefs.notifications">
+		<ion-toggle class="item-borderless" ng-model = "notification.value" > 
+			{{notification.title}}
+		</ion-toggle>
+	</ion-item>
 	<br>
 	
-	<ion-item href="#history">
-	<button class = "button secondary full">
+	<ion-item href="#/app/history" style = "text-align: center">
 		History
-	</button>
+	</ion-item>
+	<ion-item href="#/app/contact" style = "text-align: center">
+		Contact Us
 	</ion-item>
 	
 	</ion-list>
