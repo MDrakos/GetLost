@@ -10,10 +10,11 @@ angular.module('starter.controllers')
 
   .controller('ExploreCtrl', function ($scope, $ionicFilterBar, MapService) {
     MapService.listTrails().done(function(data){
-      $scope.maps = data.features;
+      var maps = data.features;
       $scope.mapProps = [];
-      for(var i=0; i<$scope.maps.length; i++) {
-        $scope.mapProps[i] = ($scope.maps[i]["properties"]);
+      for(var i=0; i<maps.length; i++) {
+        $scope.mapProps[i] = (maps[i]["properties"]);
+        $scope.mapProps[i]["favButtonColor"] = "white";
       }
       $scope.filteredMapProps = $scope.mapProps;
     });
@@ -21,7 +22,6 @@ angular.module('starter.controllers')
     $scope.segmentSelectedIndex = 3; //stores current segment selection
     //filter bar control
     $scope.showFilterBar = function () {
-      console.log($scope.filteredMapProps);
       filterBarInstance = $ionicFilterBar.show({
         //items to be filtered
         items: $scope.filteredMapProps,
@@ -57,6 +57,21 @@ angular.module('starter.controllers')
       //refilter data depending on what segment button is selected
       $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
     };
+
+    //favourite button click
+    $scope.favButtonClick = function(map) {
+      if(map.favButtonColor === "white") {
+        map.favButtonColor = "yellow";
+      }
+      else if(map.favButtonColor === "yellow") {
+        map.favButtonColor = "white";
+      }
+    }
+    
+    //card clicked (route to new page)
+    $scope.cardClicked = function(map) {
+      
+    }
   })
 
   .controller('MapCtrl', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
