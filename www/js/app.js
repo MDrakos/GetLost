@@ -138,12 +138,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     })
 
-    .state('app.nearestTrail', {
-      url: '/nearestTrail',
+    .state('app.nearby', {
+      url: '/nearby',
       views: {
         'menuContent': {
-          templateUrl: 'tempates/nearby.html',
-          controller: ''
+          templateUrl: 'templates/nearby.html',
+          controller: 'NearbyCtrl'
         }
       }
     });
