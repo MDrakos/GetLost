@@ -16,10 +16,9 @@
   width:      100%;
 }
 .mainslide {
-  height: 100vh;
-  width: auto;
+  height:   100vh;
+  width:    auto;
 }
-
 .main-card {
   padding: 2px;
   text-align: center;
@@ -49,4 +48,10 @@
   text-align: center;
   border-bottom-left-radius: 5%;
   border-bottom-right-radius: 5%;
+}
+#cartodbMap {
+  height: 100%;
+  width: 100%;
+  background: black;
+  margin: 0 auto 0 auto;
 }
