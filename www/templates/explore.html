@@ -1,20 +1,19 @@
 <ion-view view-title='Explore'>
-  <ion-nav-bar>
-    <ion-nav-buttons side="right">
-      <div>
-        <button class="button button-icon ion-search" ng-click="showFilterBar()">
-          Search
-        </button>
-      </div>
-    </ion-nav-buttons>
-  </ion-nav-bar>
+  <ion-nav-buttons side="right">
+    <div>
+      <button class="button button-icon ion-search" ng-click="showFilterBar()">
+        Search
+      </button>
+    </div>
+  </ion-nav-buttons>
 
   <ion-content>
 
+    <!-- Refresher -->
     <ion-refresher on-refresh="repullData()"></ion-refresher>
 
     <!-- Segment Buttons -->
-    <ti-segmented-control on-select="buttonClicked($index)">
+    <ti-segmented-control on-select="buttonClicked($index)" style="">
       <ti-segmented-control-button class="button-balanced"  id="segmentButton"  title="'Easy'">
         Easy   </ti-segmented-control-button>
       <ti-segmented-control-button class="button-positive"  id="segmentButton"  title="'Medium'">
@@ -25,11 +24,27 @@
         All    </ti-segmented-control-button>
     </ti-segmented-control>
 
-    <ion-list>
-      <ion-item ng-repeat="map in filteredMapProps" href="#/app/explore/map/{{map.cartodb_id}}">
-        {{map.name}}
-      </ion-item>
-    </ion-list>
+    <!-- Card list of trails -->
+    <md-content class="md-padding" layout-xs="column" layout="row">
+      <div flex-xs flex-gt-xs="50" layout="column">
+        <md-card  ng-repeat="map in filteredMapProps" href="#/app/explore/map/{{map.cartodb_id}}"
+                  ng-click="cardClicked(map)">
+
+          <md-card-title class="cardTitle{{map.difficulty}}">
+            <md-card-title-text class="exploreCardTitleText">
+              <span class="md-headline">{{map.name}}</span>
+            </md-card-title-text>
+            <!-- Favourite Button -->
+            <button class="favourite-button" style="color: {{map.favButtonColor}}"
+                    ng-click="favButtonClick(map)">
+              <div class="ion-star"></div>
+            </button>
+          </md-card-title>
+          <img ng-src="img/trail6.jpg" class="md-card-image" alt="Washed Out" style="height: 150px" />
+
+        </md-card>
+      </div>
+    </md-content>
 
   </ion-content>
 </ion-view>

@@ -1,4 +1,4 @@
-/* Empty. Add your own CSS if you like */
+/* Start Page Styling */
 .start-button {
   font-family:  Verdana, sans-serif;
   top:          60%;
@@ -19,46 +19,60 @@
   height:   100vh;
   width:    auto;
 }
-.main-card {
-  padding: 2px;
-  text-align: center;
-  position: relative;
-}
-.main-card-title {
-  opacity: 0.77;
-  text-align: center;
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
-}
-.main-card-title-text {
-  font-family: Verdana, sans-serif;
-  text-align: center;
-  font-weight: 600;
-  color: whitesmoke;
-  opacity: 1;
-}
-.main-card-content-text {
-  font-family: Verdana, sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  position: relative;
-}
-.main-card-footer {
-  opacity: 0.77;
-  text-align: center;
-  border-bottom-left-radius: 5%;
-  border-bottom-right-radius: 5%;
-}
 
-/* Segment Bar Styling */
-#segmentButton {
-  max-height: 30px;
-  height: 30px;
-  font-family: Verdana, sans-serif;
-}
 #cartodbMap {
   height: 100%;
   width: 100%;
   background: black;
   margin: 0 auto 0 auto;
+}
+
+/*** Explore Page ***/
+/* Segment Bar Styling */
+#segmentButton {
+  max-height: 30px;
+  height: 30px;
+  font-family: Verdana, sans-serif;
+  border-radius: 0;
+}
+/* Explore Page trail list styling */
+.mapListItemContainer {
+  height: 70px;
+  width: 100%;
+  background-image: url('../img/trail1.jpg');
+}
+.mapListItem {
+  background-color: #cccccc;
+  background-size: 100%;
+}
+.cardTitlegreen {
+  background-color: #33CD5F;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
+.cardTitleblue {
+  background-color: #387EF5;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
+.cardTitleblack {
+  background-color: #444444;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
+.exploreCardTitleText {
+  color: whitesmoke;
+  font-family: Verdana,sans-serif;
+}
+.favourite-button {
+  background-color: transparent;
+  border: 0;
+  font-size: 25px;
+  width: 40px;
 }
