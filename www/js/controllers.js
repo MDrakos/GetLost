@@ -10,16 +10,16 @@ angular.module('starter.controllers', [])
   // listen for the $ionicView.enter event:
   //$scope.$on('$ionicView.enter', function(e) {
   //});
+	
+	// Form data for the login modal
+    $scope.loginData = {};
 
-  // Form data for the login modal
-  $scope.loginData = {};
-
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('templates/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+    // Create the login modal that we will use later
+    $ionicModal.fromTemplateUrl('templates/login.html', {
+      scope: $scope
+    }).then(function(modal) {
+      $scope.modal = modal;
+		});
 
   // Triggered in the login modal to close it
   $scope.closeLogin = function() {
@@ -54,9 +54,6 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('PlaylistCtrl', function($scope, $stateParams, MapService) {
-})
-
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
 	$scope.prefs = Global.AppPrefs;
@@ -66,13 +63,6 @@ angular.module('starter.controllers', [])
 	}
 	
 	$scope.serialize = function(){
-		/*
-		Global.saveTo("test.txt", "1 2 3", function(){
-			Global.loadFrom("test.txt", function(data){
-				console.log(data);
-			});
-		}, function(){console.log("err");})*/
-		
 		Global.serialize(function(output){
 			console.log("Serialization successful");
 		});
@@ -102,16 +92,6 @@ angular.module('starter.controllers', [])
 			});
 		});
 	}
-})
-
-.controller('ContactCtrl', function($scope, $stateParams){
-	$scope.phones = [
-		{number: "+1-250-000-000", purpose: "company"},
-		{number: "+1-250-000-001", purpose: "private"}
-	];
-	$scope.emails = [
-		{address: "something@something.ca", purpose: "company"}
-	];
 })
 
 .controller('StartCtrl', function($scope, $state, $ionicSlideBoxDelegate) {
@@ -167,33 +147,77 @@ angular.module('starter.controllers', [])
       },
       filterProperties: 'name'  //filter by name
     });
-  };
 
-  //segment bar control
-  $scope.buttonClicked = function (index) {
-    segmentSelectedIndex = index; //store current index
-    //find the wanted difficulty based on index
-    var diff = 'all';
-    if (index === 0)   { diff = 'green';  }
-    if (index === 1)   { diff = 'blue';   }
-    if (index === 2)   { diff = 'black';  }
-    if (index === 3)   { diff = 'all';    }
-    $scope.datas = $scope.dataset; //reload full data
-    //if the 'all' is selected, do nothing. Else filter by difficulty
-    if (diff !== 'all') {
-      $scope.datas = $scope.datas.filter( function(data) {
-        return data.difficulty === diff;
-      })
-    }
-  };
-  
-  //refresher function
-  $scope.repullData = function() {
-    //repull geojson data
-    $scope.dataset = geojsonService.getData();
-    //refilter data depending on what segment button is selected
-    $scope.buttonClicked(segmentSelectedIndex);
-    //stop from refreshing
-    $scope.$broadcast('scroll.refreshComplete');
-  };
-});
+    // Triggered in the login modal to close it
+    $scope.closeLogin = function() {
+      $scope.modal.hide();
+    };
+
+    // Open the login modal
+    $scope.login = function() {
+      $scope.modal.show();
+    };
+
+    // Perform the login action when the user submits the login form
+    $scope.doLogin = function() {
+      console.log('Doing login', $scope.loginData);
+
+      // Simulate a login delay. Remove this and replace with your login
+      // code if using a login system
+      $timeout(function() {
+        $scope.closeLogin();
+      }, 1000);
+    };
+		
+		//refresher function
+		$scope.repullData = function() {
+			//repull geojson data
+			$scope.dataset = geojsonService.getData();
+			//refilter data depending on what segment button is selected
+			$scope.buttonClicked(segmentSelectedIndex);
+			//stop from refreshing
+			$scope.$broadcast('scroll.refreshComplete');
+		};
+  }
+})
+
+.controller('GalleryCtrl', function($scope, $ionicModal) {
+    $scope.gallery = [
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' },
+      { 'src' : 'img/ionic.png' }
+    ];
+
+    $scope.showImages = function(index) {
+      $scope.activeSlide = index;
+      $scope.showModal('templates/photo.html');
+    };
+
+    $scope.showModal = function(templateUrl) {
+      $ionicModal.fromTemplateUrl(templateUrl, {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal = modal;
+        $scope.modal.show();
+      });
+    };
+
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+      $scope.modal.remove()
+    };
+})
