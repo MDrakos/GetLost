@@ -13,7 +13,7 @@
     <ion-refresher on-refresh="repullData()"></ion-refresher>
 
     <!-- Segment Buttons -->
-    <ti-segmented-control on-select="buttonClicked($index)" style="">
+    <ti-segmented-control on-select="buttonClicked($index); refresh()" style="">
       <ti-segmented-control-button class="button-balanced"  id="segmentButton"  title="'Easy'">
         Easy   </ti-segmented-control-button>
       <ti-segmented-control-button class="button-positive"  id="segmentButton"  title="'Medium'">
@@ -26,7 +26,7 @@
 
     <!-- Card list of trails -->
     <md-content class="md-padding" layout-xs="column" layout="row">
-      <div flex-xs flex-gt-xs="50" layout="column">
+      <div flex-xs flex-gt-xs="100" layout="column">
         <md-card  ng-repeat="map in filteredMapProps" href="#/app/explore/map/{{map.cartodb_id}}"
                   ng-click="cardClicked(map)">
 
