@@ -23,6 +23,5 @@
   },
   "_source": "https://github.com/tinga-dev/ti-ionic-segmented-control.git",
   "_target": "^0.0.2",
-  "_originalSource": "ti-segmented-control",
-  "_direct": true
+  "_originalSource": "ti-segmented-control"
 }
