@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'jett.ionic.filter.bar',
-  'ti-segmented-control', 'ngMaterial'])
+  'ti-segmented-control', 'ngMaterial', 'starter.factories'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -57,7 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   .state('app.map', {
-    url: '/explore/map/:mapId',
+    url: '/map/:mapId',
     views: {
       'menuContent': {
         templateUrl: 'templates/map.html',
