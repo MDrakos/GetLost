@@ -10,10 +10,10 @@ angular.module('starter.controllers')
 
   .controller('ExploreCtrl', function ($scope, $ionicFilterBar, MapService) {
     MapService.listTrails().done(function(data){
-      var maps = data.features;
+      $scope.maps = data.features;
       $scope.mapProps = [];
-      for(var i=0; i<maps.length; i++) {
-        $scope.mapProps[i] = (maps[i]["properties"]);
+      for(var i=0; i<$scope.maps.length; i++) {
+        $scope.mapProps[i] = ($scope.maps[i]["properties"]);
         $scope.mapProps[i]["favButtonColor"] = "white";
         //change black diamond to black_diamond so as to be able to manipulate it in css
         $scope.mapProps[i]["difficulty"] = $scope.mapProps[i]["difficulty"].replace(" ", "_");
@@ -61,7 +61,7 @@ angular.module('starter.controllers')
       $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
     };
 
-    //favourite button click TODO route to favourites page
+    //favourite button click TODO route to favourite page
     $scope.favButtonClick = function(map) {
       if(map.favButtonColor === "white") {
         map.favButtonColor = "yellow";
