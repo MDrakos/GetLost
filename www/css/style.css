@@ -36,15 +36,6 @@
   border-radius: 0;
 }
 /* Explore Page trail list styling */
-.mapListItemContainer {
-  height: 70px;
-  width: 100%;
-  background-image: url('../img/trail1.jpg');
-}
-.mapListItem {
-  background-color: #cccccc;
-  background-size: 100%;
-}
 .cardTitlegreen {
   background-color: #33CD5F;
   padding-top: 10px;
@@ -75,4 +66,17 @@
   border: 0;
   font-size: 25px;
   width: 40px;
+}
+.map-card {
+  margin: 0;
+  padding: 0;
+}
+/* Note that including .item-content here is a workaround
+to change padding on ion-list items */
+.item-card .item-content {
+  margin: 0;
+  padding: 16px;
+  padding-bottom: 0px;
+  border-top: 0;
+  border-bottom: 0;
 }
