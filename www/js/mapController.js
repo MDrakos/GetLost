@@ -15,11 +15,13 @@ angular.module('starter.controllers')
       for(var i=0; i<maps.length; i++) {
         $scope.mapProps[i] = (maps[i]["properties"]);
         $scope.mapProps[i]["favButtonColor"] = "white";
+        //change black diamond to black_diamond so as to be able to manipulate it in css
+        $scope.mapProps[i]["difficulty"] = $scope.mapProps[i]["difficulty"].replace(" ", "_");
       }
       $scope.filteredMapProps = $scope.mapProps;
     });
 
-    $scope.segmentSelectedIndex = 3; //stores current segment selection
+    $scope.segmentSelectedIndex = 4; //stores current segment selection
     //filter bar control
     $scope.showFilterBar = function () {
       filterBarInstance = $ionicFilterBar.show({
@@ -38,10 +40,11 @@ angular.module('starter.controllers')
       $scope.segmentSelectedIndex = index; //store current index
       //find the wanted difficulty based on index
       var diff = 'all';
-      if (index === 0)   { diff = 'green';  }
-      if (index === 1)   { diff = 'blue';   }
-      if (index === 2)   { diff = 'black';  }
-      if (index === 3)   { diff = 'all';    }
+      if (index === 0)   { diff = 'green';        }
+      if (index === 1)   { diff = 'blue';         }
+      if (index === 2)   { diff = 'black';        }
+      if (index === 3)   { diff = 'double_black'; }
+      if (index === 4)   { diff = 'all';          }
       $scope.filteredMapProps = $scope.mapProps; //reload full data
       //if the 'all' is selected, do nothing. Else filter by difficulty
       if (diff !== 'all') {
@@ -58,7 +61,7 @@ angular.module('starter.controllers')
       $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
     };
 
-    //favourite button click
+    //favourite button click TODO route to favourites page
     $scope.favButtonClick = function(map) {
       if(map.favButtonColor === "white") {
         map.favButtonColor = "yellow";
