@@ -13,13 +13,15 @@
     <ion-refresher on-refresh="repullData()"></ion-refresher>
 
     <!-- Segment Buttons -->
-    <ti-segmented-control on-select="buttonClicked($index); refresh()" style="">
+    <ti-segmented-control on-select="buttonClicked($index); refresh()">
       <ti-segmented-control-button class="button-balanced"  id="segmentButton"  title="'Easy'">
         Easy   </ti-segmented-control-button>
       <ti-segmented-control-button class="button-positive"  id="segmentButton"  title="'Medium'">
         Medium </ti-segmented-control-button>
       <ti-segmented-control-button class="button-dark"      id="segmentButton"  title="'Hard'">
         Hard   </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-dark"      id="segmentButton"  title="'Expert'">
+        Expert </ti-segmented-control-button>
       <ti-segmented-control-button class="button-assertive" id="segmentButton"  title="'All'" selected>
         All    </ti-segmented-control-button>
     </ti-segmented-control>
@@ -40,7 +42,9 @@
               <div class="ion-star"></div>
             </button>
           </md-card-title>
-          <img ng-src="img/trail6.jpg" class="md-card-image" alt="Washed Out" style="height: 150px" />
+          <img ng-src="img/trail6.jpg" class="md-card-image" alt="Washed Out" style="height: 150px; position: relative" />
+          <button class="difficultyIcon{{map.difficulty}}">
+          </button>
         </md-card>
       </ion-item>
     </ion-list>
