@@ -30,8 +30,9 @@
 /*** Explore Page ***/
 /* Segment Bar Styling */
 #segmentButton {
-  max-height: 30px;
-  height: 30px;
+  padding: 3px;
+  max-height: 33px;
+  height: 33px;
   font-family: Verdana, sans-serif;
   border-radius: 0;
 }
@@ -57,6 +58,13 @@
   padding-right: 10px;
   padding-bottom: 4px;
 }
+.cardTitledouble_black {
+  background-color: black;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
 .exploreCardTitleText {
   color: whitesmoke;
   font-family: Verdana,sans-serif;
@@ -70,6 +78,59 @@
 .map-card {
   margin: 0;
   padding: 0;
+  z-index: 2;
+}
+.difficultyIcongreen {
+  background-image: url('../img/Ski_trail_rating_symbol-green_circle.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+}
+.difficultyIconblue {
+  background-image: url('../img/Ski_trail_rating_symbol-blue_square.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+}
+.difficultyIconblack {
+  background-image: url('../img/Ski_trail_rating_symbol-black_diamond.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+}
+.difficultyIcondouble_black {
+  background-image: url('../img/Ski_trail_rating_symbol-double_black_diamond.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
 }
 /* Note that including .item-content here is a workaround
 to change padding on ion-list items */
