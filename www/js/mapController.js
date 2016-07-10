@@ -10,10 +10,10 @@ angular.module('starter.controllers')
 
   .controller('ExploreCtrl', function ($scope, $ionicFilterBar, MapService) {
     MapService.listTrails().done(function(data){
-      $scope.maps = data.features;
+      var maps = data.features;
       $scope.mapProps = [];
-      for(var i=0; i<$scope.maps.length; i++) {
-        $scope.mapProps[i] = ($scope.maps[i]["properties"]);
+      for(var i=0; i<maps.length; i++) {
+        $scope.mapProps[i] = (maps[i]["properties"]);
         $scope.mapProps[i]["favButtonColor"] = "white";
       }
       $scope.filteredMapProps = $scope.mapProps;
@@ -66,11 +66,6 @@ angular.module('starter.controllers')
       else if(map.favButtonColor === "yellow") {
         map.favButtonColor = "white";
       }
-    }
-    
-    //card clicked (route to new page)
-    $scope.cardClicked = function(map) {
-
     }
   })
 
