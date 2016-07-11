@@ -8,6 +8,7 @@
       Computer Lab &#xD;&#xD;
     </author>
   <content src="index.html"/>
+  <allow-navigation href="*" /><!--FIXME-->
   <allow-navigation href="https://ajax.googleapis.com/ajax/libs/*/"/>
   <allow-navigation href="https://cdn.rawgit.com/djett41/ionic-filter-bar/*/"/>
   <allow-navigation href="https://cdn.rawgit.com/tinga-dev/ti-ionic-segmented-control/*/"/>
