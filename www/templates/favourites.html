@@ -1,12 +1,19 @@
 <ion-view view-title='<i class="icon icon ion-star"></i> Favourites'>
   <ion-content>
     <ion-list>
+		
       <ion-item ng-repeat="favourite in favourites" href="#/app/favourites/{{favourite.id}}">
-        <h2 style="font-size: 20px">
-          {{favourite.name}}, {{favourite.location}}
-        </h2>
-        <img src="{{favourite.img}}" style="display:inline-block" />
+				<ion-icon style = "display: table-cell; min-width: 40px">
+					<img src="{{favourite.img}}" style="display:inline-block; width: 80px;" />
+				</ion-icon>
+				
+				<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: middle">
+						<h3>{{favourite.name}}</h3>
+						<p>{{favourite.location}}</p>
+				</div>
+        
       </ion-item>
+			
     </ion-list>
   </ion-content>
 </ion-view>

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicapp.getlost512478" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>GetLost</name>
-  <description>
-        An Ionic Framework and Cordova project.
+  <description>;&#xD;
+        An Ionic Framework and Cordova project.;&#xD;
     </description>
-  <author email="compnetlab@unbc.ca" href="http://example.com.com/">
-      Computer Lab 
+  <author email="compnetlab@unbc.ca" href="http://example.com.com/">&#xD;&#xD;
+      Computer Lab &#xD;&#xD;
     </author>
   <content src="index.html"/>
   <allow-navigation href="*" /><!--FIXME-->
+  <allow-navigation href="https://ajax.googleapis.com/ajax/libs/*/"/>
+  <allow-navigation href="https://cdn.rawgit.com/djett41/ionic-filter-bar/*/"/>
+  <allow-navigation href="https://cdn.rawgit.com/tinga-dev/ti-ionic-segmented-control/*/"/>
+  <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
@@ -17,6 +21,7 @@
   <preference name="android-minSdkVersion" value="16"/>
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
+  <preference name="phonegap-version" value="3.7.0"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true"/>
   </feature>

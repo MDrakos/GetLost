@@ -2,21 +2,12 @@ angular.module('starter.controllers')
 
   .constant('SHORT_STYLE', {"color": "#FFE403", "weight": 5, "opacity": 0.65})
 
+  // Angular service to persist the map and layer between page loads.
   .service('mapReference', function () {
     this.map = null;
     this.layer = null;
     this.currentLocation = null;
   })
-
-  .controller('ExploreCtrl', ['$scope', 'MapService', function ($scope, MapService) {
-    MapService.listTrails()
-      .done(function(data){
-        $scope.maps = data.features;
-      })
-      .error(function (errors) {
-        console.log("listTrails Errors:" + errors);
-      });
-  }])
 
   .controller('MapCtrl', ['$scope', '$stateParams', 'MapService', 'SHORT_STYLE', 'mapReference', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
 

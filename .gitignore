@@ -4,10 +4,10 @@
 
 node_modules/
 platforms/
+resources/
 plugins/
 .bowerrc
 .editorconfig
 .idea/
 resources/
 www/lib/
-
