@@ -232,10 +232,8 @@ angular.module('starter.controllers', [])
 
 .controller('DetailCtrl', ['$scope', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', function($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
 
-	$scope.img = "";
-	$scope.details = [
-		{name: 'unknown', value: 'unknown'}
-	];
+	$scope.img = "";			//bg imag, not implemented yet as we have no img references to each layer
+	$scope.details = [];	//List of details to display
 	
 		var ESRI = [L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
@@ -286,8 +284,12 @@ angular.module('starter.controllers', [])
 		redraw();
 	});
 	
-	$scope.changebase = function(id){
-		baselayer = ESRI[0];
+	var id = 0;
+	$scope.changebase = function(){
+		id++;
+		if(id >= ESRI.length)
+			id = 0;
+		baselayer = ESRI[id];
 		
 		redraw();
 	}
