@@ -221,3 +221,12 @@ angular.module('starter.controllers', [])
       $scope.modal.remove()
     };
 })
+
+.controller('DetailCtrl', function($scope, $stateParams) {
+	$scope.img = "";
+	$scope.details = [
+		{name: 'Name', value: 'Gravel Pit'},
+		{name: 'Difficulty', value: 'Easy'},
+		{name: 'Length', value: 'Unknnown'}
+	];
+});
