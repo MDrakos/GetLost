@@ -130,55 +130,63 @@ angular.module('starter.controllers', [])
 .controller('FavouriteCtrl', function($scope, $stateParams) {
 
 })
-  
-.controller('ExploreCtrl', function($scope, $ionicFilterBar, geojsonService) {
-  $scope.dataset           = geojsonService.getData(); //get geojson data
-  $scope.datas             = $scope.dataset;           //duplicate set of data that is filtered by app
-  var segmentSelectedIndex = 3;                        //stores current segment selection
 
-  //filter bar control
-  $scope.showFilterBar = function () {
-    filterBarInstance = $ionicFilterBar.show({
-      //items to be filtered
-      items: $scope.datas,
-      //update function
-      update: function (filteredItems) {
-        $scope.datas = filteredItems;
-      },
-      filterProperties: 'name'  //filter by name
-    });
+.service('TrailService', function(){
+  this.fullTrailList = null;
+  this.currentTrailList = null;
+})
 
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
-      $scope.modal.hide();
-    };
+.controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
+  // Fetch for Data source
+  MapService.listTrails().done(function(data){
 
-    // Open the login modal
-    $scope.login = function() {
-      $scope.modal.show();
-    };
+    $scope.dataset = data.features; //get geojson data
+    $scope.datas = data.features; //duplicate set of data that is filtered by app
 
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function() {
-      console.log('Doing login', $scope.loginData);
+    var segmentSelectedIndex = 3; //stores current segment selection
 
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function() {
-        $scope.closeLogin();
-      }, 1000);
-    };
-		
-		//refresher function
-		$scope.repullData = function() {
-			//repull geojson data
-			$scope.dataset = geojsonService.getData();
-			//refilter data depending on what segment button is selected
-			$scope.buttonClicked(segmentSelectedIndex);
-			//stop from refreshing
-			$scope.$broadcast('scroll.refreshComplete');
-		};
-  }
+    //filter bar control
+    $scope.showFilterBar = function () {
+      filterBarInstance = $ionicFilterBar.show({
+        //items to be filtered
+        items: $scope.datas,
+        //update function
+        update: function (filteredItems) {
+          $scope.datas = filteredItems;
+        },
+        filterProperties: 'name'  //filter by name
+      });
+
+      // Triggered in the login modal to close it
+      $scope.closeLogin = function() {
+        $scope.modal.hide();
+      };
+
+      // Open the login modal
+      $scope.login = function() {
+        $scope.modal.show();
+      };
+
+      // Perform the login action when the user submits the login form
+      $scope.doLogin = function() {
+        console.log('Doing login', $scope.loginData);
+
+        // Simulate a login delay. Remove this and replace with your login
+        // code if using a login system
+        $timeout(function() {
+          $scope.closeLogin();
+        }, 1000);
+      };
+
+      //refresher function
+      $scope.repullData = function() {
+        //refilter data depending on what segment button is selected
+        $scope.buttonClicked(segmentSelectedIndex);
+        //stop from refreshing
+        $scope.$broadcast('scroll.refreshComplete');
+      };
+    }
+  });
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {
@@ -222,11 +230,89 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('DetailCtrl', function($scope, $stateParams) {
+.controller('DetailCtrl', ['$scope', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', function($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
+
 	$scope.img = "";
 	$scope.details = [
-		{name: 'Name', value: 'Gravel Pit'},
-		{name: 'Difficulty', value: 'Easy'},
-		{name: 'Length', value: 'Unknnown'}
+		{name: 'unknown', value: 'unknown'}
 	];
-});
+	
+		var ESRI = [L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    }),
+
+    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: US National Park Service',
+      maxZoom: 8
+    }),
+
+    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
+    })];
+		
+		var baselayer = ESRI[0];
+		
+		var redraw = function(){
+			if(mapReference.map === null)
+				return;
+			
+			mapReference.map.eachLayer(function(layer){mapReference.map.removeLayer(layer);});
+			mapReference.map.addLayer(baselayer);
+			mapReference.map.addLayer(mapReference.layer);
+			
+			mapReference.map.invalidateSize();
+			
+			mapReference.map.fitBounds(mapReference.layer.getBounds());
+		}
+		
+		if (mapReference.map === null){
+			mapReference.map = new L.Map('cartodbMap', {
+          dragging: true,
+          layers: [baselayer]
+      });
+		}
+		
+	MapService.getTrail($stateParams.mapId).done(function(data){
+		mapReference.layer = L.geoJson(data, {style: SHORT_STYLE});
+		
+		var lst = [];
+		if(data.features.length >0 && data.features[0].properties){
+			lst.push({name: "Name", value: data.features[0].properties.name});
+			lst.push({name: "Difficulty", value: data.features[0].properties.difficulty});
+			lst.push({name: "Length", value: data.features[0].properties.length});
+		}
+		$scope.details = lst;
+
+		redraw();
+	});
+	
+	$scope.changebase = function(id){
+		baselayer = ESRI[0];
+		
+		redraw();
+	}
+	
+	$scope.locate = function(){
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          console.log(position.coords);
+          var latLng = [position.coords.latitude, position.coords.longitude];
+          mapReference.map.setView(latLng, 15);
+
+          if (mapReference.currentLocation === null) {
+            mapReference.currentLocation = L.marker(latLng, {
+              message: "You Are Here",
+              focus: true,
+              draggable: false
+            }).addTo(mapReference.map);
+          } else{
+            mapReference.currentLocation.setLatLng(latLng);
+          }
+        }, function(err) {
+          // error
+          console.log("Location error!");
+          console.log(err);
+        });
+    };
+}]);

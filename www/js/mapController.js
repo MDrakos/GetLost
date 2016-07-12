@@ -6,60 +6,10 @@ angular.module('starter.controllers')
   .service('mapReference', function () {
     this.map = null;
     this.layer = null;
+    this.currentLocation = null;
   })
 
-  .controller('ExploreCtrl', function ($scope, $ionicFilterBar, MapService) {
-    MapService.listTrails().done(function(data){
-      $scope.maps = data.features;
-      $scope.mapProps = [];
-      for(var i=0; i<$scope.maps.length; i++) {
-        $scope.mapProps[i] = ($scope.maps[i]["properties"]);
-      }
-      $scope.filteredMapProps = $scope.mapProps;
-    });
-
-    $scope.segmentSelectedIndex = 3; //stores current segment selection
-    //filter bar control
-    $scope.showFilterBar = function () {
-      console.log($scope.filteredMapProps);
-      filterBarInstance = $ionicFilterBar.show({
-        //items to be filtered
-        items: $scope.filteredMapProps,
-        //update function
-        update: function (filteredItems) {
-          $scope.filteredMapProps = filteredItems;
-        },
-        filterProperties: 'name'  //filter by name
-      });
-    };
-
-    //segment bar control
-    $scope.buttonClicked = function (index) {
-      $scope.segmentSelectedIndex = index; //store current index
-      //find the wanted difficulty based on index
-      var diff = 'all';
-      if (index === 0)   { diff = 'green';  }
-      if (index === 1)   { diff = 'blue';   }
-      if (index === 2)   { diff = 'black';  }
-      if (index === 3)   { diff = 'all';    }
-      $scope.filteredMapProps = $scope.mapProps; //reload full data
-      //if the 'all' is selected, do nothing. Else filter by difficulty
-      if (diff !== 'all') {
-        $scope.filteredMapProps = $scope.filteredMapProps.filter( function(data) {
-          return data.difficulty === diff;
-        })
-      }
-    };
-
-    //refresher function
-    $scope.repullData = function() {
-      //TODO repull map data
-      //refilter data depending on what segment button is selected
-      $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
-    };
-  })
-
-  .controller('MapCtrl', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
+  .controller('MapCtrl', ['$scope', '$stateParams', 'MapService', 'SHORT_STYLE', 'mapReference', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
 
     var OpenTopoMap = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       maxZoom: 17,
@@ -119,7 +69,34 @@ angular.module('starter.controllers')
       // Fit map to trail bounds
       mapReference.map.fitBounds(mapReference.layer.getBounds());
 
+    })
+    .error(function (errors) {
+      console.log("getTrail Errors:" + errors);
     });
 
+    // Function for centering over the users current location
+    $scope.locate = function(){
 
-  });
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          console.log(position.coords);
+          var latLng = [position.coords.latitude, position.coords.longitude];
+          mapReference.map.setView(latLng, 15);
+
+          if (mapReference.currentLocation === null) {
+            mapReference.currentLocation = L.marker(latLng, {
+              message: "You Are Here",
+              focus: true,
+              draggable: false
+            }).addTo(mapReference.map);
+          } else{
+            mapReference.currentLocation.setLatLng(latLng);
+          }
+        }, function(err) {
+          // error
+          console.log("Location error!");
+          console.log(err);
+        });
+    };
+
+  }]);
