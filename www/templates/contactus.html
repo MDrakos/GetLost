@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+<ion-view view-title=''>
+=======
 <ion-view >
+>>>>>>> origin/development
   <ion-content>
 	<div style = 
 		"background-color: #FF9D00; 
@@ -17,35 +21,33 @@
 		
 		<ion-item>
 			<ion-icon style = "display: table-cell; min-width: 40px">
-				<img src = "/img/phone_icon.png"
+			
+				<img src = "img/phone_icon.png"
 					style = "width: 40px; height: 40px">
 			</ion-icon>
 		
 			<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: top">
 				<div ng-repeat= "phone in phones" style = "padding-bottom: 20px">
-					<a href = "tel: {{phone.number}}">
+					<ion-item class="item-borderless" ng-href="tel:{{phone.number}}">
 						<h3>Call: {{phone.number}}</h3>
-					</a>
-					<p>
-						{{phone.purpose}}
-					</p>
+						<p>{{phone.purpose}}</p>
+					</ion-item>					
 				</div>
 			</div>
 		</ion-item>
 	
 		<ion-item>
 			<ion-icon style = "display: table-cell; min-width: 40px">
-				<img src = "/img/email_icon.jpg"
+
+				<img src = "img/email_icon.jpg"
 					style = "width: 40px; height: 40px">
 			</ion-icon>
 			<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: top">
 				<div ng-repeat= "email in emails" style = "padding-bottom: 20px">
-					<a href = "mailto: {{email.address}}">
+					<ion-item class="item-borderless" href"mailto:{{email.address}}" ng-click="sendmail(email.address)">
 						<h3>Email: {{email.address}}</h3>
-					</a>
-					<p>
-						{{email.purpose}}
-					</p>
+						<p>{{email.purpose}}</p>
+					</ion-item>
 				</div>
 			</div>
 		</ion-item>
@@ -61,15 +63,15 @@
 		padding: 5px">
 		
 		<a href = "https://www.facebook.com/">
-			<img src = "./img/facebook_icon.png"
+			<img src = "img/facebook_icon.png"
 				style = "width: 40px; height: 40px">
 		</a>
 		<a href = "https://www.linkedin.com/uas/login">
-			<img src = "./img/linkedin_icon.png"
+			<img src = "img/linkedin_icon.png"
 				style = "width: 40px; height: 40px">
 		</a>
 		<a href = "https://github.com/artbabu/GetLost">
-			<img src = "./img/github_icon.png"
+			<img src = "img/github_icon.png"
 				style = "width: 40px; height: 40px">
 		</a>
 	</div>

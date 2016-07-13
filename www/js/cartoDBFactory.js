@@ -2,7 +2,7 @@ angular.module('starter.factories', [])
 
   .constant('LAYER_NAME', 'otway_ski_trails')
 
-// Services for fetching data from CartoDB
+  // Services for fetching data from CartoDB
   .factory('MapService', function (LAYER_NAME) {
 
     var sql = new cartodb.SQL({user: 'sparkgeo', format: 'geojson'});
