@@ -82,13 +82,8 @@ angular.module('starter.controllers', [])
     $scope.selectedFav = favourite;
   }
 })
-
-.service('TrailService', function(){
-  this.fullTrailList = null;
-  this.currentTrailList = null;
-})
-
-.controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
+  
+  .controller('ExploreCtrl', function ($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
   // Fetch for Data source
   MapService.listTrails().done(function(data){
 

@@ -59,5 +59,12 @@ angular.module('starter.services', [])
     return data;
   }
 })
+  
+  
+  .service('TrailService', function () {
+    this.fullTrailList = null;
+    this.currentTrailList = null;
+  })
+
 
 ;
