@@ -16,6 +16,7 @@ angular.module('starter.controllers')
         $scope.mapProps[i] = ($scope.maps[i]["properties"]);
         $scope.mapProps[i]["favButtonColor"] = "white";
         $scope.mapProps[i]["img"] = 'img/trail1.jpg';
+        $scope.mapProps[i]["location"] = "Otway";
         //change black diamond to black_diamond so as to be able to manipulate it in css
         $scope.mapProps[i]["difficulty"] = $scope.mapProps[i]["difficulty"].replace(" ", "_");
       }
