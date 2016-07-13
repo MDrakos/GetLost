@@ -30,6 +30,7 @@
     <ion-list>
       <ion-item ng-repeat="map in filteredMapProps" href="#/app/explore/map/{{map.cartodb_id}}"
                 class="item-card" style="border-top: 0; border-bottom: 0">
+
         <!-- Card -->
         <md-card class="map-card">
           <md-card-title class="cardTitle{{map.difficulty}}">
@@ -37,15 +38,16 @@
               <span class="md-headline">{{map.name}}</span>
             </md-card-title-text>
             <!-- Favourite Button -->
-            <button class="favourite-button" style="color: {{map.favButtonColor}}"
+            <button ion-stop-event="click" class="favourite-button" style="color: {{map.favButtonColor}}"
                     ng-click="favButtonClick(map)">
               <div class="ion-star"></div>
             </button>
           </md-card-title>
-          <img ng-src="img/trail6.jpg" class="md-card-image" alt="Washed Out" style="height: 150px; position: relative" />
+          <img ng-src="{{map.img}}" class="md-card-image" alt="Washed Out" style="height: 150px; position: relative" />
           <button class="difficultyIcon{{map.difficulty}}">
           </button>
         </md-card>
+
       </ion-item>
     </ion-list>
 
