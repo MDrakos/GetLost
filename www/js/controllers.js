@@ -71,7 +71,10 @@ angular.module('starter.controllers', [])
 
 .controller('HistoryCtrl', function($scope, $stateParams){
 	//Functions for history
-	$scope.history = Global.AppPrefs.history;
+	$scope.history = Global.History;
+	$scope.goto = function(id){
+		console.log(id);
+	}
 })
 
 .controller('ContactCtrl', function($scope, $stateParams, $window){
@@ -137,6 +140,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
+	$scope.addhistory = function(name,id){
+		Global.History.push({name: name, id: id});
+		while(Global.History.length > 100){
+			Global.History.shift();
+		}
+	};
+	
   // Fetch for Data source
   MapService.listTrails().done(function(data){
 
@@ -235,43 +245,52 @@ angular.module('starter.controllers', [])
 	$scope.img = "";			//bg imag, not implemented yet as we have no img references to each layer
 	$scope.details = [];	//List of details to display
 	
-		var ESRI = [L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
-    }),
-
-    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Physical_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Source: US National Park Service',
-      maxZoom: 8
-    }),
-
-    L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community'
-    })];
+		var BASE = [
+			new ol.layer.Tile({
+				source: new ol.source.OSM()
+			}),
+			new ol.layer.Tile({
+				source: new ol.source.XYZ({
+					url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+				})
+			}),
+			new ol.layer.Tile({
+				source: new ol.source.XYZ({
+					url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+				})
+			})
+		];
 		
-		var baselayer = ESRI[0];
-		
-		var redraw = function(){
-			if(mapReference.map === null)
-				return;
-			
-			mapReference.map.eachLayer(function(layer){mapReference.map.removeLayer(layer);});
-			mapReference.map.addLayer(baselayer);
-			mapReference.map.addLayer(mapReference.layer);
-			
-			mapReference.map.invalidateSize();
-			
-			mapReference.map.fitBounds(mapReference.layer.getBounds());
-		}
-		
-		if (mapReference.map === null){
-			mapReference.map = new L.Map('cartodbMap', {
-          dragging: true,
-          layers: [baselayer]
-      });
-		}
+	var baselayer = BASE[0];
+	if(mapReference.map == null){
+			mapReference.map = new ol.Map({
+					target: 'cartodbMap',
+					controls:[],
+					view: new ol.View({
+						center:[0,0], zoom: 1
+					}),
+					layers:[baselayer]
+			});
+	}
+	
+	$scope.$on('$ionicView.enter', function(e){
+			mapReference.map.setTarget('cartodbMap');
+			mapReference.map.updateSize();
+			mapReference.map.renderSync();
+	});
 		
 	MapService.getTrail($stateParams.mapId).done(function(data){
-		mapReference.layer = L.geoJson(data, {style: SHORT_STYLE});
+		
+		data.crs = {'type': 'name', 'properties':{'name':'EPSG:4326'}};
+		mapReference.map.removeLayer(mapReference.layer);
+		mapReference.layer = new ol.layer.Vector({
+			source: new ol.source.Vector({
+				features: (new ol.format.GeoJSON()).readFeatures(data, {
+					featureProjection: mapReference.map.getView().getProjection()
+				})
+			})
+		});
+		mapReference.map.addLayer(mapReference.layer);
 		
 		var lst = [];
 		if(data.features.length >0 && data.features[0].properties){
@@ -281,17 +300,22 @@ angular.module('starter.controllers', [])
 		}
 		$scope.details = lst;
 
-		redraw();
+		//ZoomToExtent...
+		console.log(mapReference.layer.getSource().getExtent());
+		
 	});
 	
 	var id = 0;
 	$scope.changebase = function(){
+		mapReference.map.removeLayer(mapReference.layer);
+		mapReference.map.removeLayer(baselayer)
 		id++;
-		if(id >= ESRI.length)
+		if(id >= BASE.length)
 			id = 0;
-		baselayer = ESRI[id];
-		
-		redraw();
+		baselayer = BASE[id];
+
+		mapReference.map.addLayer(baselayer);
+		mapReference.map.addLayer(mapReference.layer);
 	}
 	
 	$scope.locate = function(){
@@ -300,17 +324,11 @@ angular.module('starter.controllers', [])
         function (position) {
           console.log(position.coords);
           var latLng = [position.coords.latitude, position.coords.longitude];
-          mapReference.map.setView(latLng, 15);
-
-          if (mapReference.currentLocation === null) {
-            mapReference.currentLocation = L.marker(latLng, {
-              message: "You Are Here",
-              focus: true,
-              draggable: false
-            }).addTo(mapReference.map);
-          } else{
-            mapReference.currentLocation.setLatLng(latLng);
-          }
+          //Look at latlon point
+					mapReference.map.getView().setCenter(ol.proj.transform(latLng, 'EPSG:4326', mapReference.map.getView().getProjection()));
+					
+					mapReference.currentLocation = latLng;
+          
         }, function(err) {
           // error
           console.log("Location error!");
