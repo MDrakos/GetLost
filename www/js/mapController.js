@@ -15,6 +15,7 @@ angular.module('starter.controllers')
       for(var i=0; i<$scope.maps.length; i++) {
         $scope.mapProps[i] = ($scope.maps[i]["properties"]);
         $scope.mapProps[i]["favButtonColor"] = "white";
+        $scope.mapProps[i]["img"] = 'img/trail1.jpg';
         //change black diamond to black_diamond so as to be able to manipulate it in css
         $scope.mapProps[i]["difficulty"] = $scope.mapProps[i]["difficulty"].replace(" ", "_");
       }
@@ -63,10 +64,16 @@ angular.module('starter.controllers')
 
     //favourite button click TODO route to favourite page
     $scope.favButtonClick = function(map) {
+      //add to favourites
       if(map.favButtonColor === "white") {
+        Global.Favorites.push ( map );
         map.favButtonColor = "yellow";
       }
+      //remove from favourites
       else if(map.favButtonColor === "yellow") {
+        var index = Global.Favorites.indexOf( map );
+        if(index > -1)
+          Global.Favorites.splice(index, 1);
         map.favButtonColor = "white";
       }
     }
