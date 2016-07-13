@@ -121,63 +121,8 @@ angular.module('starter.controllers', [])
   
 .controller('FavouritesCtrl', function($scope){
 	$scope.favourites = Global.Favorites;
-  $scope.selectFav = function(favourite)
-  {
+  $scope.selectFav = function(favourite) {
     $scope.selectedFav = favourite;
-  }
-})
-
-.controller('FavouriteCtrl', function($scope, $stateParams) {
-
-})
-  
-.controller('ExploreCtrl', function($scope, $ionicFilterBar, geojsonService) {
-  $scope.dataset           = geojsonService.getData(); //get geojson data
-  $scope.datas             = $scope.dataset;           //duplicate set of data that is filtered by app
-  var segmentSelectedIndex = 3;                        //stores current segment selection
-
-  //filter bar control
-  $scope.showFilterBar = function () {
-    filterBarInstance = $ionicFilterBar.show({
-      //items to be filtered
-      items: $scope.datas,
-      //update function
-      update: function (filteredItems) {
-        $scope.datas = filteredItems;
-      },
-      filterProperties: 'name'  //filter by name
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
-      $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function() {
-      $scope.modal.show();
-    };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function() {
-      console.log('Doing login', $scope.loginData);
-
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function() {
-        $scope.closeLogin();
-      }, 1000);
-    };
-		
-		//refresher function
-		$scope.repullData = function() {
-			//repull geojson data
-			$scope.dataset = geojsonService.getData();
-			//refilter data depending on what segment button is selected
-			$scope.buttonClicked(segmentSelectedIndex);
-			//stop from refreshing
-			$scope.$broadcast('scroll.refreshComplete');
-		};
   }
 })
 
