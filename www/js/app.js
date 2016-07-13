@@ -38,24 +38,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     controller: 'AppCtrl'
   })
 
-  .state('app.search', {
-    url: '/search',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/search.html'
-      }
-    }
-  })
-
-  .state('app.browse', {
-      url: '/browse',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/browse.html'
-        }
-      }
-  })
-
   .state('app.map', {
     url: '/map/:mapId',
     views: {
@@ -66,17 +48,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('app.playlists', {
-    url: '/playlists',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlists.html',
-        controller: 'PlaylistsCtrl'
-      }
-    }
-  })
-
-
 	.state('app.settings', {
       url: '/settings',
       views: {
@@ -86,26 +57,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       }
     })
-		
-	.state('app.history',{
-		url: '/history',
-		views: {
-			'menuContent': {
-				templateUrl: 'templates/history.html',
-				controller: 'HistoryCtrl'
-			}
-		}
-	})
-
-  .state('app.single', {
-    url: '/playlists/:playlistId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/playlist.html',
-        controller: 'PlaylistCtrl'
-      }
-    }
-  })
 
 	.state('app.contact',{
 		url: '/contact',
@@ -123,16 +74,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'menuContent': {
         templateUrl: 'templates/favourites.html',
         controller: 'FavouritesCtrl'
-      }
-    }
-  })
-
-    .state('app.favourite', {
-    url: '/favourites/:favouritesId',
-    views: {
-      'menuContent': {
-        templateUrl: 'templates/favourite.html',
-        controller: 'FavouriteCtrl'
       }
     }
   })
