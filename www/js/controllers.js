@@ -126,6 +126,113 @@ angular.module('starter.controllers', [])
   }
 })
 
+.service('TrailService', function(){
+  this.fullTrailList = null;
+  this.currentTrailList = null;
+})
+
+  .controller('ExploreCtrl', function ($scope, $ionicFilterBar, MapService) {
+    MapService.listTrails().done(function(data){
+
+    });
+
+  })
+
+.controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
+  // Fetch for Data source
+  MapService.listTrails().done(function(data){
+    $scope.maps = data.features;
+    $scope.mapProps = [];
+    for(var i=0; i<$scope.maps.length; i++) {
+      $scope.mapProps[i] = ($scope.maps[i]["properties"]);
+      $scope.mapProps[i]["favButtonColor"] = "white";
+      $scope.mapProps[i]["img"] = 'img/trail1.jpg';
+      $scope.mapProps[i]["location"] = "Otway";
+      //change black diamond to black_diamond so as to be able to manipulate it in css
+      $scope.mapProps[i]["difficulty"] = $scope.mapProps[i]["difficulty"].replace(" ", "_");
+    }
+    $scope.filteredMapProps = $scope.mapProps;
+
+    var segmentSelectedIndex = 3; //stores current segment selection
+
+    //filter bar control
+    $scope.showFilterBar = function () {
+      filterBarInstance = $ionicFilterBar.show({
+        //items to be filtered
+        items: $scope.datas,
+        //update function
+        update: function (filteredItems) {
+          $scope.datas = filteredItems;
+        },
+        filterProperties: 'name'  //filter by name
+      });
+
+      // Triggered in the login modal to close it
+      $scope.closeLogin = function() {
+        $scope.modal.hide();
+      };
+
+      // Open the login modal
+      $scope.login = function() {
+        $scope.modal.show();
+      };
+
+      // Perform the login action when the user submits the login form
+      $scope.doLogin = function() {
+        console.log('Doing login', $scope.loginData);
+
+        // Simulate a login delay. Remove this and replace with your login
+        // code if using a login system
+        $timeout(function() {
+          $scope.closeLogin();
+        }, 1000);
+      };
+
+      //segment bar control
+      $scope.buttonClicked = function (index) {
+        $scope.segmentSelectedIndex = index; //store current index
+        //find the wanted difficulty based on index
+        var diff = 'all';
+        if (index === 0)   { diff = 'green';        }
+        if (index === 1)   { diff = 'blue';         }
+        if (index === 2)   { diff = 'black';        }
+        if (index === 3)   { diff = 'double_black'; }
+        if (index === 4)   { diff = 'all';          }
+        $scope.filteredMapProps = $scope.mapProps; //reload full data
+        //if the 'all' is selected, do nothing. Else filter by difficulty
+        if (diff !== 'all') {
+          $scope.filteredMapProps = $scope.filteredMapProps.filter( function(data) {
+            return data.difficulty === diff;
+          })
+        }
+      };
+
+      //refresher function
+      $scope.repullData = function() {
+        //TODO repull map data
+        //refilter data depending on what segment button is selected
+        $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
+      };
+
+      //favourite button click TODO route to favourite page
+      $scope.favButtonClick = function(map) {
+        //add to favourites
+        if(map.favButtonColor === "white") {
+          Global.Favorites.push ( map );
+          map.favButtonColor = "yellow";
+        }
+        //remove from favourites
+        else if(map.favButtonColor === "yellow") {
+          var index = Global.Favorites.indexOf( map );
+          if(index > -1)
+            Global.Favorites.splice(index, 1);
+          map.favButtonColor = "white";
+        }
+      }
+    }
+  });
+})
+
 .controller('GalleryCtrl', function($scope, $ionicModal) {
     $scope.gallery = [
       { 'src' : 'img/ionic.png' },
