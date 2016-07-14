@@ -131,17 +131,14 @@ angular.module('starter.controllers', [])
 
 })
 
-.service('TrailService', function(){
-  this.fullTrailList = null;
-  this.currentTrailList = null;
-})
+.controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, TrailsService) {
 
-.controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
-  // Fetch for Data source
-  MapService.listTrails().done(function(data){
+  var all_trails = TrailsService.list();
 
-    $scope.dataset = data.features; //get geojson data
-    $scope.datas = data.features; //duplicate set of data that is filtered by app
+  all_trails.$loaded().then(function(items){
+    console.log(items);
+    $scope.dataset = items; //get geojson data
+    $scope.datas = items; //duplicate set of data that is filtered by app
 
     var segmentSelectedIndex = 3; //stores current segment selection
 
@@ -185,8 +182,14 @@ angular.module('starter.controllers', [])
         //stop from refreshing
         $scope.$broadcast('scroll.refreshComplete');
       };
+
+      $scope.goToMap = function(id){
+        console.log('click: ', id);
+        $state.go('app.map', {mapId: id});
+      };
     }
   });
+
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {

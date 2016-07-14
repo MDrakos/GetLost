@@ -9,7 +9,9 @@ angular.module('starter.controllers')
     this.currentLocation = null;
   })
 
-  .controller('MapCtrl', ['$scope', '$stateParams', 'MapService', 'SHORT_STYLE', 'mapReference', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
+  .controller('MapCtrl', ['$scope', '$stateParams', 'MapService', 'SHORT_STYLE', 'mapReference', 'TrailsService', function ($scope, $stateParams, MapService, SHORT_STYLE, mapReference, TrailsService) {
+
+    console.log('Trail: ', TrailsService.list());
 
     var OpenTopoMap = L.tileLayer('http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
       maxZoom: 17,
@@ -39,8 +41,6 @@ angular.module('starter.controllers')
 
     // Initialize leaflet map
     MapService.getTrail($stateParams.mapId).done(function(data) {
-      // Create new layer
-      mapReference.layer = L.geoJson(data, {style: SHORT_STYLE});
 
       if (mapReference.map !== null){
         // Remove the layer, add a new one
@@ -48,6 +48,10 @@ angular.module('starter.controllers')
 
         // This is the way it should be done, but does not work...
         // mapReference.map.removeLayer(mapReference.layer);
+
+        // Create new layer
+        mapReference.layer = L.geoJson(data, {style: SHORT_STYLE});
+
         // mapReference.map.addLayer(mapReference.layer);
 
         mapReference.map.remove();
@@ -57,13 +61,20 @@ angular.module('starter.controllers')
           layers: [mapReference.layer, currentTileLayer]
         });
 
+        $scope.map = mapReference.map;
+
       } else {
         // Create new map
         console.log('New Map');
+
+        // Create new layer
+        mapReference.layer = L.geoJson(data, {style: SHORT_STYLE});
+
         mapReference.map = new L.Map('cartodbMap', {
           dragging: true,
           layers: [mapReference.layer, currentTileLayer]
         });
+        $scope.map = mapReference.map;
       }
 
       // Fit map to trail bounds
@@ -99,4 +110,6 @@ angular.module('starter.controllers')
         });
     };
 
-  }]);
+  }])
+
+;
