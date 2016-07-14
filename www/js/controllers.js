@@ -245,8 +245,13 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('DetailCtrl', ['$scope', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', function($scope, $stateParams, MapService, SHORT_STYLE, mapReference) {
+.controller('DetailCtrl', ['$scope', '$state', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', function($scope, $state, $stateParams, MapService, SHORT_STYLE, mapReference) {
 
+  $scope.myGoBack = function() {
+    console.log('Go Back Explore');
+    $state.go('app.explore');
+  };
+  
 	$scope.img = "";			//bg imag, not implemented yet as we have no img references to each layer
 	$scope.details = [];	//List of details to display
 	$scope.title = ""; 		//Top bar title
@@ -271,7 +276,7 @@ angular.module('starter.controllers', [])
 	var baselayer = BASE[id];
 	$scope.changebase = function(){
 		mapReference.map.removeLayer(mapReference.layer);
-		mapReference.map.removeLayer(baselayer)
+		mapReference.map.removeLayer(baselayer);
 		id++;
 		if(id >= BASE.length)
 			id = 0;
@@ -279,7 +284,7 @@ angular.module('starter.controllers', [])
 
 		mapReference.map.addLayer(baselayer);
 		mapReference.map.addLayer(mapReference.layer);
-	}
+	};
 
 		MapService.getTrail($stateParams.mapId).done(function(data){	
 		//Cleanup
