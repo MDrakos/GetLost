@@ -132,11 +132,14 @@ angular.module('starter.controllers', [])
     $scope.maps = data.features;
     $scope.mapProps = [];
     for (var i = 0; i < $scope.maps.length; i++) {
-      $scope.mapProps[i] = ($scope.maps[i]["properties"]);
+      $scope.mapProps[i] = ($scope.maps[i]["properties"]); //copy the maps properties only
       $scope.mapProps[i]["favButtonColor"] = "white";
+      for(var j=0; j < Global.Favorites.length; j++)
+        if($scope.mapProps[i]["cartodb_id"] === Global.Favorites[j]["cartodb_id"])
+          $scope.mapProps[i]["favButtonColor"] = "yellow";
       $scope.mapProps[i]["img"] = 'img/trail1.jpg';
       $scope.mapProps[i]["location"] = "Otway";
-      //change black diamond to black_diamond so as to be able to manipulate it in css
+      //change dbl black to dbl_black so as to be able to manipulate it in css
       $scope.mapProps[i]["difficulty"] = $scope.mapProps[i]["difficulty"].replace(" ", "_");
     }
     $scope.filteredMapProps = $scope.mapProps;
@@ -202,18 +205,21 @@ angular.module('starter.controllers', [])
     $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
   };
 
-  //favourite button click TODO route to favourite page
+  //favourite button click
   $scope.favButtonClick = function(map) {
     //add to favourites
     if(map.favButtonColor === "white") {
       Global.Favorites.push ( map );
+      Global.serialize();
       map.favButtonColor = "yellow";
     }
     //remove from favourites
     else if(map.favButtonColor === "yellow") {
       var index = Global.Favorites.indexOf( map );
-      if(index > -1)
+      if(index > -1) {
         Global.Favorites.splice(index, 1);
+        Global.serialize();
+      }
       map.favButtonColor = "white";
     }
   };
