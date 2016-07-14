@@ -28,24 +28,29 @@
 
     <!-- Card View -->
     <ion-list>
-      <ion-item ng-repeat="map in filteredMapProps" href="#/app/explore/map/{{map.cartodb_id}}"
+      <ion-item ng-repeat="map in filteredMapProps"
                 class="item-card" style="border-top: 0; border-bottom: 0">
 
         <!-- Card -->
         <md-card class="map-card">
           <md-card-title class="cardTitle{{map.difficulty}}">
-            <md-card-title-text class="exploreCardTitleText">
-              <span class="md-headline">{{map.name}}, {{map.location}}</span>
-            </md-card-title-text>
+            <a href="#/app/explore/map/{{map.cartodb_id}}" style="text-decoration: none; width: 90%">
+              <md-card-title-text class="exploreCardTitleText">
+                <span class="md-headline">{{map.name}}, {{map.location}}</span>
+              </md-card-title-text>
+            </a>
             <!-- Favourite Button -->
             <button ion-stop-event="click" class="favourite-button" style="color: {{map.favButtonColor}}"
                     ng-click="favButtonClick(map)">
               <div class="ion-star"></div>
             </button>
           </md-card-title>
-          <img ng-src="{{map.img}}" class="md-card-image" alt="Washed Out" style="height: 150px; position: relative" />
-          <button class="difficultyIcon{{map.difficulty}}">
-          </button>
+          <div style="height: 150px; position: relative">
+            <a href="#/app/explore/map/{{map.cartodb_id}}">
+              <img ng-src="{{map.img}}" class="md-card-image" alt="Washed Out" style="height: 170px"/>
+              <button class="difficultyIcon{{map.difficulty}}"></button>
+            </a>
+          </div>
         </md-card>
 
       </ion-item>
