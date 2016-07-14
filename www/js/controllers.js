@@ -281,28 +281,27 @@ angular.module('starter.controllers', [])
 		mapReference.map.addLayer(mapReference.layer);
 	}
 
-		MapService.getTrail($stateParams.mapId).done(function(data){
-		//Cleanup map
-		if(mapReference.map != null){
-			mapReference.map.setTarget(null);													//Clear map render target
-			var node = document.getElementById('cartodbMap');					//Clear viewport from DOM
-			while(node.firstChild){node.removeChild(node.firstChild);}
-			mapReference.map.setTarget('cartodbMap');									//Set new render target
-			mapReference.map.updateSize();
+		MapService.getTrail($stateParams.mapId).done(function(data){	
+		//Cleanup
+		if(mapReference.map){
+			mapReference.map.setTarget(null);														//Clear old render target
+			var node = document.getElementById('cartodbMap');						//Clear viewport dom
+			while(node.firstChild){node.removeChild(node.firstChild);};
+			mapReference.map.setTarget('cartodbMap');										//Assign new render target, create new viewport
+			mapReference.map.renderSync();															//Force render
 		}else{
 			mapReference.map = new ol.Map({
+				target: 'cartodbMap',
 				controls:[],
 				view: new ol.View({
 					center:[0,0], zoom: 1
 				}),
 				layers:[baselayer]
 			});
-			mapReference.map.setTarget('cartodbMap');			
 		}
 		
 		//Load GeoJSON
 		data.crs = {'type': 'name', 'properties':{'name':'EPSG:4326'}};
-		mapReference.map.removeLayer(mapReference.layer);
 		mapReference.layer = new ol.layer.Vector({
 			source: new ol.source.Vector({
 				features: (new ol.format.GeoJSON()).readFeatures(data, {
@@ -316,7 +315,7 @@ angular.module('starter.controllers', [])
 		var lst = [];
 		if(data.features.length >0 && data.features[0].properties){
 			lst.push({name: "Name", value: data.features[0].properties.name});
-			$scope.title = (""+lst[0].value).replace(/\s*/g,"");
+			$scope.title = (""+data.features[0].properties.name).replace(/\s*/g,"");
 			lst.push({name: "Difficulty", value: data.features[0].properties.difficulty});
 			lst.push({name: "Length (m)", value: data.features[0].properties.length});
 		}
@@ -324,10 +323,8 @@ angular.module('starter.controllers', [])
 
 		//ZoomToExtent...
 		mapReference.layer.once('postcompose', function(evt){
-			console.log("zoom");
 			mapReference.map.getView().fit(mapReference.layer.getSource().getExtent(), mapReference.map.getSize());
 		});
-		
 	});
 	
 	$scope.locate = function(){
