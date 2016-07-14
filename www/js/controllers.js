@@ -260,52 +260,9 @@ angular.module('starter.controllers', [])
 				})
 			})
 		];
-		
-	var baselayer = BASE[0];
-	if(mapReference.map == null){
-			mapReference.map = new ol.Map({
-					target: 'cartodbMap',
-					controls:[],
-					view: new ol.View({
-						center:[0,0], zoom: 1
-					}),
-					layers:[baselayer]
-			});
-	}
 	
-	$scope.$on('$ionicView.enter', function(e){
-			mapReference.map.setTarget('cartodbMap');
-			mapReference.map.updateSize();
-			mapReference.map.renderSync();
-	});
-		
-	MapService.getTrail($stateParams.mapId).done(function(data){
-		
-		data.crs = {'type': 'name', 'properties':{'name':'EPSG:4326'}};
-		mapReference.map.removeLayer(mapReference.layer);
-		mapReference.layer = new ol.layer.Vector({
-			source: new ol.source.Vector({
-				features: (new ol.format.GeoJSON()).readFeatures(data, {
-					featureProjection: mapReference.map.getView().getProjection()
-				})
-			})
-		});
-		mapReference.map.addLayer(mapReference.layer);
-		
-		var lst = [];
-		if(data.features.length >0 && data.features[0].properties){
-			lst.push({name: "Name", value: data.features[0].properties.name});
-			lst.push({name: "Difficulty", value: data.features[0].properties.difficulty});
-			lst.push({name: "Length", value: data.features[0].properties.length});
-		}
-		$scope.details = lst;
-
-		//ZoomToExtent...
-		console.log(mapReference.layer.getSource().getExtent());
-		
-	});
-	
-	var id = 0;
+	var id = 1;
+	var baselayer = BASE[id];
 	$scope.changebase = function(){
 		mapReference.map.removeLayer(mapReference.layer);
 		mapReference.map.removeLayer(baselayer)
@@ -317,6 +274,50 @@ angular.module('starter.controllers', [])
 		mapReference.map.addLayer(baselayer);
 		mapReference.map.addLayer(mapReference.layer);
 	}
+		
+	MapService.getTrail($stateParams.mapId).done(function(data){
+		if(mapReference.map != null){
+			console.log("disposing old map");
+			mapReference.map.setTarget(null); mapReference.map = null;
+		}
+		
+		mapReference.map = new ol.Map({
+			target: 'cartodbMap',
+			controls:[],
+			view: new ol.View({
+				center:[0,0], zoom: 1
+			}),
+			layers:[baselayer]
+		}); mapReference.map.updateSize();
+		
+		//Load GeoJSON
+		data.crs = {'type': 'name', 'properties':{'name':'EPSG:4326'}};
+		mapReference.map.removeLayer(mapReference.layer);
+		mapReference.layer = new ol.layer.Vector({
+			source: new ol.source.Vector({
+				features: (new ol.format.GeoJSON()).readFeatures(data, {
+					featureProjection: mapReference.map.getView().getProjection()
+				})
+			})
+		});
+		mapReference.map.addLayer(mapReference.layer);
+		
+		//Load Trail Details
+		var lst = [];
+		if(data.features.length >0 && data.features[0].properties){
+			lst.push({name: "Name", value: data.features[0].properties.name});
+			lst.push({name: "Difficulty", value: data.features[0].properties.difficulty});
+			lst.push({name: "Length (m)", value: data.features[0].properties.length});
+		}
+		$scope.details = lst;
+
+		//ZoomToExtent...
+		mapReference.layer.once('postcompose', function(evt){
+			console.log("zoom");
+			mapReference.map.getView().fit(mapReference.layer.getSource().getExtent(), mapReference.map.getSize());
+		});
+		
+	});
 	
 	$scope.locate = function(){
 
