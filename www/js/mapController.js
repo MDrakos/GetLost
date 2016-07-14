@@ -39,6 +39,9 @@ angular.module('starter.controllers')
 
     var currentTileLayer = Esri_WorldTopoMap; // Change this to change the tileLayer
 
+    var trail_json = TrailsService.get($stateParams.mapId);
+    console.log('trail_json: ', trail_json);
+
     // Initialize leaflet map
     MapService.getTrail($stateParams.mapId).done(function(data) {
 
