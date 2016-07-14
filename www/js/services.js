@@ -7,18 +7,29 @@ angular.module('starter.services', [])
     this.trails = $firebaseArray(this.ref);
 
     this.list = function () {
-      console.log('Get List');
+      console.log('list');
       return this.trails;
     };
 
     this.get = function (trailID) {
       console.log('get: ', trailID);
-      for (i=0; i<this.trails.length; i++){
+      for (var i=0; i<this.trails.length; i++){
         if (this.trails[i].$id == trailID) {
+          console.log('theTrail: ', this.trails[i]);
           return this.trails[i];
         }
+        console.log('Trail Not Found!')
       }
       return null;
+    };
+
+    this.setFavColor = function(trailID, favColor){
+      console.log('set: ', trailID, favColor);
+      for (var i=0; i<this.trails.length; i++){
+        if (this.trails[i].$id == trailID) {
+          this.trails[i].favButtonColor = favColor;
+        }
+      }
     };
     
   })
