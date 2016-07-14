@@ -154,25 +154,23 @@ angular.module('starter.controllers', [])
         filterProperties: 'name'  //filter by name
       });
 
-      // Triggered in the login modal to close it
-      $scope.closeLogin = function() {
-        $scope.modal.hide();
-      };
-
-      // Open the login modal
-      $scope.login = function() {
-        $scope.modal.show();
-      };
-
-      // Perform the login action when the user submits the login form
-      $scope.doLogin = function() {
-        console.log('Doing login', $scope.loginData);
-
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function() {
-          $scope.closeLogin();
-        }, 1000);
+      //segment bar control
+      $scope.buttonClicked = function (index) {
+        $scope.segmentSelectedIndex = index; //store current index
+        //find the wanted difficulty based on index
+        var diff = 'all';
+        if (index === 0)   { diff = 'green';        }
+        if (index === 1)   { diff = 'blue';         }
+        if (index === 2)   { diff = 'black';        }
+        if (index === 3)   { diff = 'double_black'; }
+        if (index === 4)   { diff = 'all';          }
+        $scope.filteredMapProps = $scope.mapProps; //reload full data
+        //if the 'all' is selected, do nothing. Else filter by difficulty
+        if (diff !== 'all') {
+          $scope.filteredMapProps = $scope.filteredMapProps.filter( function(data) {
+            return data.difficulty === diff;
+          })
+        }
       };
 
       //refresher function
@@ -183,6 +181,7 @@ angular.module('starter.controllers', [])
         $scope.$broadcast('scroll.refreshComplete');
       };
 
+      // For use with ng-click if required.
       $scope.goToMap = function(id){
         console.log('click: ', id);
         $state.go('app.map', {mapId: id});
