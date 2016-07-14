@@ -72,6 +72,11 @@ angular.module('starter.controllers', [])
 .controller('HistoryCtrl', function($scope, $stateParams){
 	//Functions for history
 	$scope.history = Global.History;
+	$scope.clear = function(){
+		while(Global.History.length > 0){
+			Global.History.shift();
+		}
+	}
 	$scope.goto = function(id){
 		console.log(id);
 	}
@@ -244,6 +249,7 @@ angular.module('starter.controllers', [])
 
 	$scope.img = "";			//bg imag, not implemented yet as we have no img references to each layer
 	$scope.details = [];	//List of details to display
+	$scope.title = ""; 		//Top bar title
 	
 		var BASE = [
 			new ol.layer.Tile({
@@ -274,21 +280,25 @@ angular.module('starter.controllers', [])
 		mapReference.map.addLayer(baselayer);
 		mapReference.map.addLayer(mapReference.layer);
 	}
-		
-	MapService.getTrail($stateParams.mapId).done(function(data){
+
+		MapService.getTrail($stateParams.mapId).done(function(data){
+		//Cleanup map
 		if(mapReference.map != null){
-			console.log("disposing old map");
-			mapReference.map.setTarget(null); mapReference.map = null;
+			mapReference.map.setTarget(null);													//Clear map render target
+			var node = document.getElementById('cartodbMap');					//Clear viewport from DOM
+			while(node.firstChild){node.removeChild(node.firstChild);}
+			mapReference.map.setTarget('cartodbMap');									//Set new render target
+			mapReference.map.updateSize();
+		}else{
+			mapReference.map = new ol.Map({
+				controls:[],
+				view: new ol.View({
+					center:[0,0], zoom: 1
+				}),
+				layers:[baselayer]
+			});
+			mapReference.map.setTarget('cartodbMap');			
 		}
-		
-		mapReference.map = new ol.Map({
-			target: 'cartodbMap',
-			controls:[],
-			view: new ol.View({
-				center:[0,0], zoom: 1
-			}),
-			layers:[baselayer]
-		}); mapReference.map.updateSize();
 		
 		//Load GeoJSON
 		data.crs = {'type': 'name', 'properties':{'name':'EPSG:4326'}};
@@ -306,6 +316,7 @@ angular.module('starter.controllers', [])
 		var lst = [];
 		if(data.features.length >0 && data.features[0].properties){
 			lst.push({name: "Name", value: data.features[0].properties.name});
+			$scope.title = (""+lst[0].value).replace(/\s*/g,"");
 			lst.push({name: "Difficulty", value: data.features[0].properties.difficulty});
 			lst.push({name: "Length (m)", value: data.features[0].properties.length});
 		}
