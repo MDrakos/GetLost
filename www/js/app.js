@@ -57,7 +57,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
 
   .state('app.map', {
-    url: '/map/:mapId',
+    url: '/explore/map/:mapId',
     views: {
       'menuContent': {
         templateUrl: 'templates/map.html',
@@ -127,35 +127,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-    .state('app.favourite', {
-    url: '/favourites/:favouritesId',
+  .state('app.explore', {
+    url: '/explore',
     views: {
       'menuContent': {
-        templateUrl: 'templates/favourite.html',
-        controller: 'FavouriteCtrl'
+        templateUrl: 'templates/explore.html',
+        controller: 'ExploreCtrl'
       }
     }
   })
 
-    .state('app.explore', {
-      url: '/explore',
-      views: {
-        'menuContent': {
-          templateUrl: 'templates/explore.html',
-          controller: 'ExploreCtrl'
-        }
+  .state('app.details',{
+    url: '/details/:mapId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/details.html',
+        controller: 'DetailCtrl'
       }
-    })
-		
-		.state('app.details',{
-			url: '/details/:mapId',
-			views: {
-				'menuContent': {
-					templateUrl: 'templates/details.html',
-					controller: 'DetailCtrl'
-				}
-			}
-		})
+    }
+  })
 
   ;
   // if none of the above states are matched, use this as the fallback

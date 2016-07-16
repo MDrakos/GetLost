@@ -9,21 +9,51 @@
 
   <ion-content>
 
+    <!-- Refresher -->
     <ion-refresher on-refresh="repullData()"></ion-refresher>
 
     <!-- Segment Buttons -->
-    <div style="padding: 5px">
-      <ti-segmented-control on-select="buttonClicked($index)">
-        <ti-segmented-control-button class="button-balanced" title="'Easy'">         Easy   </ti-segmented-control-button>
-        <ti-segmented-control-button class="button-positive" title="'Medium'">       Medium </ti-segmented-control-button>
-        <ti-segmented-control-button class="button-dark"     title="'Hard'">         Hard   </ti-segmented-control-button>
-        <ti-segmented-control-button class="button-royal"    title="'All'" selected> All    </ti-segmented-control-button>
-      </ti-segmented-control>
-    </div>
+    <ti-segmented-control on-select="buttonClicked($index); refresh()">
+      <ti-segmented-control-button class="button-balanced"  id="segmentButton"  title="'Easy'">
+        Easy   </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-positive"  id="segmentButton"  title="'Medium'">
+        Medium </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-dark"      id="segmentButton"  title="'Hard'">
+        Hard   </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-dark"      id="segmentButton"  title="'Expert'">
+        Expert </ti-segmented-control-button>
+      <ti-segmented-control-button class="button-assertive" id="segmentButton"  title="'All'" selected>
+        All    </ti-segmented-control-button>
+    </ti-segmented-control>
 
+    <!-- Card View -->
     <ion-list>
-      <ion-item ng-repeat="data in datas" ng-href="#/app/details/{{data.properties.cartodb_id}}" ng-click="addhistory('{{data.properties.name}}', '{{data.properties.cartodb_id}}')">
-        {{data.properties.name}}
+      <ion-item ng-repeat="map in filteredMapProps"
+                class="item-card" style="border-top: 0; border-bottom: 0">
+
+        <!-- Card -->
+        <md-card class="map-card">
+          <md-card-title class="cardTitle{{map.difficulty}}">
+            <a href="#/app/details/{{map.cartodb_id}}" style="text-decoration: none; width: 90%"
+                    ng-click="addhistory('{{map.name}}', '{{map.cartodb_id}}')">
+              <md-card-title-text class="exploreCardTitleText">
+                <span class="md-headline">{{map.name}}, {{map.location}}</span>
+              </md-card-title-text>
+            </a>
+            <!-- Favourite Button -->
+            <button class="favourite-button" style="color: {{map.favButtonColor}}"
+                    on-tap="favButtonClick(map)">
+              <div class="ion-star"></div>
+            </button>
+          </md-card-title>
+          <div style="height: 150px; position: relative">
+            <a href="#/app/details/{{map.cartodb_id}}" ng-click="addhistory('{{map.name}}', '{{map.cartodb_id}}')">
+              <img ng-src="{{map.img}}" class="md-card-image" alt="Washed Out" style="height: 170px"/>
+              <button class="difficultyIcon{{map.difficulty}}"></button>
+            </a>
+          </div>
+        </md-card>
+
       </ion-item>
     </ion-list>
 

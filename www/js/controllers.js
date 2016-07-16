@@ -129,19 +129,13 @@ angular.module('starter.controllers', [])
   
 .controller('FavouritesCtrl', function($scope){
 	$scope.favourites = Global.Favorites;
-  $scope.selectFav = function(favourite)
-  {
+  $scope.selectFav = function(favourite) {
     $scope.selectedFav = favourite;
   }
-})
-
-.controller('FavouriteCtrl', function($scope, $stateParams) {
-
-})
-
-.service('TrailService', function(){
-  this.fullTrailList = null;
-  this.currentTrailList = null;
+  //refresher function
+  $scope.refresh = function() {
+    $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
+  };
 })
 
 .controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
@@ -151,57 +145,103 @@ angular.module('starter.controllers', [])
 			Global.History.shift();
 		}
 	};
-	
+
   // Fetch for Data source
-  MapService.listTrails().done(function(data){
-
-    $scope.dataset = data.features; //get geojson data
-    $scope.datas = data.features; //duplicate set of data that is filtered by app
-
-    var segmentSelectedIndex = 3; //stores current segment selection
-
-    //filter bar control
-    $scope.showFilterBar = function () {
-      filterBarInstance = $ionicFilterBar.show({
-        //items to be filtered
-        items: $scope.datas,
-        //update function
-        update: function (filteredItems) {
-          $scope.datas = filteredItems;
-        },
-        filterProperties: 'name'  //filter by name
-      });
-
-      // Triggered in the login modal to close it
-      $scope.closeLogin = function() {
-        $scope.modal.hide();
-      };
-
-      // Open the login modal
-      $scope.login = function() {
-        $scope.modal.show();
-      };
-
-      // Perform the login action when the user submits the login form
-      $scope.doLogin = function() {
-        console.log('Doing login', $scope.loginData);
-
-        // Simulate a login delay. Remove this and replace with your login
-        // code if using a login system
-        $timeout(function() {
-          $scope.closeLogin();
-        }, 1000);
-      };
-
-      //refresher function
-      $scope.repullData = function() {
-        //refilter data depending on what segment button is selected
-        $scope.buttonClicked(segmentSelectedIndex);
-        //stop from refreshing
-        $scope.$broadcast('scroll.refreshComplete');
-      };
+  MapService.listTrails().done(function(data) {
+    $scope.maps = data.features;
+    $scope.mapProps = [];
+    for (var i = 0; i < $scope.maps.length; i++) {
+      $scope.mapProps[i] = ($scope.maps[i]["properties"]); //copy the maps properties only
+      $scope.mapProps[i]["favButtonColor"] = "white";
+      for(var j=0; j < Global.Favorites.length; j++)
+        if($scope.mapProps[i]["cartodb_id"] === Global.Favorites[j]["cartodb_id"])
+          $scope.mapProps[i]["favButtonColor"] = "yellow";
+      $scope.mapProps[i]["img"] = 'img/trail1.jpg';
+      $scope.mapProps[i]["location"] = "Otway";
+      //change dbl black to dbl_black so as to be able to manipulate it in css
+      $scope.mapProps[i]["difficulty"] = $scope.mapProps[i]["difficulty"].replace(" ", "_");
     }
+    $scope.filteredMapProps = $scope.mapProps;
   });
+
+  var segmentSelectedIndex = 4; //stores current segment selection
+  //filter bar control
+  $scope.showFilterBar = function () {
+    $ionicFilterBar.show({
+      //items to be filtered
+      items: $scope.datas,
+      //update function
+      update: function (filteredItems) {
+        $scope.datas = filteredItems;
+      },
+      filterProperties: 'name'  //filter by name
+  })};
+
+  // Triggered in the login modal to close it
+  $scope.closeLogin = function() {
+    $scope.modal.hide();
+  };
+
+  // Open the login modal
+  $scope.login = function() {
+    $scope.modal.show();
+  };
+
+  // Perform the login action when the user submits the login form
+  $scope.doLogin = function() {
+    console.log('Doing login', $scope.loginData);
+
+    // Simulate a login delay. Remove this and replace with your login
+    // code if using a login system
+    $timeout(function() {
+      $scope.closeLogin();
+    }, 1000);
+  };
+
+  //segment bar control
+  $scope.buttonClicked = function (index) {
+    $scope.segmentSelectedIndex = index; //store current index
+    //find the wanted difficulty based on index
+    var diff = 'all';
+    if (index === 0)   { diff = 'green';        }
+    if (index === 1)   { diff = 'blue';         }
+    if (index === 2)   { diff = 'black';        }
+    if (index === 3)   { diff = 'double_black'; }
+    if (index === 4)   { diff = 'all';          }
+    $scope.filteredMapProps = $scope.mapProps; //reload full data
+    //if the 'all' is selected, do nothing. Else filter by difficulty
+    if (diff !== 'all') {
+      $scope.filteredMapProps = $scope.filteredMapProps.filter( function(data) {
+        return data.difficulty === diff;
+      })
+    }
+  };
+
+  //refresher function
+  $scope.repullData = function() {
+    //TODO repull map data
+    //refilter data depending on what segment button is selected
+    $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
+  };
+
+  //favourite button click
+  $scope.favButtonClick = function(map) {
+    //add to favourites
+    if(map.favButtonColor === "white") {
+      Global.Favorites.push ( map );
+      Global.serialize();
+      map.favButtonColor = "yellow";
+    }
+    //remove from favourites
+    else if(map.favButtonColor === "yellow") {
+      var index = Global.Favorites.indexOf( map );
+      if(index > -1) {
+        Global.Favorites.splice(index, 1);
+        Global.serialize();
+      }
+      map.favButtonColor = "white";
+    }
+  };
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {
@@ -251,11 +291,11 @@ angular.module('starter.controllers', [])
     console.log('Go Back Explore');
     $state.go('app.explore');
   };
-  
+
 	$scope.img = "";			//bg imag, not implemented yet as we have no img references to each layer
 	$scope.details = [];	//List of details to display
 	$scope.title = ""; 		//Top bar title
-	
+
 		var BASE = [
 			new ol.layer.Tile({
 				source: new ol.source.OSM()
@@ -271,7 +311,7 @@ angular.module('starter.controllers', [])
 				})
 			})
 		];
-	
+
 	var id = 1;
 	var baselayer = BASE[id];
 	$scope.changebase = function(){
@@ -286,7 +326,7 @@ angular.module('starter.controllers', [])
 		mapReference.map.addLayer(mapReference.layer);
 	};
 
-		MapService.getTrail($stateParams.mapId).done(function(data){	
+		MapService.getTrail($stateParams.mapId).done(function(data){
 		//Cleanup
 		if(mapReference.map){
 			mapReference.map.setTarget(null);														//Clear old render target
@@ -304,7 +344,7 @@ angular.module('starter.controllers', [])
 				layers:[baselayer]
 			});
 		}
-		
+
 		//Load GeoJSON
 		data.crs = {'type': 'name', 'properties':{'name':'EPSG:4326'}};
 		mapReference.layer = new ol.layer.Vector({
@@ -315,7 +355,7 @@ angular.module('starter.controllers', [])
 			})
 		});
 		mapReference.map.addLayer(mapReference.layer);
-		
+
 		//Load Trail Details
 		var lst = [];
 		if(data.features.length >0 && data.features[0].properties){
@@ -331,7 +371,7 @@ angular.module('starter.controllers', [])
 			mapReference.map.getView().fit(mapReference.layer.getSource().getExtent(), mapReference.map.getSize());
 		});
 	});
-	
+
 	$scope.locate = function(){
 
       navigator.geolocation.getCurrentPosition(
@@ -340,9 +380,9 @@ angular.module('starter.controllers', [])
           var latLng = [position.coords.latitude, position.coords.longitude];
           //Look at latlon point
 					mapReference.map.getView().setCenter(ol.proj.transform(latLng, 'EPSG:4326', mapReference.map.getView().getProjection()));
-					
+
 					mapReference.currentLocation = latLng;
-          
+
         }, function(err) {
           // error
           console.log("Location error!");

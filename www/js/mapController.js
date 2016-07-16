@@ -70,9 +70,9 @@ angular.module('starter.controllers')
       mapReference.map.fitBounds(mapReference.layer.getBounds());
 
     })
-    .error(function (errors) {
-      console.log("getTrail Errors:" + errors);
-    });
+      .error(function (errors) {
+        console.log("getTrail Errors:" + errors);
+      });
 
     // Function for centering over the users current location
     $scope.locate = function(){

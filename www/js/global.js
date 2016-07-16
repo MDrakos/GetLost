@@ -2,7 +2,7 @@
 const Global = {
 	
 	Favorites: [
-		{ name: 'Something Trail1', location: 'Something Park1', img: 'img/ionic.png', id: 1 }
+		
 	],
 
 	History: [],

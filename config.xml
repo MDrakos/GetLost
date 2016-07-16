@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <widget id="com.ionicapp.getlost512478" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>GetLost</name>
-  <description>;&#xD;&#xD;
-        An Ionic Framework and Cordova project.;&#xD;&#xD;
+  <description>
+        An Ionic Framework and Cordova project.
     </description>
-  <author email="compnetlab@unbc.ca" href="http://example.com.com/">&#xD;&#xD;&#xD;
-      Computer Lab &#xD;&#xD;&#xD;
+  <author email="compnetlab@unbc.ca" href="http://example.com.com/">
+      Computer Lab
     </author>
   <content src="index.html"/>
   <allow-navigation href="*"/>

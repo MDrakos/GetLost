@@ -1,5 +1,10 @@
 angular.module('starter.services', [])
 
+.service('TrailService', function(){
+  this.fullTrailList = null;
+  this.currentTrailList = null;
+})
+
 .service('geojsonService', function() {
   //aquire the data
   var request = new XMLHttpRequest();

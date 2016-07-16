@@ -1,4 +1,4 @@
-/* Empty. Add your own CSS if you like */
+/* Start Page Styling */
 .start-button {
   font-family:  Verdana, sans-serif;
   top:          60%;
@@ -19,36 +19,7 @@
   height:   100vh;
   width:    auto;
 }
-.main-card {
-  padding: 2px;
-  text-align: center;
-  position: relative;
-}
-.main-card-title {
-  opacity: 0.77;
-  text-align: center;
-  border-top-left-radius: 5%;
-  border-top-right-radius: 5%;
-}
-.main-card-title-text {
-  font-family: Verdana, sans-serif;
-  text-align: center;
-  font-weight: 600;
-  color: whitesmoke;
-  opacity: 1;
-}
-.main-card-content-text {
-  font-family: Verdana, sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  position: relative;
-}
-.main-card-footer {
-  opacity: 0.77;
-  text-align: center;
-  border-bottom-left-radius: 5%;
-  border-bottom-right-radius: 5%;
-}
+
 #cartodbMap {
   height: 100%;
   width: 100%;
@@ -61,4 +32,119 @@
 }
 .darkbg {
   background-color: #f5f5f0;
+}
+
+/*** Explore Page ***/
+/* Segment Bar Styling */
+#segmentButton {
+  padding: 3px;
+  max-height: 33px;
+  height: 33px;
+  font-family: Verdana, sans-serif;
+  border-radius: 0;
+}
+/* Explore Page trail list styling */
+.cardTitlegreen {
+  background-color: #33CD5F;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
+.cardTitleblue {
+  background-color: #387EF5;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
+.cardTitleblack {
+  background-color: #444444;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
+.cardTitledouble_black {
+  background-color: black;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 4px;
+}
+.exploreCardTitleText {
+  color: whitesmoke;
+  font-family: Verdana,sans-serif;
+}
+.favourite-button {
+  background-color: transparent;
+  border: 0;
+  font-size: 25px;
+  width: 10%;
+}
+.map-card {
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+}
+.difficultyIcongreen {
+  background-image: url('../img/Ski_trail_rating_symbol-green_circle.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+}
+.difficultyIconblue {
+  background-image: url('../img/Ski_trail_rating_symbol-blue_square.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+}
+.difficultyIconblack {
+  background-image: url('../img/Ski_trail_rating_symbol-black_diamond.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+}
+.difficultyIcondouble_black {
+  background-image: url('../img/Ski_trail_rating_symbol-double_black_diamond.svg');
+  width: 50px;
+  height: 50px;
+  top: 70%;
+  left: 80%;
+  display: block;
+  background-size: cover;
+  border: 0;
+  background-color: transparent;
+  position: absolute;
+  z-index: 100;
+}
+/* Note that including .item-content here is a workaround
+to change padding on ion-list items */
+.item-card .item-content {
+  margin: 0;
+  padding: 16px;
+  padding-bottom: 0px;
+  border-top: 0;
+  border-bottom: 0;
 }
