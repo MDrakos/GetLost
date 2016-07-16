@@ -132,6 +132,10 @@ angular.module('starter.controllers', [])
   $scope.selectFav = function(favourite) {
     $scope.selectedFav = favourite;
   }
+  //refresher function
+  $scope.refresh = function() {
+    $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
+  };
 })
 
 .controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
