@@ -71,7 +71,15 @@ angular.module('starter.controllers', [])
 
 .controller('HistoryCtrl', function($scope, $stateParams){
 	//Functions for history
-	$scope.history = Global.AppPrefs.history;
+	$scope.history = Global.History;
+	$scope.clear = function(){
+		while(Global.History.length > 0){
+			Global.History.shift();
+		}
+	}
+	$scope.goto = function(id){
+		console.log(id);
+	}
 })
 
 .controller('ContactCtrl', function($scope, $stateParams, $window){
@@ -137,6 +145,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
+	$scope.addhistory = function(name,id){
+		Global.History.push({name: name, id: id});
+		while(Global.History.length > 100){
+			Global.History.shift();
+		}
+	};
+	
   // Fetch for Data source
   MapService.listTrails().done(function(data){
 
@@ -229,3 +244,109 @@ angular.module('starter.controllers', [])
       $scope.modal.remove()
     };
 })
+
+.controller('DetailCtrl', ['$scope', '$state', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', function($scope, $state, $stateParams, MapService, SHORT_STYLE, mapReference) {
+
+  $scope.myGoBack = function() {
+    console.log('Go Back Explore');
+    $state.go('app.explore');
+  };
+  
+	$scope.img = "";			//bg imag, not implemented yet as we have no img references to each layer
+	$scope.details = [];	//List of details to display
+	$scope.title = ""; 		//Top bar title
+	
+		var BASE = [
+			new ol.layer.Tile({
+				source: new ol.source.OSM()
+			}),
+			new ol.layer.Tile({
+				source: new ol.source.XYZ({
+					url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+				})
+			}),
+			new ol.layer.Tile({
+				source: new ol.source.XYZ({
+					url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+				})
+			})
+		];
+	
+	var id = 1;
+	var baselayer = BASE[id];
+	$scope.changebase = function(){
+		mapReference.map.removeLayer(mapReference.layer);
+		mapReference.map.removeLayer(baselayer);
+		id++;
+		if(id >= BASE.length)
+			id = 0;
+		baselayer = BASE[id];
+
+		mapReference.map.addLayer(baselayer);
+		mapReference.map.addLayer(mapReference.layer);
+	};
+
+		MapService.getTrail($stateParams.mapId).done(function(data){	
+		//Cleanup
+		if(mapReference.map){
+			mapReference.map.setTarget(null);														//Clear old render target
+			var node = document.getElementById('cartodbMap');						//Clear viewport dom
+			while(node.firstChild){node.removeChild(node.firstChild);};
+			mapReference.map.setTarget('cartodbMap');										//Assign new render target, create new viewport
+			mapReference.map.renderSync();															//Force render
+		}else{
+			mapReference.map = new ol.Map({
+				target: 'cartodbMap',
+				controls:[],
+				view: new ol.View({
+					center:[0,0], zoom: 1
+				}),
+				layers:[baselayer]
+			});
+		}
+		
+		//Load GeoJSON
+		data.crs = {'type': 'name', 'properties':{'name':'EPSG:4326'}};
+		mapReference.layer = new ol.layer.Vector({
+			source: new ol.source.Vector({
+				features: (new ol.format.GeoJSON()).readFeatures(data, {
+					featureProjection: mapReference.map.getView().getProjection()
+				})
+			})
+		});
+		mapReference.map.addLayer(mapReference.layer);
+		
+		//Load Trail Details
+		var lst = [];
+		if(data.features.length >0 && data.features[0].properties){
+			lst.push({name: "Name", value: data.features[0].properties.name});
+			$scope.title = (""+data.features[0].properties.name).replace(/\s*/g,"");
+			lst.push({name: "Difficulty", value: data.features[0].properties.difficulty});
+			lst.push({name: "Length (m)", value: data.features[0].properties.length});
+		}
+		$scope.details = lst;
+
+		//ZoomToExtent...
+		mapReference.layer.once('postcompose', function(evt){
+			mapReference.map.getView().fit(mapReference.layer.getSource().getExtent(), mapReference.map.getSize());
+		});
+	});
+	
+	$scope.locate = function(){
+
+      navigator.geolocation.getCurrentPosition(
+        function (position) {
+          console.log(position.coords);
+          var latLng = [position.coords.latitude, position.coords.longitude];
+          //Look at latlon point
+					mapReference.map.getView().setCenter(ol.proj.transform(latLng, 'EPSG:4326', mapReference.map.getView().getProjection()));
+					
+					mapReference.currentLocation = latLng;
+          
+        }, function(err) {
+          // error
+          console.log("Location error!");
+          console.log(err);
+        });
+    };
+}]);

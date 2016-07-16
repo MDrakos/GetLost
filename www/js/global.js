@@ -4,14 +4,15 @@ const Global = {
 	Favorites: [
 		{ name: 'Something Trail1', location: 'Something Park1', img: 'img/ionic.png', id: 1 }
 	],
+
+	History: [],
 	
 	AppPrefs: {
 		uselocation: false,
 		notifications: [
 			{title: 'News', value: true},
 			{title: 'Weather Updates', value: false}
-		],
-		history: ["location 1", "location 2"]
+		]
 	},
 	
 	Private:{},

@@ -22,7 +22,7 @@
     </div>
 
     <ion-list>
-      <ion-item ng-repeat="data in datas" ui-sref="app.map({mapId: {{data.properties.cartodb_id}}})">
+      <ion-item ng-repeat="data in datas" ng-href="#/app/details/{{data.properties.cartodb_id}}" ng-click="addhistory('{{data.properties.name}}', '{{data.properties.cartodb_id}}')">
         {{data.properties.name}}
       </ion-item>
     </ion-list>
