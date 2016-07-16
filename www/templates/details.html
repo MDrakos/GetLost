@@ -1,0 +1,55 @@
+<ion-view view-title="{{title}}">
+
+	<ion-nav-bar ng-controller="DetailCtrl">
+		<ion-nav-back-button ng-click="myGoBack()">
+			<i class="ion-arrow-left-c"></i> Back
+		</ion-nav-back-button>
+	</ion-nav-bar>
+
+  <ion-content>
+    <div id="titleimg" style= "
+			width: 100%;
+			height: 200px;
+		">
+			<img src="img/trail8.jpg" width="100%" height="100%">
+		</div> 
+		<div id="gallerybtn" ng-href="" style="
+			position: absolute; 
+			right: 5px; top: 10px; text-align: left;
+			background-color: rgba(245,245,240,0.5);
+			padding: 1px; vertical-align: text-middle;
+			">
+			<img src="img/camera.png" width="24px" height="24px" style="vertical-align: middle"></img> gallery
+		</div>
+		
+		<div id="listcontent" style="
+			position: absolute;
+			top: 150px; left: 32px; right: 32px;
+			border-radius: 25px;
+			border: 2px solid #73AD21;
+			padding: 20px;
+			background-color: #FFFFFF;
+		">
+			<ion-list ng-repeat="detail in details">
+				<ion-item class="item-borderless" ng-class-even="'darkbg'" ng-class-odd="'lightbg'">
+				<div id="leftcontent" style="float: left; width: 50%; text-align: left">
+					{{detail.name}}
+				</div>
+				<div id="rightcontent" style="float: right; width: 50%; text-align: right">
+					{{detail.value}}
+				</div>
+				</ion-item>
+			</ion-list>
+		</div>
+		
+		<div id="cartodbMap" style="
+			height: 256px;
+			width: 100%;
+			position: absolute;
+			top: 400px;
+		">
+		</div>
+		
+		<img src="img/globe.png" style="position: absolute; top: 400px; background-color: rgba(245,245,240,0.5); padding: 8px" width="40px" height="40px" ng-click="changebase()"></img>
+  </ion-content>
+</ion-view>

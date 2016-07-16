@@ -1,10 +1,16 @@
 <ion-view view-title="History">
+	<ion-nav-buttons side="secondary">
+      <button class="button" ng-click="clear()">
+        Clear All
+      </button>
+  </ion-nav-buttons>
+	
   <ion-content>
 	
 	<ion-list show-delete="true">
 	
-	<ion-item ng-repeat = "location in history" >
-		{{location}}
+	<ion-item ng-repeat = "location in history" ng-href="#/app/details/{{location.id}}">
+		{{location.name}}
 		<ion-delete-button class="ion-minus-circled item-right" ng-click="history.splice($index, 1)">
 		</ion-delete-button>
 	</ion-item>

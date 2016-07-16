@@ -137,6 +137,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+  .state('app.details',{
+    url: '/details/:mapId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/details.html',
+        controller: 'DetailCtrl'
+      }
+    }
+  })
+
   ;
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');

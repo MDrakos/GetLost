@@ -4,14 +4,15 @@ const Global = {
 	Favorites: [
 		
 	],
+
+	History: [],
 	
 	AppPrefs: {
 		uselocation: false,
 		notifications: [
 			{title: 'News', value: true},
 			{title: 'Weather Updates', value: false}
-		],
-		history: ["location 1", "location 2"]
+		]
 	},
 	
 	Private:{},

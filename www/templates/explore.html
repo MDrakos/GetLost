@@ -34,7 +34,8 @@
         <!-- Card -->
         <md-card class="map-card">
           <md-card-title class="cardTitle{{map.difficulty}}">
-            <a href="#/app/explore/map/{{map.cartodb_id}}" style="text-decoration: none; width: 90%">
+            <a href="#/app/details/{{map.cartodb_id}}" style="text-decoration: none; width: 90%"
+                    ng-click="addhistory('{{map.name}}', '{{map.cartodb_id}}')">
               <md-card-title-text class="exploreCardTitleText">
                 <span class="md-headline">{{map.name}}, {{map.location}}</span>
               </md-card-title-text>
@@ -46,7 +47,7 @@
             </button>
           </md-card-title>
           <div style="height: 150px; position: relative">
-            <a href="#/app/explore/map/{{map.cartodb_id}}">
+            <a href="#/app/details/{{map.cartodb_id}}" ng-click="addhistory('{{map.name}}', '{{map.cartodb_id}}')">
               <img ng-src="{{map.img}}" class="md-card-image" alt="Washed Out" style="height: 170px"/>
               <button class="difficultyIcon{{map.difficulty}}"></button>
             </a>
