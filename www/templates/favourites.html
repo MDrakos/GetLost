@@ -1,19 +1,26 @@
 <ion-view view-title='<i class="icon icon ion-star"></i> Favourites'>
+
   <ion-content>
+
+		<ion-refresher on-refresh="refresh()"></ion-refresher>
+
     <ion-list>
-		
-      <ion-item ng-repeat="favourite in favourites" href="#/app/favourites/{{favourite.id}}">
-				<ion-icon style = "display: table-cell; min-width: 40px">
-					<img src="{{favourite.img}}" style="display:inline-block; width: 80px;" />
-				</ion-icon>
-				
-				<div style = "display: table-cell; width: 100%; text-align: center; vertical-align: middle">
-						<h3>{{favourite.name}}</h3>
-						<p>{{favourite.location}}</p>
-				</div>
-        
+      <ion-item ng-repeat="map in favourites" href="#/app/favourites/{{map.cartodb_id}}"
+								class="item-card" style="border-top: 0; border-bottom: 0" ng-href="#/app/details/{{map.cartodb_id}}">
+
+				<!-- Card -->
+				<md-card class="map-card">
+					<md-card-title class="cardTitle{{map.difficulty}}">
+						<md-card-title-text class="exploreCardTitleText">
+							<span class="md-headline">{{map.name}}, {{map.location}}</span>
+						</md-card-title-text>
+					</md-card-title>
+					<img ng-src="{{map.img}}" class="md-card-image" alt="Washed Out" style="height: 150px; position: relative" />
+					<button class="difficultyIcon{{map.difficulty}}">
+					</button>
+				</md-card>
+
       </ion-item>
-			
     </ion-list>
   </ion-content>
 </ion-view>
