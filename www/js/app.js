@@ -147,6 +147,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
+    .state('app.gallery', {
+           url: '/gallery',
+          views: {
+            'menuContent': {
+                templateUrl: 'templates/gallery.html',
+                  controller: 'GalleryCtrl'
+              }
+         }
+      })
+
     .state('app.nearby', {
       url: '/nearby',
       views: {

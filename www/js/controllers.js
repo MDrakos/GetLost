@@ -247,24 +247,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {
-  $scope.gallery = [
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' }
-  ];
+  $scope.gallery = [];
+  for(var i = 1; i<=8; i++) {
+    $scope.gallery.add({src: 'img/trail' + i +'.jpg'});
+  }
 
   $scope.showImages = function(index) {
     $scope.activeSlide = index;
