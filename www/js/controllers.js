@@ -131,7 +131,7 @@ angular.module('starter.controllers', [])
 	$scope.favourites = Global.Favorites;
   $scope.selectFav = function(favourite) {
     $scope.selectedFav = favourite;
-  }
+  };
   //refresher function
   $scope.refresh = function() {
     $scope.$broadcast('scroll.refreshComplete'); //stops refreshing
@@ -234,55 +234,57 @@ angular.module('starter.controllers', [])
     }
     //remove from favourites
     else if(map.favButtonColor === "yellow") {
+      console.log(Global.Favorites);
       var index = Global.Favorites.indexOf( map );
       if(index > -1) {
         Global.Favorites.splice(index, 1);
         Global.serialize();
       }
       map.favButtonColor = "white";
+      console.log(Global.Favorites);
     }
   };
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {
-    $scope.gallery = [
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' },
-      { 'src' : 'img/ionic.png' }
-    ];
+  $scope.gallery = [
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' },
+    { 'src' : 'img/ionic.png' }
+  ];
 
-    $scope.showImages = function(index) {
-      $scope.activeSlide = index;
-      $scope.showModal('templates/photo.html');
-    };
+  $scope.showImages = function(index) {
+    $scope.activeSlide = index;
+    $scope.showModal('templates/photo.html');
+  };
 
-    $scope.showModal = function(templateUrl) {
-      $ionicModal.fromTemplateUrl(templateUrl, {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-        $scope.modal = modal;
-        $scope.modal.show();
-      });
-    };
+  $scope.showModal = function(templateUrl) {
+    $ionicModal.fromTemplateUrl(templateUrl, {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
 
-    $scope.closeModal = function() {
-      $scope.modal.hide();
-      $scope.modal.remove()
-    };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    $scope.modal.remove()
+  };
 })
 
 .controller('DetailCtrl', ['$scope', '$state', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', function($scope, $state, $stateParams, MapService, SHORT_STYLE, mapReference) {
