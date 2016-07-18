@@ -117,7 +117,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  ;
+    .state('app.gallery', {
+           url: '/gallery',
+          views: {
+            'menuContent': {
+                templateUrl: 'templates/gallery.html',
+                  controller: 'GalleryCtrl'
+              }
+         }
+      })
+
+    .state('app.nearby', {
+      url: '/nearby',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/nearby.html',
+          controller: 'NearbyCtrl'
+        }
+      }
+    });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/start');
 });
