@@ -15,11 +15,11 @@ angular.module('starter.controllers', [])
 .controller('SettingsCtrl', function($scope, $stateParams){
 	//Functions for settings menu
 	$scope.prefs = Global.AppPrefs;
-	
+
 	$scope.enablegps = function(){
 		cordova.dialogGPS();
 	}
-	
+
 	$scope.serialize = function(){
 		Global.serialize(function(output){
 			console.log("Serialization successful");
@@ -47,7 +47,7 @@ angular.module('starter.controllers', [])
 	$scope.emails = [
 		{address: "compnetlab@unbc.ca", purpose: "company"}
 	];
-	
+
 	$scope.sendmail = function(address){
 		Global.getAppInfo(function(appid){
 			Global.sendMail({
@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
     $scope.slideIndex = index;
   };
 })
-  
+
 .controller('FavouritesCtrl', function($scope){
 	$scope.favourites = Global.Favorites;
   $scope.selectFav = function(favourite) {
@@ -96,41 +96,50 @@ angular.module('starter.controllers', [])
   };
 })
 
-  .controller('NearbyCtrl', function($scope, $state, MapService) {
-    var myLocation = null;
+  .controller('NearbyCtrl', function($scope, $state, MapService,$cordovaGeolocation) {
+    $scope.myLocation = null;
     $scope.nearby = [];
+      $scope.mapInfo = [];
 
     $scope.relocate = function() {
       getLocation();
       $scope.mapInfo.sort(function(a,b) {
-        return getDistance(a["coords"]) - getDistance(b["coords"]);
+          console.log(" "+a+" "+b);
+          return getDistance(a["coords"]) - getDistance(b["coords"]);
       });
       for(var i = 0; i<10; i++) {
-        nearby[i] = $scope.mapInfo[i]["properties"];
+        console.log($scope.mapInfo[i]);
+        $scope.nearby[i]= $scope.mapInfo[i];
       }
       $scope.$broadcast('scroll.refreshComplete');
     };
 
     MapService.listTrails().done(function(data) {
+      console.log("list trails in loading");
       $scope.maps = data.features;
-      $scope.mapInfo = [];
       for (var i = 0; i < $scope.maps.length; i++) {
         $scope.mapInfo[i] = {properties : $scope.maps[i]["properties"],
                             coords : $scope.maps[i]["geometry"]["coordinates"][0]};
-        $scope.mapProps[i]["properties"]["favButtonColor"] = "white";
+        $scope.mapInfo[i]["properties"]["favButtonColor"] = "white";
         for(var j=0; j < Global.Favorites.length; j++)
-          if($scope.mapInfo[i]["properties"]["cartodb_id"] === Global.Favorites[j]["properties"]["cartodb_id"])
+          if($scope.mapInfo[i]["properties"]["cartodb_id"] === Global.Favorites[j]["cartodb_id"])
             $scope.mapInfo[i]["properties"]["favButtonColor"] = "yellow";
         $scope.mapInfo[i]["properties"]["img"] = 'img/trail1.jpg';
         $scope.mapInfo[i]["properties"]["location"] = "Otway";
         //change dbl black to dbl_black so as to be able to manipulate it in css
         $scope.mapInfo[i]["properties"]["difficulty"] = $scope.mapInfo[i]["properties"]["difficulty"].replace(" ", "_");
       }
-    });
+       $scope.relocate();
+    }
+    );
 
     function getLocation() {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        myLocation = [position.longitude, position.latitude];
+      var posOptions = {timeout: 10000, enableHighAccuracy: false};
+      $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function (position)  {
+        console.log(position.longitude+"----"+position.latitude)
+        $scope.myLocation = [position.longitude, position.latitude];
       }, function(error) {
         $state.go('app.settings');
       })
@@ -138,14 +147,20 @@ angular.module('starter.controllers', [])
 
     function getDistance(location) {
       //both myLocation & the location passed are stored as [longitude, latitude]
-      if(myLocation = null) {
+      if($scope.myLocation[0] == null || $scope.myLocation[1] == null) {
         $state.go('app.settings');
       }
-      var dx = Math.cos(myLocation[0])*Math.cos(myLocation[1])-Math.cos(location[0])*Math.cos(location[1]);
-      var dy = Math.sin(myLocation[0])*Math.cos(myLocation[1])-Math.sin(location[0])*Math.cos(location[1]);
-      var dz = Math.sin(myLocation[1])-Math.sin(location[1]);
+
+      if(location[0] != null && location[1] != null){
+        var dx = Math.cos($scope.myLocation[0])*Math.cos($scope.myLocation[1])-Math.cos(location[0])*Math.cos(location[1]);
+        var dy = Math.sin($scope.myLocation[0])*Math.cos($scope.myLocation[1])-Math.sin(location[0])*Math.cos(location[1]);
+        var dz = Math.sin($scope.myLocation[1])-Math.sin(location[1]);
+      }
+
       return Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2)+Math.pow(dz,2));
     }
+
+
   })
 
 .controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
@@ -257,33 +272,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {
-  $scope.gallery = [];
-  for(var i = 1; i<=8; i++) {
-    $scope.gallery.add({src: 'img/trail' + i +'.jpg'});
-  }
 
-  $scope.showImages = function(index) {
-    $scope.activeSlide = index;
-    $scope.showModal('templates/photo.html');
-  };
-
-  $scope.showModal = function(templateUrl) {
-    $ionicModal.fromTemplateUrl(templateUrl, {
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.modal = modal;
-      $scope.modal.show();
-    });
-  };
-
-  $scope.closeModal = function() {
-    $scope.modal.hide();
-    $scope.modal.remove()
-  };
 })
 
-.controller('DetailCtrl', ['$scope', '$state', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', function($scope, $state, $stateParams, MapService, SHORT_STYLE, mapReference) {
+.controller('DetailCtrl', ['$scope', '$state', '$stateParams','MapService', 'SHORT_STYLE', 'mapReference', '$ionicModal', function($scope, $state, $stateParams, MapService, SHORT_STYLE, mapReference,$ionicModal) {
 
   $scope.myGoBack = function() {
     console.log('Go Back Explore');
@@ -387,4 +379,29 @@ angular.module('starter.controllers', [])
           console.log(err);
         });
     };
+  $scope.gallery = [];
+  for(var i = 1; i<=8; i++) {
+    $scope.gallery[i]=({src: 'img/trail' + i +'.jpg'});
+  }
+
+  $scope.showImages = function(index) {
+    $scope.activeSlide = index;
+    $scope.showModal('templates/photo.html');
+  };
+
+  $scope.showModal = function(templateUrl) {
+    $ionicModal.fromTemplateUrl(templateUrl, {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.modal = modal;
+      $scope.modal.show();
+    });
+  };
+
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+    $scope.modal.remove()
+  };
+
 }]);
