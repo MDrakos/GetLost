@@ -96,6 +96,58 @@ angular.module('starter.controllers', [])
   };
 })
 
+  .controller('NearbyCtrl', function($scope, $state, MapService) {
+    var myLocation = null;
+    $scope.nearby = [];
+
+    $scope.relocate = function() {
+      getLocation();
+      $scope.mapInfo.sort(function(a,b) {
+        return getDistance(a["coords"]) - getDistance(b["coords"]);
+      });
+      for(var i = 0; i<10; i++) {
+        nearby[i] = $scope.mapInfo[i]["properties"];
+      }
+      $scope.$broadcast('scroll.refreshComplete');
+    };
+
+    MapService.listTrails().done(function(data) {
+      $scope.maps = data.features;
+      $scope.mapInfo = [];
+      for (var i = 0; i < $scope.maps.length; i++) {
+        $scope.mapInfo[i] = {properties : $scope.maps[i]["properties"],
+                            coords : $scope.maps[i]["geometry"]["coordinates"][0]};
+        $scope.mapProps[i]["properties"]["favButtonColor"] = "white";
+        for(var j=0; j < Global.Favorites.length; j++)
+          if($scope.mapInfo[i]["properties"]["cartodb_id"] === Global.Favorites[j]["properties"]["cartodb_id"])
+            $scope.mapInfo[i]["properties"]["favButtonColor"] = "yellow";
+        $scope.mapInfo[i]["properties"]["img"] = 'img/trail1.jpg';
+        $scope.mapInfo[i]["properties"]["location"] = "Otway";
+        //change dbl black to dbl_black so as to be able to manipulate it in css
+        $scope.mapInfo[i]["properties"]["difficulty"] = $scope.mapInfo[i]["properties"]["difficulty"].replace(" ", "_");
+      }
+    });
+
+    function getLocation() {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        myLocation = [position.longitude, position.latitude];
+      }, function(error) {
+        $state.go('app.settings');
+      })
+    }
+
+    function getDistance(location) {
+      //both myLocation & the location passed are stored as [longitude, latitude]
+      if(myLocation = null) {
+        $state.go('app.settings');
+      }
+      var dx = Math.cos(myLocation[0])*Math.cos(myLocation[1])-Math.cos(location[0])*Math.cos(location[1]);
+      var dy = Math.sin(myLocation[0])*Math.cos(myLocation[1])-Math.sin(location[0])*Math.cos(location[1]);
+      var dz = Math.sin(myLocation[1])-Math.sin(location[1]);
+      return Math.sqrt(Math.pow(dx,2)+Math.pow(dy,2)+Math.pow(dz,2));
+    }
+  })
+
 .controller('ExploreCtrl', function($scope, $state, $ionicFilterBar, geojsonService, MapService, TrailService) {
 	$scope.addhistory = function(name,id){
 		Global.History.push({name: name, id: id});
@@ -205,24 +257,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('GalleryCtrl', function($scope, $ionicModal) {
-  $scope.gallery = [
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' },
-    { 'src' : 'img/ionic.png' }
-  ];
+  $scope.gallery = [];
+  for(var i = 1; i<=8; i++) {
+    $scope.gallery.add({src: 'img/trail' + i +'.jpg'});
+  }
 
   $scope.showImages = function(index) {
     $scope.activeSlide = index;
